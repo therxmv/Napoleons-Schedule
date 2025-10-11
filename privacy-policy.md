@@ -1,6 +1,6 @@
 # Privacy Policy
 
-eRSHU takes your privacy seriously. To better protect your privacy I provide this privacy policy notice explaining the way your personal information is collected and used.
+Napoleon's Schedule takes your privacy seriously. To better protect your privacy I provide this privacy policy notice explaining the way your personal information is collected and used.
 
 
 ## Collection of Routine Information
@@ -28,7 +28,7 @@ I have included links on this app for your use and reference. I am not responsib
 The security of your personal information is important to me, but remember that no method of transmission over the Internet, or method of electronic storage, is 100% secure. While I strive to use commercially acceptable means to protect your personal information, I cannot guarantee its absolute security.
 
 
-## Changes To This Privacy PolicyThis Privacy Policy is effective as of 08/02/2024 and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page.
+## Changes To This Privacy PolicyThis Privacy Policy is effective as of 11/10/2025 and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page.
 I reserve the right to update or change my Privacy Policy at any time and you should check this Privacy Policy periodically. If I make any material changes to this Privacy Policy, I will notify you either through the email address you have provided me, or by placing a prominent notice on my app.
 
 
