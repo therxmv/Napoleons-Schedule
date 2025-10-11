@@ -1,0 +1,182 @@
+package com.therxmv.napoleon.ui.schedule.content
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.therxmv.napoleon.base.extensions.thenIf
+import com.therxmv.napoleon.base.ui.CopyIconButton
+import com.therxmv.napoleon.base.ui.LocalCopyIconColor
+import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
+import com.therxmv.napoleon.ui.theme.NapoleonTheme
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Link
+
+@Composable
+fun Lesson(
+    data: ScheduleUiData.Lesson,
+    isLast: Boolean,
+    onCopyEvent: () -> Unit,
+) {
+    val shape = remember(isLast) {
+        NapoleonTheme.shapes.onlyBottomRounded.takeIf { isLast } ?: NapoleonTheme.shapes.noneRounded
+    }
+
+    LessonRow(
+        shape = shape,
+        onClick = (data as? ScheduleUiData.Lesson.Online)?.onClick,
+    ) {
+        when (data) {
+            is ScheduleUiData.Lesson.Offline -> OfflineLesson(data)
+            is ScheduleUiData.Lesson.Online -> OnlineLesson(data, onCopyEvent)
+            is ScheduleUiData.Lesson.ByTime -> TimeLesson(data)
+            is ScheduleUiData.Lesson.Empty -> EmptyLesson(data)
+        }
+    }
+}
+
+@Composable
+private fun RowScope.OnlineLesson(
+    data: ScheduleUiData.Lesson.Online,
+    onCopyEvent: () -> Unit,
+) {
+    PrefixText(data.number)
+    Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+
+    Name(
+        modifier = Modifier.weight(1f),
+        name = data.name,
+    )
+
+    CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+        CopyIconButton(data.toString(), FeatherIcons.Link, onCopyEvent)
+    }
+}
+
+@Composable
+private fun RowScope.OfflineLesson(
+    data: ScheduleUiData.Lesson.Offline,
+) {
+    PrefixText(data.number)
+    Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+
+    Name(
+        modifier = Modifier.weight(1f),
+        name = data.name,
+    )
+
+    if (data.classroom != null) {
+        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        SuffixText(data.classroom)
+    }
+
+    CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+        CopyIconButton(data.toString())
+    }
+}
+
+@Composable
+private fun RowScope.TimeLesson(
+    data: ScheduleUiData.Lesson.ByTime,
+) {
+    if (data.time != null) {
+        PrefixText(data.time)
+        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+    }
+
+    Name(
+        modifier = Modifier.weight(1f),
+        name = data.name,
+    )
+
+    CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+        CopyIconButton(data.toString())
+    }
+}
+
+@Composable
+private fun RowScope.EmptyLesson(
+    data: ScheduleUiData.Lesson.Empty,
+) {
+    if (data.number != null) {
+        PrefixText(data.number)
+        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+    }
+
+    Name(
+        modifier = Modifier.weight(1f),
+        name = data.name,
+    )
+}
+
+@Composable
+private fun PrefixText(text: String) {
+    Text(
+        modifier = Modifier
+            .sizeIn(minWidth = 24.dp),
+        text = text,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+}
+
+@Composable
+private fun SuffixText(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodySmall,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+}
+
+@Composable
+private fun Name(
+    modifier: Modifier = Modifier,
+    name: String,
+) {
+    Text(
+        modifier = modifier,
+        text = name,
+        overflow = TextOverflow.Ellipsis,
+        maxLines = 5,
+    )
+}
+
+@Composable
+private fun LessonRow(
+    shape: Shape,
+    onClick: (() -> Unit)?,
+    content: @Composable (RowScope.() -> Unit),
+) {
+    Row(
+        modifier = Modifier
+            .padding(top = NapoleonTheme.paddings.divider)
+            .fillMaxWidth()
+            .clip(shape)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .thenIf(onClick != null) {
+                clickable { onClick?.invoke() }
+            }
+            .padding(NapoleonTheme.paddings.startAndHalfVerticalValues),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content,
+    )
+}

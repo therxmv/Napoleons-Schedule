@@ -1,26 +1,35 @@
 <resources>
-    <string name="app_name">eRSHU</string>
+    <string name="app_name">Napoleon's Schedule</string>
+
+    <!--BottomNav-->
+    <string name="bottom_dashboard_label">Dashboard</string>
+    <string name="bottom_schedule_label">Schedule</string>
+    <string name="bottom_profile_label">Profile</string>
+
+    <!--Dashboard-->
+    <string name="dashboard_exams_card">Exams</string>
+    <string name="dashboard_excel_card">Schedule in Excel</string>
+    <string name="dashboard_timetable_card">Breaks Timetable</string>
+    <string name="dashboard_tg_channel_card">Telegram Channel</string>
+    <string name="dashboard_tg_bot_card">Telegram Bot</string>
+    <string name="dashboard_site_card">Website</string>
+    <string name="dashboard_process_card">Educational Process</string>
 
     <!--Profile-->
-    <string name="profile_title">Your profile</string>
-    <string name="profile_welcome">Welcome, RSHU student!</string>
-    <string name="profile_faculty_title">Faculty:</string>
-    <string name="profile_specialty_title">Specialty:</string>
+    <string name="profile_welcome">Welcome</string>
+    <string name="profile_faculty_label">Faculty:</string>
+    <string name="profile_specialty_label">Specialty:</string>
     <string name="profile_edit_button">Edit</string>
+    <string name="profile_info_title">About specialty</string>
+    <string name="profile_default_name">Student</string>
 
-    <!--SpecialtyInfo-->
-    <string name="specialtyinfo_title">About specialty</string>
-    <string name="specialtyinfo_edit">Edit profile</string>
-    <string name="specialtyinfo_change">Change schedule</string>
-    <string name="specialtyinfo_choose_faculty">Choose faculty</string>
-    <string name="specialtyinfo_choose_specialty">Choose specialty</string>
-    <string name="specialtyinfo_choose_year">Choose year</string>
+    <!--Edit Profile-->
+    <string name="edit_profile_title">Edit profile</string>
+    <string name="edit_profile_faculty_placeholder">Choose faculty</string>
+    <string name="edit_profile_specialty_placeholder">Choose specialty</string>
+    <string name="edit_profile_year_placeholder">Choose year</string>
 
-    <string name="specialtyinfo_specialty_prefix">Specialty:</string>
-    <string name="specialtyinfo_year_prefix">Year:</string>
-
-    <string name="specialtyinfo_continue_label">ⓘ Fill all fields to continue</string>
-    <string name="specialtyinfo_save">Save</string>
+    <string name="edit_profile_save_button">Save</string>
     <string name="specialtyinfo_select">Select</string>
 
     <!--Schedule-->
@@ -38,29 +47,23 @@
     <string name="schedule_no_lesson">None</string>
     <string name="schedule_no_lessons">No lessons</string>
 
-    <string name="schedule_no_connection">Oops... Something went wrong. Check your connection and
-        try again
-    </string>
-    <string name="offline_title">You are offline</string>
     <string name="offline_open_schedule">Open schedule</string>
-    <string name="offline_schedule_update">Schedule is being updated</string>
 
-    <string name="calls_schedule_title">Calls schedule</string>
-    <string name="calls_schedule_first_shift">First shift</string>
-    <string name="calls_schedule_second_shift">Second shift</string>
-    <string name="calls_schedule_copy">Copy</string>
-    <string name="calls_schedule_close">Close</string>
+    <!-- Timetable -->
+    <string name="timetable_title">Calls schedule</string>
+    <string name="timetable_loading">Loading...</string>
+    <string name="timetable_first_shift">First shift</string>
+    <string name="timetable_second_shift">Second shift</string>
+    <string name="timetable_empty_shift">No information</string>
+    <string name="timetable_copy">Copy</string>
+    <string name="timetable_close">Close</string>
 
     <!-- Reminders -->
     <string name="reminder_title">Починається пара!</string>
     <string name="reminders_dialog_title">Reminders permission</string>
-    <string name="reminders_dialog_description">Please allow eRSHU send you notifications about upcoming lessons</string>
+    <string name="reminders_dialog_description">Please allow Napoleon send you notifications about upcoming lessons</string>
     <string name="reminders_dialog_grant">Allow</string>
     <string name="reminders_dialog_deny">Deny</string>
-
-    <!-- Home -->
-    <string name="home_schedule">Schedule</string>
-    <string name="home_profile">Profile</string>
 
     <!-- Rating -->
     <string name="rating_title">Rating calculator</string>
@@ -72,9 +75,19 @@
     <string name="rating_not_available">This feature is not yet available for your specialty</string>
 
     <!-- Exams -->
-    <string name="exams_title">Exams Calendar</string>
+    <string name="exams_title">Exams Schedule for</string>
     <string name="exams_list_title">Exams</string>
-    <string name="zalik_list_title">Заліки</string>
-    <string name="exams_no_data">Data is not yet available</string>
+    <string name="zalik_list_title">Zaliks</string>
+    <string name="exams_no_data">Exams are not yet available</string>
+
+    <!-- Error -->
+    <string name="error_generic">Oops... Something went wrong :(</string>
+    <string name="error_offline">We can't connect to the server. Check your internet and try again</string>
+    <string name="error_cant_find">We can't find data on the server. Try again later</string>
+    <string name="error_slow_internet">Your internet is too slow to load data. Check your internet and try again</string>
+    <!-- Fallback cache -->
+    <string name="fallback_offline">We can't connect to the server to update data. You are using saved data now (it might be outdated)</string>
+    <string name="fallback_cant_find">We can't find data on the server but we saved some data (it might be outdated)</string>
+    <string name="fallback_slow_internet">Your internet is too slow to update data but we saved some data (it might be outdated)</string>
 
 </resources>

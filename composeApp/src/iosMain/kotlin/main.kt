@@ -1,5 +1,5 @@
 import androidx.compose.ui.window.ComposeUIViewController
-import com.therxmv.ershu.App
+import com.therxmv.napoleon.MainScreen
 import platform.UIKit.UIViewController
 
-fun MainViewController(): UIViewController = ComposeUIViewController { App() }
+fun mainViewController(): UIViewController = ComposeUIViewController { MainScreen() }

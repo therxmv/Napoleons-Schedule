@@ -1,61 +1,115 @@
 [versions]
+# Project
+project-applicationId = "com.therxmv.napoleon"
+project-minSdk = "24"
+project-compileSdk = "36"
+project-targetSdk = "36"
+project-versionCode = "100"
+project-versionName = "1.0.0"
 
-firebase = "4.4.0"
-firebase-crashlytics = "2.9.9"
-firebaseBom = "32.7.1"
-kotlin = "1.9.20"
-agp = "8.1.2"
-compose = "1.5.10"
-androidx-appcompat = "1.6.1"
-androidx-activityCompose = "1.7.2"
-compose-uitooling = "1.5.1"
-kotlinxDatetime = "0.6.0-RC.2"
-ktorClientContentNegotiation = "2.3.1"
-libres = "1.2.0"
-voyager = "1.0.0"
-buildConfig = "5.3.2"
-kotlinx-coroutines = "1.7.3"
-ktor = "2.3.5"
-composeIcons = "1.1.0"
-kotlinx-serialization = "1.6.0"
-multiplatformSettings = "1.1.0"
-koin = "3.4.0"
-sqlDelight = "2.0.0"
+# Plugins
+agp = "8.11.1"
+kotlin = "2.2.0"
+composePlugin = "1.8.2"
+firebase = "4.4.3"
+firebase-crashlytics = "3.0.6"
+
+# Libs
+androidx-appcompat = "1.7.1"
+androidx-activity = "1.10.1"
+
+kotlinx-coroutines = "1.10.2"
+kotlinx-serialization = "1.9.0"
+kotlinxDatetime = "0.7.1"
+
+koin = "4.1.0"
+
+ktor = "3.2.3"
+
+firebaseBom = "34.1.0"
+libres = "1.2.4"
+
+voyager = "1.0.1"
+decompose = "3.3.0"
+decompose-coroutines = "2.5.0"
+
+featherIcons = "1.1.1"
+dataStore = "1.1.7"
 
 [libraries]
-
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
-androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClientContentNegotiation" }
-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorClientContentNegotiation" }
-libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
-voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
-voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+compose-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler" }
+
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-composeIcons-featherIcons = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "composeIcons" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-sqlDelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
-sqlDelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
-sqlDelight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+koin-compose-multiplatform = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+
+libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
+
+voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-extensions = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
+decompose-experimental = { module = "com.arkivanov.decompose:extensions-compose-experimental", version.ref = "decompose" }
+decompose-coroutines = { module = "com.arkivanov.essenty:lifecycle-coroutines", version.ref = "decompose-coroutines" }
+
+icons-feather = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "featherIcons" }
+
+datastore = { module = "androidx.datastore:datastore", version.ref = "dataStore" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+
+[bundles]
+koin = [
+    "koin-core",
+    "koin-compose-multiplatform",
+]
+
+voyager = [
+    "voyager-screenModel",
+    "voyager-navigator",
+]
+
+decompose = [
+    "decompose",
+    "decompose-extensions",
+    "decompose-experimental",
+    "decompose-coroutines",
+]
+
+ktor = [
+    "ktor-core",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+]
+
+datastore = [
+    "datastore",
+    "datastore-preferences",
+]
 
 [plugins]
-
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 android-application = { id = "com.android.application", version.ref = "agp" }
-libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
-buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
-kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 firebase = { id = "com.google.gms.google-services", version.ref = "firebase" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
+
+libres = { id = "io.github.skeptick.libres", version.ref = "libres" }

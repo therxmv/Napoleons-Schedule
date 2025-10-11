@@ -1,27 +1,34 @@
 <resources>
-    <string name="app_name">eRSHU</string>
+    <string name="app_name">Розклад Наполеона</string>
+
+    <!--BottomNav-->
+    <string name="bottom_dashboard_label">Дошка</string>
+    <string name="bottom_schedule_label">Розклад</string>
+    <string name="bottom_profile_label">Профіль</string>
+
+    <!--Dashboard-->
+    <string name="dashboard_exams_card">Екзамени</string>
+    <string name="dashboard_excel_card">Розклад у Excel</string>
+    <string name="dashboard_timetable_card">Розклад Дзвінків</string>
+    <string name="dashboard_tg_channel_card">Телеграм Канал</string>
+    <string name="dashboard_tg_bot_card">Телеграм Бот</string>
+    <string name="dashboard_site_card">Вебсайт</string>
+    <string name="dashboard_process_card">Освітній Процес</string>
 
     <!--Profile-->
-    <string name="profile_title">Ваш профіль</string>
-    <string name="profile_welcome">Вітаємо, студенте!</string>
-    <string name="profile_faculty_title">Факультет:</string>
-    <string name="profile_specialty_title">Спеціальність:</string>
+    <string name="profile_welcome">Вітаємо</string>
+    <string name="profile_faculty_label">Факультет:</string>
+    <string name="profile_specialty_label">Спеціальність:</string>
     <string name="profile_edit_button">Редагувати</string>
+    <string name="profile_info_title">Про спеціальність</string>
+    <string name="profile_default_name">Студент</string>
 
-    <!--SpecialtyInfo-->
-    <string name="specialtyinfo_title">Про спеціальність</string>
-    <string name="specialtyinfo_edit">Редагування профілю</string>
-    <string name="specialtyinfo_change">Зміна розкладу</string>
-    <string name="specialtyinfo_choose_faculty">Виберіть факультет</string>
-    <string name="specialtyinfo_choose_specialty">Виберіть спеціальність</string>
-    <string name="specialtyinfo_choose_year">Виберіть курс</string>
-
-    <string name="specialtyinfo_specialty_prefix">Спеціальність:</string>
-    <string name="specialtyinfo_year_prefix">Курс:</string>
-
-    <string name="specialtyinfo_continue_label">ⓘ Заповніть всі поля щоб продовжити</string>
-    <string name="specialtyinfo_save">Зберегти</string>
-    <string name="specialtyinfo_select">Вибрати</string>
+    <!--Edit Profile-->
+    <string name="edit_profile_title">Редагування профілю</string>
+    <string name="edit_profile_faculty_placeholder">Виберіть факультет</string>
+    <string name="edit_profile_specialty_placeholder">Виберіть спеціальність</string>
+    <string name="edit_profile_year_placeholder">Виберіть курс</string>
+    <string name="edit_profile_save_button">Зберегти</string>
 
     <!--Schedule-->
     <string name="schedule_title">Розклад для</string>
@@ -38,29 +45,23 @@
     <string name="schedule_no_lesson">Немає</string>
     <string name="schedule_no_lessons">Немає занять</string>
 
-    <string name="schedule_no_connection">Упс... Щось пішло не так. Перевірте з'єднання і спробуйте
-        ще раз
-    </string>
-    <string name="offline_title">Ви перебуваєте в офлайн режимі</string>
     <string name="offline_open_schedule">Відкрити розклад</string>
-    <string name="offline_schedule_update">Розклад оновлюється</string>
 
-    <string name="calls_schedule_title">Розклад дзвінків</string>
-    <string name="calls_schedule_first_shift">Перша зміна</string>
-    <string name="calls_schedule_second_shift">Друга зміна</string>
-    <string name="calls_schedule_copy">Копіювати</string>
-    <string name="calls_schedule_close">Закрити</string>
+    <!-- Timetable -->
+    <string name="timetable_title">Розклад дзвінків</string>
+    <string name="timetable_loading">Завантаження...</string>
+    <string name="timetable_first_shift">Перша зміна</string>
+    <string name="timetable_second_shift">Друга зміна</string>
+    <string name="timetable_empty_shift">Немає інформації</string>
+    <string name="timetable_copy">Копіювати</string>
+    <string name="timetable_close">Закрити</string>
 
     <!-- Reminders -->
     <string name="reminder_title">Починається пара!</string>
     <string name="reminders_dialog_title">Дозвіл на нагадування</string>
-    <string name="reminders_dialog_description">Будь ласка, дозвольте eRSHU надсилати вам сповіщення про майбутні пари</string>
+    <string name="reminders_dialog_description">Будь ласка, дозвольте Наполеону надсилати вам сповіщення про майбутні пари</string>
     <string name="reminders_dialog_grant">Дозволити</string>
     <string name="reminders_dialog_deny">Заборонити</string>
-
-    <!-- Home -->
-    <string name="home_schedule">Розклад</string>
-    <string name="home_profile">Профіль</string>
 
     <!-- Rating -->
     <string name="rating_title">Калькулятор рейтингу</string>
@@ -72,9 +73,19 @@
     <string name="rating_not_available">Ця функція ще не доступна для вашої спеціальності</string>
 
     <!-- Exams -->
-    <string name="exams_title">Календар екзаменів</string>
+    <string name="exams_title">Розклад екзаменів для</string>
     <string name="exams_list_title">Екзамени</string>
     <string name="zalik_list_title">Заліки</string>
     <string name="exams_no_data">Поки що немає даних</string>
+
+    <!-- Error -->
+    <string name="error_generic">Ой-йо... Щось зламалося :(</string>
+    <string name="error_offline">Не можемо зв'язатися з сервером. Перевірте Ваш інтернет та спробуйте ще раз</string>
+    <string name="error_cant_find">Не можемо знайти дані на сервері. Спробуйте ще раз пізніше</string>
+    <string name="error_slow_internet">Ваш інтернет надто повільний для завантаження даних. Перевірте Ваш інтернет та спробуйте ще раз</string>
+    <!-- Fallback cache -->
+    <string name="fallback_offline">Не можемо зв'язатися з сервером для оновлення даних. Ви зараз бачите збереженні дані (можуть бути застарілими)</string>
+    <string name="fallback_cant_find">Не можемо знайти дані на сервері, але ми дещо зберегли (дані можуть бути застарілими)</string>
+    <string name="fallback_slow_internet">Ваш інтернет надто повільний для оновлення даних, але ми дещо зберегли (дані можуть бути застарілими)</string>
 
 </resources>

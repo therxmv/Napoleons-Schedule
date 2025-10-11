@@ -1,91 +1,30 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.multiplatform)
-    alias(libs.plugins.compose)
     alias(libs.plugins.android.application)
-    alias(libs.plugins.libres)
-    alias(libs.plugins.buildConfig)
-    alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
+
     alias(libs.plugins.firebase)
     alias(libs.plugins.firebase.crashlytics)
-}
 
-kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
-    sourceSets {
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
-            implementation(libs.libres)
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.screenModel)
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.ktor.core)
-            implementation(libs.composeIcons.featherIcons)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.koin.core)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.sqlDelight.coroutines.extensions)
-            implementation(libs.kotlinx.datetime)
-        }
-
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-        }
-
-        androidMain.dependencies {
-            implementation(libs.androidx.appcompat)
-            implementation(libs.androidx.activityCompose)
-            implementation(libs.compose.uitooling)
-            implementation(libs.kotlinx.coroutines.android)
-            implementation(libs.ktor.client.okhttp)
-            implementation(libs.koin.android)
-            implementation(libs.sqlDelight.android)
-
-            implementation(project.dependencies.platform(libs.firebase.bom))
-            implementation("com.google.firebase:firebase-analytics")
-            implementation("com.google.firebase:firebase-crashlytics")
-        }
-
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-            implementation(libs.sqlDelight.native)
-        }
-
-    }
+    alias(libs.plugins.libres)
 }
 
 android {
-    namespace = "com.therxmv.ershu"
-    compileSdk = 34
+    namespace = libs.versions.project.applicationId.get()
+    compileSdk = libs.versions.project.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 23
-        targetSdk = 34
+        minSdk = libs.versions.project.minSdk.get().toInt()
+        targetSdk = libs.versions.project.targetSdk.get().toInt()
 
-        applicationId = "com.therxmv.ershu.androidApp"
-        versionCode = 151
-        versionName = "1.5.1"
+        applicationId = libs.versions.project.applicationId.get() + ".androidApp"
+        versionCode = libs.versions.project.versionCode.get().toInt()
+        versionName = libs.versions.project.versionName.get()
     }
     sourceSets["main"].apply {
         manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -105,18 +44,75 @@ android {
     }
 }
 
-libres {
-    // https://github.com/Skeptick/libres#setup
-}
-
-buildConfig {
-
-}
-
-sqldelight {
-    databases {
-        create("ERSHUDatabase") {
-            packageName.set("com.therxmv.ershu.db")
+kotlin {
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.backhandler)
+
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.datetime)
+
+                implementation(libs.libres)
+
+                implementation(libs.bundles.voyager)
+                implementation(libs.bundles.decompose)
+
+                implementation(libs.bundles.ktor)
+
+                implementation(libs.icons.feather)
+
+                implementation(libs.bundles.koin)
+
+                implementation(libs.bundles.datastore)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.kotlinx.coroutines.android)
+                implementation(libs.ktor.client.okhttp)
+                implementation(libs.koin.android)
+
+                implementation(project.dependencies.platform(libs.firebase.bom))
+                implementation("com.google.firebase:firebase-analytics")
+                implementation("com.google.firebase:firebase-crashlytics")
+            }
+        }
+
+        iosMain {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+    }
+}
+
+libres {
+    // https://github.com/Skeptick/libres#setup
 }
