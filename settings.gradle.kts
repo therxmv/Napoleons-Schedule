@@ -1,4 +1,4 @@
-rootProject.name = "eRSHU"
+rootProject.name = "Napoleon"
 include(":composeApp")
 
 pluginManagement {
