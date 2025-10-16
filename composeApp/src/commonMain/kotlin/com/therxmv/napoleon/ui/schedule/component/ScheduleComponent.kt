@@ -56,6 +56,8 @@ class ScheduleComponent(
                     is Result.Failure -> BaseState.Error(result.reason.message, ::loadData)
                 }
             }
+
+            analyticsRepository.reportScheduleOpened(profile.facultyName, profile.specialtyName)
         }
     }
 
