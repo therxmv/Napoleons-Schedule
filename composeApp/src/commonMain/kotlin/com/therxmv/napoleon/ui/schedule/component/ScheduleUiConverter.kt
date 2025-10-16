@@ -89,7 +89,8 @@ class ScheduleUiConverter {
                 val entry = entryList[indexByHour]
 
                 entry.key.takeIf { entry.value.isNotEmpty() }
-                    ?: entryList.slice(indexByHour..entryList.lastIndex).firstNotEmptyKey()
+                    // "+ entryList" in case slice returns only Friday, so it could take Monday or next day
+                    ?: (entryList.slice(indexByHour..entryList.lastIndex) + entryList).firstNotEmptyKey()
             }
 
             else -> null

@@ -11,6 +11,9 @@ data class DashboardUiData(
     val cacheReason: String? = null,
 ) {
     sealed interface Widget {
+        val isSchedule: Boolean
+            get() = this is SkeletonTodaySchedule || this is TodaySchedule
+
         data object SkeletonTodaySchedule : Widget
         data class TodaySchedule(val day: ScheduleUiData.Day) : Widget
     }

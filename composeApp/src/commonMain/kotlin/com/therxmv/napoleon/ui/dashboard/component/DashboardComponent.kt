@@ -184,10 +184,8 @@ class DashboardComponent(
                         val scheduleWidget = DashboardUiData.Widget.TodaySchedule(expandToday)
                         _uiState.update { data ->
                             data.copy(
-                                widgets = data.widgets.map {
-                                    if (it is DashboardUiData.Widget.SkeletonTodaySchedule) {
-                                        scheduleWidget
-                                    } else it
+                                widgets = data.widgets.map { widget ->
+                                    scheduleWidget.takeIf { widget.isSchedule } ?: widget
                                 },
                                 cacheReason = result.reason?.message,
                             )
@@ -198,9 +196,7 @@ class DashboardComponent(
                 is Result.Failure -> {
                     _uiState.update { data ->
                         data.copy(
-                            widgets = data.widgets.filter {
-                                it !is DashboardUiData.Widget.TodaySchedule && it !is DashboardUiData.Widget.SkeletonTodaySchedule
-                            },
+                            widgets = data.widgets.filter { it.isSchedule.not() },
                         )
                     }
                 }
