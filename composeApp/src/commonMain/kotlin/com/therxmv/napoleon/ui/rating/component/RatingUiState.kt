@@ -1,6 +1,9 @@
 package com.therxmv.napoleon.ui.rating.component
 
 import androidx.compose.runtime.Immutable
+import com.therxmv.napoleon.data.repository.rating.model.RatingModel
+import com.therxmv.napoleon.data.repository.rating.model.SubjectModel
+import com.therxmv.napoleon.ui.rating.component.RatingUiState.Subject
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -22,3 +25,30 @@ data class RatingUiState(
         val error: String? = null,
     )
 }
+
+fun RatingUiState.toModel(): RatingModel =
+    RatingModel(
+        subjects = subjects.toModel(),
+    )
+
+fun List<Subject>.toModel(): List<SubjectModel> =
+    map {
+        SubjectModel(
+            id = it.id,
+            name = it.name,
+            credits = it.credits,
+            score = it.score,
+            error = it.error,
+        )
+    }
+
+fun List<SubjectModel>.toUi(): List<Subject> =
+    map {
+        Subject(
+            id = it.id,
+            name = it.name,
+            credits = it.credits,
+            score = it.score,
+            error = it.error,
+        )
+    }

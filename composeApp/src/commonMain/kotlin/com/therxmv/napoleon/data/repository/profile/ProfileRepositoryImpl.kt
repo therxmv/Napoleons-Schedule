@@ -1,7 +1,7 @@
 package com.therxmv.napoleon.data.repository.profile
 
 import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.data.repository.model.ProfileModel
+import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
 import kotlinx.coroutines.runBlocking
 

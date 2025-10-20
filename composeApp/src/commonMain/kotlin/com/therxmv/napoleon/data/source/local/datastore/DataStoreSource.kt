@@ -4,10 +4,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.therxmv.napoleon.data.repository.model.ProfileModel
+import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
+import com.therxmv.napoleon.data.repository.rating.model.RatingModel
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ExamsDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.FacultiesDto
-import com.therxmv.napoleon.data.source.remote.napoleon.dto.RatingDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.SpecialtiesDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.TimetableDto
@@ -26,7 +26,6 @@ class DataStoreSource(
 
     companion object {
         private const val SCHEDULE = "_schedule"
-        private const val RATING = "_rating"
         private const val EXAMS = "_exams"
     }
 
@@ -34,6 +33,7 @@ class DataStoreSource(
     private val facultiesKey = stringPreferencesKey("FacultiesKey")
     private val specialtiesKey = stringPreferencesKey("SpecialtiesKey")
     private val timetableKey = stringPreferencesKey("TimetableKey")
+    private val ratingKey = stringPreferencesKey("RatingKey")
 
     suspend fun getProfile(): ProfileModel? =
         profileKey.getObject<ProfileModel>()
@@ -70,18 +70,18 @@ class DataStoreSource(
         stringPreferencesKey(specialty + SCHEDULE).saveObject(schedule)
     }
 
-    suspend fun getRatingBySpecialty(specialty: String): RatingDto? =
-        stringPreferencesKey(specialty + RATING).getObject<RatingDto>()
-
-    suspend fun setRatingBySpecialty(specialty: String, rating: RatingDto) {
-        stringPreferencesKey(specialty + RATING).saveObject(rating)
-    }
-
     suspend fun getExamsBySpecialty(specialty: String): ExamsDto? =
         stringPreferencesKey(specialty + EXAMS).getObject<ExamsDto>()
 
     suspend fun setExamsBySpecialty(specialty: String, exams: ExamsDto) {
         stringPreferencesKey(specialty + EXAMS).saveObject(exams)
+    }
+
+    suspend fun getRating(): RatingModel? =
+        ratingKey.getObject<RatingModel>()
+
+    suspend fun setRating(model: RatingModel) {
+        ratingKey.saveObject(model)
     }
 
     private suspend inline fun <reified T> Preferences.Key<String>.getObject(): T? =

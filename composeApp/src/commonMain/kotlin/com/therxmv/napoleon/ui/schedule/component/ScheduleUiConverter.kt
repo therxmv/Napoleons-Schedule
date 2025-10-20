@@ -2,8 +2,8 @@ package com.therxmv.napoleon.ui.schedule.component
 
 import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.date.getTodayDateTime
-import com.therxmv.napoleon.data.repository.model.LessonModel
-import com.therxmv.napoleon.data.repository.model.ScheduleModel
+import com.therxmv.napoleon.data.repository.specialty.model.LessonModel
+import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 
 class ScheduleUiConverter {
 

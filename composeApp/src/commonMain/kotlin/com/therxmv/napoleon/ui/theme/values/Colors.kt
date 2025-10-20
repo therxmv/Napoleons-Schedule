@@ -55,9 +55,10 @@ object NapoleonColors {
             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
             focusedContainerColor = MaterialTheme.colorScheme.surface,
             disabledContainerColor = MaterialTheme.colorScheme.surface,
+            errorContainerColor = MaterialTheme.colorScheme.surface,
 
             unfocusedBorderColor = MaterialTheme.colorScheme.surface,
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedBorderColor = MaterialTheme.colorScheme.surfaceTint,
 
             selectionColors = TextSelectionColors(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.tertiary)
         )

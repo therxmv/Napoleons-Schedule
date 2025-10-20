@@ -1,17 +1,28 @@
 package com.therxmv.napoleon.ui.rating.component
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.therxmv.napoleon.data.repository.rating.RatingRepository
 import com.therxmv.napoleon.ui.rating.component.RatingUiState.Subject
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlin.math.round
 
 class RatingComponent(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
+    private val ratingRepository: RatingRepository,
 ) : ComponentContext by componentContext {
+    val scope = coroutineScope(SupervisorJob())
 
     private val _uiState = MutableStateFlow(createInitialData())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        observeAndSaveRating()
+    }
 
     fun onEvent(event: RatingUiEvent) {
         when (event) {
@@ -23,50 +34,89 @@ class RatingComponent(
         }
     }
 
+    private fun observeAndSaveRating() {
+        scope.launch {
+            _uiState.collect {
+                ratingRepository.saveRating(it.toModel())
+            }
+        }
+    }
+
     private fun addNewInput() {
         _uiState.update { data ->
-            data.copy(subjects = listOf(Subject()) + data.subjects)
+            val newSubjects = listOf(Subject()) + data.subjects
+            val result = calculateRating(newSubjects)
+
+            data.copy(
+                subjects = newSubjects,
+                result = result
+            )
         }
     }
 
     private fun filterOutInput(id: String) {
         _uiState.update { data ->
-            data.copy(subjects = data.subjects.filter { it.id != id })
+            val newSubjects = data.subjects.filter { it.id != id }
+            val result = calculateRating(newSubjects)
+
+            data.copy(
+                subjects = newSubjects,
+                result = result,
+            )
         }
     }
 
     private fun updateInputState(event: RatingUiEvent.UpdateInput) {
         _uiState.update { data ->
-            val newInputs = data.subjects.map { input ->
-                if (input.id == event.id) {
-                    val newCredits = event.credits
-                    val newScore = event.score
+            val newSubjects = data.subjects.map { subject ->
+                if (subject.id == event.id) {
+                    val (credits, creditsError) = ratingRepository.validateCredits(event.credits ?: subject.credits)
+                    val (score, scoreError) = ratingRepository.validateScore(event.score ?: subject.score)
 
-                    input.copy(
-                        name = event.name ?: input.name,
-                        credits = newCredits ?: input.credits,
-                        score = newScore ?: input.score,
+                    subject.copy(
+                        name = event.name ?: subject.name,
+                        credits = credits,
+                        score = score,
+                        error = combineErrors(creditsError, scoreError),
                     )
-                } else input
+                } else subject
             }
 
-            data.copy(subjects = newInputs)
+            val result = calculateRating(newSubjects)
+
+            data.copy(
+                subjects = newSubjects,
+                result = result,
+            )
         }
-
-        calculateRating()
     }
 
-    private fun calculateRating() {
+    private fun calculateRating(list: List<Subject>): String {
+        val rating = ratingRepository.calculateRating(list.toModel())
+        val rounded = round(rating * 100) / 100
 
+        return "Ваш рейтинг: $rounded" // TODO translate
     }
 
-    private fun createInitialData(): RatingUiState =
-        RatingUiState( // TODO translate
+    private fun combineErrors(vararg errors: String?): String? {
+        val errorList = errors.filterNotNull().toSet().ifEmpty { null }
+
+        return errorList?.joinToString("\n")
+    }
+
+    private fun createInitialData(): RatingUiState {
+        val subjects = ratingRepository.getRatingSync()?.subjects?.toUi()
+            ?: listOf(Subject(), Subject())
+
+        val result = calculateRating(subjects)
+
+        return RatingUiState( // TODO translate
             nameLabel = "Предмет",
             creditsLabel = "Кредити",
             scoreLabel = "Бал",
             addInputLabel = "+ Add Subject",
-            subjects = emptyList(),
-            result = "Ваш рейтинг: 0.0",
+            subjects = subjects,
+            result = result,
         )
+    }
 }

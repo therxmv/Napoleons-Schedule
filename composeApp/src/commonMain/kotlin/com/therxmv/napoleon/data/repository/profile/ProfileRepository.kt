@@ -1,6 +1,6 @@
 package com.therxmv.napoleon.data.repository.profile
 
-import com.therxmv.napoleon.data.repository.model.ProfileModel
+import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
 
 interface ProfileRepository {
 

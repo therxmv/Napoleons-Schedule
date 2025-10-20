@@ -75,6 +75,14 @@ fun RatingInputs(
                 data = input,
                 onEvent = onEvent,
             )
+
+            if (input.error != null) {
+                Spacer(modifier = Modifier.height(NapoleonTheme.paddings.halfVertical))
+                ErrorText(
+                    modifier = Modifier.animateItem(),
+                    error = input.error,
+                )
+            }
         }
 
         item {
@@ -201,6 +209,19 @@ private fun InputLabel(
         text = label,
         style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.onSurface
+    )
+}
+
+@Composable
+private fun ErrorText(
+    modifier: Modifier = Modifier,
+    error: String,
+) {
+    Text(
+        modifier = modifier,
+        text = error,
+        style = MaterialTheme.typography.titleSmall,
+        color = MaterialTheme.colorScheme.error
     )
 }
 

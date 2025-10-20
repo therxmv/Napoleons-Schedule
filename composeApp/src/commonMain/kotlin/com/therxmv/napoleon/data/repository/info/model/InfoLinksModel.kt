@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.data.repository.model
+package com.therxmv.napoleon.data.repository.info.model
 
 data class InfoLinksModel(
     val excelSchedule: String?,

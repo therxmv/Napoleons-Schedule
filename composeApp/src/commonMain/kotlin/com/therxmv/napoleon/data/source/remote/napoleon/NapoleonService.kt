@@ -3,7 +3,6 @@ package com.therxmv.napoleon.data.source.remote.napoleon
 import com.therxmv.napoleon.data.source.remote.BaseUrlProvider
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ExamsDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.FacultiesDto
-import com.therxmv.napoleon.data.source.remote.napoleon.dto.RatingDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ShiftDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.SpecialtiesDto
@@ -22,7 +21,6 @@ class NapoleonService(
         private const val SCHEDULE = "schedule"
         private const val RES = "recours"
         private const val EXAMS = "exams"
-        private const val RATING = "rating"
 
         private const val FACULTIES_PATH = "/$RES/all_faculties.json"
         private const val SPECIALTIES_PATH = "/$SCHEDULE/all_years.json"
@@ -65,11 +63,6 @@ class NapoleonService(
         httpClient
             .get("$apiUrl/$faculty/$SCHEDULE/$year/$specialty.json")
             .body<ScheduleDto>()
-
-    override suspend fun getRatingBySpecialty(faculty: String, year: String, specialty: String): RatingDto =
-        httpClient
-            .get("$apiUrl/$faculty/$RATING/$year/$specialty.json")
-            .body<RatingDto>()
 
     override suspend fun getExamsBySpecialty(faculty: String, year: String, specialty: String): ExamsDto =
         httpClient

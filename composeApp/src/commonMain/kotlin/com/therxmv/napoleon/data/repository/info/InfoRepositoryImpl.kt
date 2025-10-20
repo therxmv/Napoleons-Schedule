@@ -1,6 +1,6 @@
 package com.therxmv.napoleon.data.repository.info
 
-import com.therxmv.napoleon.data.repository.model.InfoLinksModel
+import com.therxmv.napoleon.data.repository.info.model.InfoLinksModel
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 
 class InfoRepositoryImpl(

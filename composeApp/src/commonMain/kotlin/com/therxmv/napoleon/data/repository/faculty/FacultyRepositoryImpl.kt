@@ -1,9 +1,9 @@
 package com.therxmv.napoleon.data.repository.faculty
 
-import com.therxmv.napoleon.data.repository.model.FacultiesModel
-import com.therxmv.napoleon.data.repository.model.SpecialtiesModel
-import com.therxmv.napoleon.data.repository.model.SpecialtyModel
-import com.therxmv.napoleon.data.repository.model.YearsModel
+import com.therxmv.napoleon.data.repository.faculty.model.FacultiesModel
+import com.therxmv.napoleon.data.repository.faculty.model.SpecialtiesModel
+import com.therxmv.napoleon.data.repository.faculty.model.SpecialtyModel
+import com.therxmv.napoleon.data.repository.faculty.model.YearsModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
 import com.therxmv.napoleon.data.source.remote.napoleon.NapoleonApi
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.SpecialtiesDto

@@ -116,7 +116,12 @@ val navigationModule = module {
                 )
 
                 Rating -> fullEntry(
-                    Full.Rating(RatingComponent(context))
+                    Full.Rating(
+                        RatingComponent(
+                            componentContext = context,
+                            ratingRepository = get(),
+                        )
+                    )
                 )
             }
         }

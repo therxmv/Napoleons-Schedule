@@ -4,10 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,14 +23,12 @@ fun RatingResult(
     data: RatingUiState,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
-    val windowInsets = WindowInsets.navigationBars.union(WindowInsets.ime)
-
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clip(NapoleonTheme.shapes.onlyTopRounded)
             .background(MaterialTheme.colorScheme.tertiary)
-            .windowInsetsPadding(windowInsets)
+            .windowInsetsPadding(WindowInsets.navigationBars)
             .padding(NapoleonTheme.paddings.defaultValues),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

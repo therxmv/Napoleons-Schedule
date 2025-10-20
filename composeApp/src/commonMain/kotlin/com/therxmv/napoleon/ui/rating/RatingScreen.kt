@@ -1,9 +1,12 @@
 package com.therxmv.napoleon.ui.rating
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -11,7 +14,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.therxmv.napoleon.base.state.ClearFocusWhenKeyboardIsHidden
 import com.therxmv.napoleon.ui.rating.component.RatingComponent
-import com.therxmv.napoleon.ui.rating.content.RatingScreenContent
+import com.therxmv.napoleon.ui.rating.content.RatingContent
 
 @Composable
 fun RatingScreen(
@@ -22,8 +25,9 @@ fun RatingScreen(
 
     val uiState by component.uiState.collectAsStateWithLifecycle()
 
-    RatingScreenContent(
+    RatingContent(
         modifier = Modifier
+            .windowInsetsPadding(WindowInsets.ime)
             .padding(
                 top = paddingValues.calculateTopPadding(),
                 start = paddingValues.calculateStartPadding(layoutDirection),

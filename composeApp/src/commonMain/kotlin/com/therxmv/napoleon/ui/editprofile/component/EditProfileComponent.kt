@@ -6,12 +6,12 @@ import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.state.BaseState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.faculty.FacultyRepository
-import com.therxmv.napoleon.data.repository.model.FacultiesModel
-import com.therxmv.napoleon.data.repository.model.FacultyModel
-import com.therxmv.napoleon.data.repository.model.ProfileModel
-import com.therxmv.napoleon.data.repository.model.SpecialtyModel
-import com.therxmv.napoleon.data.repository.model.YearsModel
+import com.therxmv.napoleon.data.repository.faculty.model.FacultiesModel
+import com.therxmv.napoleon.data.repository.faculty.model.FacultyModel
+import com.therxmv.napoleon.data.repository.faculty.model.SpecialtyModel
+import com.therxmv.napoleon.data.repository.faculty.model.YearsModel
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
+import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
 import com.therxmv.napoleon.data.source.remote.result.Result
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination.BottomNav

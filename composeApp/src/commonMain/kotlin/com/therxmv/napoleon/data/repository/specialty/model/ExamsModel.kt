@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.data.repository.model
+package com.therxmv.napoleon.data.repository.specialty.model
 
 data class ExamsModel(
     val exams: List<ExamModel>,

@@ -6,8 +6,8 @@ import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.state.BaseState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
-import com.therxmv.napoleon.data.repository.model.TimetableModel
 import com.therxmv.napoleon.data.repository.timetable.TimetableRepository
+import com.therxmv.napoleon.data.repository.timetable.model.TimetableModel
 import com.therxmv.napoleon.data.source.remote.result.Result
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Clock

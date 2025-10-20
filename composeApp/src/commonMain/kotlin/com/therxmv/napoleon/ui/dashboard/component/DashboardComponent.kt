@@ -7,9 +7,9 @@ import com.therxmv.napoleon.base.date.getTodayDateTime
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.info.InfoRepository
-import com.therxmv.napoleon.data.repository.model.ScheduleModel
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
+import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.remote.result.Result
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination
 import com.therxmv.napoleon.navigation.destination.slot.SlotDestination
