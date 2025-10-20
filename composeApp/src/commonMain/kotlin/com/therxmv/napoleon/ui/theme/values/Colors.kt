@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.ui.theme.values
 
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,8 +56,10 @@ object NapoleonColors {
             focusedContainerColor = MaterialTheme.colorScheme.surface,
             disabledContainerColor = MaterialTheme.colorScheme.surface,
 
-            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.surface,
             focusedBorderColor = MaterialTheme.colorScheme.primary,
+
+            selectionColors = TextSelectionColors(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.tertiary)
         )
 
     val dialogTint: Color

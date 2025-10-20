@@ -1,12 +1,14 @@
-package com.therxmv.napoleon.ui.rating.view
+package com.therxmv.napoleon.ui.rating.content
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
@@ -35,9 +38,34 @@ import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.state.keyboardAsState
 import com.therxmv.napoleon.data.repository.model.RatingItemModel
 import com.therxmv.napoleon.data.repository.model.RatingModel
+import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
+import com.therxmv.napoleon.ui.rating.component.RatingUiState
 import com.therxmv.napoleon.ui.rating.viewmodel.utils.InputState
 import com.therxmv.napoleon.ui.rating.viewmodel.utils.RatingState
 import com.therxmv.napoleon.ui.theme.NapoleonTheme
+
+@Composable
+fun RatingScreenContent(
+    modifier: Modifier = Modifier,
+    data: RatingUiState,
+    onEvent: (RatingUiEvent) -> Unit,
+) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+    ) {
+        RatingInputs(
+            modifier = Modifier.align(Alignment.TopCenter),
+            data = data,
+            onEvent = onEvent,
+        )
+
+        RatingResult(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            data = data,
+            onEvent = onEvent,
+        )
+    }
+}
 
 @Stable
 @Composable
@@ -106,6 +134,7 @@ private fun ResultSection(
                         fontWeight = FontWeight.Bold,
                     )
                 }
+
                 is RatingState.Error -> {
                     Text(
                         text = Res.string.rating_error,
@@ -113,6 +142,7 @@ private fun ResultSection(
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
+
                 is RatingState.Initial -> {}
             }
         }

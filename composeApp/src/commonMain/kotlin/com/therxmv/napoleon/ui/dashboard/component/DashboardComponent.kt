@@ -18,6 +18,7 @@ import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Calendar
 import compose.icons.feathericons.Clock
+import compose.icons.feathericons.DivideCircle
 import compose.icons.feathericons.Folder
 import compose.icons.feathericons.Globe
 import compose.icons.feathericons.Layout
@@ -82,6 +83,7 @@ class DashboardComponent(
                 excelCard(links.excelSchedule).also(::add)
             }
 
+            ratingCard().also(::add)
             examsCard().also(::add)
             timetableCard().also(::add)
 
@@ -110,6 +112,17 @@ class DashboardComponent(
             title = Res.string.dashboard_exams_card,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Exams))
+            },
+            gridSpan = 1,
+            ratio = 1f,
+        )
+
+    private fun ratingCard(): DashboardUiData.Card =
+        DashboardUiData.Card.Default(
+            icon = FeatherIcons.DivideCircle,
+            title = "Rating", // TODO translate
+            onClick = {
+                onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Rating))
             },
             gridSpan = 1,
             ratio = 1f,

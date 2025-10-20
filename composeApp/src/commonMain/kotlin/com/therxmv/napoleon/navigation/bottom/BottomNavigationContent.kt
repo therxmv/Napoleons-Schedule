@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.navigation.bottom
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -52,6 +53,7 @@ fun BottomNavigationContent(
 @Composable
 fun TopLeftAppBar(
     data: BottomNavigationComponent.AppBarData,
+    windowInsets: WindowInsets,
 ) {
     TopAppBar(
         title = {
@@ -65,7 +67,8 @@ fun TopLeftAppBar(
             data.actions.forEach {
                 AppBarAction(it)
             }
-        }
+        },
+        windowInsets = windowInsets,
     )
 }
 

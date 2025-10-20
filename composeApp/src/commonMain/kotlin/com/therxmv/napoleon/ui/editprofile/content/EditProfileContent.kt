@@ -76,7 +76,6 @@ fun EditProfileContent(
         )
         Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical.times(2)))
 
-//        Spacer(modifier = Modifier.weight(1f))
         SaveButton(
             label = data.saveLabel,
             isEnabled = data.isAllSelected,

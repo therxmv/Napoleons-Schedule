@@ -6,13 +6,20 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.union
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -62,7 +69,7 @@ fun RootNavigation(component: RootComponent) {
 
             is Child.FullScreen -> {
                 FullScreenContent(
-                    modifier = Modifier.padding(paddingValues),
+                    paddingValues = paddingValues,
                     child = child.child,
                 )
             }
@@ -82,15 +89,27 @@ private fun ScaffoldChildStack(
     val stack by component.stack.subscribeAsState()
     val activeChild = stack.active.instance
 
+    val safePadding = WindowInsets.safeDrawing
+    val scaffoldInsets by remember(activeChild) {
+        derivedStateOf {
+            when ((activeChild as? Child.FullScreen)?.child) {
+                is Child.Full.Rating -> safePadding.exclude(WindowInsets(bottom = 0))
+
+                else -> safePadding
+            }
+        }
+    }
+    val appBarInsets = WindowInsets.displayCutout.union(WindowInsets.statusBars)
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
-            .safeDrawingPadding(),
+            .background(MaterialTheme.colorScheme.surface),
+        contentWindowInsets = scaffoldInsets,
         topBar = {
             when (activeChild) {
-                is Child.BottomNavigation -> TopLeftAppBar(activeChild.component.data.appBarData)
-                is Child.FullScreen -> TopCenterAppBar(activeChild.component.data)
+                is Child.BottomNavigation -> TopLeftAppBar(activeChild.component.data.appBarData, appBarInsets)
+                is Child.FullScreen -> TopCenterAppBar(activeChild.component.data, appBarInsets)
             }
         },
         bottomBar = {

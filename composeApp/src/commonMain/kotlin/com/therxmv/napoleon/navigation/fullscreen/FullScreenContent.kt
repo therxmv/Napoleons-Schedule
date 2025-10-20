@@ -1,5 +1,8 @@
 package com.therxmv.napoleon.navigation.fullscreen
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -11,31 +14,35 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.therxmv.napoleon.navigation.destination.child.Child
 import com.therxmv.napoleon.ui.editprofile.EditProfileScreen
 import com.therxmv.napoleon.ui.exam.ExamsScreen
+import com.therxmv.napoleon.ui.rating.RatingScreen
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowLeft
 
 @Composable
 fun FullScreenContent(
-    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
     child: Child.Full,
 ) {
     when (child) {
         is Child.Full.EditProfile -> {
             EditProfileScreen(
-                modifier = modifier,
+                modifier = Modifier.padding(paddingValues),
                 component = child.component,
             )
         }
 
         is Child.Full.Exams -> {
             ExamsScreen(
-                modifier = modifier,
+                modifier = Modifier.padding(paddingValues),
                 component = child.component,
             )
         }
 
         is Child.Full.Rating -> {
-
+            RatingScreen(
+                paddingValues = paddingValues,
+                component = child.component,
+            )
         }
     }
 }
@@ -44,6 +51,7 @@ fun FullScreenContent(
 @Composable
 fun TopCenterAppBar(
     data: FullScreenComponent.Data,
+    windowInsets: WindowInsets,
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -65,5 +73,6 @@ fun TopCenterAppBar(
                 }
             }
         },
+        windowInsets = windowInsets,
     )
 }
