@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +40,13 @@ import compose.icons.feathericons.Trash2
 fun RatingInputs(
     modifier: Modifier = Modifier,
     data: RatingUiState,
+    heightFraction: Float,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight(heightFraction),
         contentPadding = NapoleonTheme.paddings.defaultValues,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
@@ -51,11 +55,11 @@ fun RatingInputs(
             AddInputButton(
                 modifier = Modifier.animateItem(),
                 label = data.addInputLabel,
-                onClick = { onEvent(RatingUiEvent.AddInput) },
+                onClick = { onEvent(RatingUiEvent.AddSubjectInput) },
             )
         }
 
-        if (data.subjects.isNotEmpty()) {
+        if (data.subjectInputs.isNotEmpty()) {
             item {
                 InputLabels(
                     modifier = Modifier.animateItem(),
@@ -67,7 +71,7 @@ fun RatingInputs(
         }
 
         items(
-            items = data.subjects,
+            items = data.subjectInputs,
             key = { it.id },
         ) { input ->
             SubjectItem(
@@ -84,17 +88,13 @@ fun RatingInputs(
                 )
             }
         }
-
-        item {
-            Spacer(modifier = Modifier.height(200.dp))
-        }
     }
 }
 
 @Composable
 private fun SubjectItem(
     modifier: Modifier = Modifier,
-    data: RatingUiState.Subject,
+    data: RatingUiState.SubjectInput,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
     Row(
@@ -116,7 +116,7 @@ private fun SubjectItem(
             ),
             onValueChange = {
                 onEvent(
-                    RatingUiEvent.UpdateInput(
+                    RatingUiEvent.UpdateSubjectInput(
                         id = data.id,
                         name = it,
                     )
@@ -134,7 +134,7 @@ private fun SubjectItem(
             ),
             onValueChange = {
                 onEvent(
-                    RatingUiEvent.UpdateInput(
+                    RatingUiEvent.UpdateSubjectInput(
                         id = data.id,
                         credits = it,
                     )
@@ -152,7 +152,7 @@ private fun SubjectItem(
             ),
             onValueChange = {
                 onEvent(
-                    RatingUiEvent.UpdateInput(
+                    RatingUiEvent.UpdateSubjectInput(
                         id = data.id,
                         score = it,
                     )
@@ -163,7 +163,7 @@ private fun SubjectItem(
         DeleteIcon(
             modifier = Modifier.weight(0.5f),
             onClick = {
-                onEvent(RatingUiEvent.DeleteInput(data.id))
+                onEvent(RatingUiEvent.DeleteSubjectInput(data.id))
             },
         )
     }
@@ -264,11 +264,12 @@ private fun AddInputButton(
 }
 
 @Composable
-private fun InputField(
+fun InputField(
     modifier: Modifier = Modifier,
     value: String,
     error: String?,
     keyboardOptions: KeyboardOptions,
+    colors: TextFieldColors = NapoleonTheme.colors.primaryOutlinedTextField,
     onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -280,6 +281,6 @@ private fun InputField(
         textStyle = TextStyle(fontWeight = FontWeight.Bold),
         keyboardOptions = keyboardOptions,
         maxLines = 1,
-        colors = NapoleonTheme.colors.outlinedTextField
+        colors = colors,
     )
 }

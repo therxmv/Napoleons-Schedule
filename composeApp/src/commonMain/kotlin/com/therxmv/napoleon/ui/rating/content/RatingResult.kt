@@ -1,18 +1,47 @@
 package com.therxmv.napoleon.ui.rating.content
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 import com.therxmv.napoleon.ui.rating.component.RatingUiState
 import com.therxmv.napoleon.ui.theme.NapoleonTheme
@@ -21,18 +50,99 @@ import com.therxmv.napoleon.ui.theme.NapoleonTheme
 fun RatingResult(
     modifier: Modifier = Modifier,
     data: RatingUiState,
+    heightFraction: Float,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
-    Column(
+    val focusManager = LocalFocusManager.current
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
+    val transition = updateTransition(isExpanded)
+    val heightFraction by transition.animateFloat { target ->
+        1f.takeIf { target } ?: heightFraction
+    }
+
+    Surface( // to consume touch events and don't click on the button behind
         modifier = modifier
             .fillMaxWidth()
-            .clip(NapoleonTheme.shapes.onlyTopRounded)
-            .background(MaterialTheme.colorScheme.tertiary)
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .padding(NapoleonTheme.paddings.defaultValues),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .fillMaxHeight(heightFraction),
     ) {
-        ResultText(data.result)
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .clip(NapoleonTheme.shapes.onlyTopRounded)
+                .background(MaterialTheme.colorScheme.tertiary)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(NapoleonTheme.paddings.defaultValues),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+        ) {
+            HorizontalDivider(
+                modifier = Modifier
+                    .width(50.dp)
+                    .clip(CircleShape)
+                    .clickable(onClick = {
+                        focusManager.clearFocus()
+                        isExpanded = isExpanded.not()
+                    }),
+                thickness = 6.dp,
+                color = MaterialTheme.colorScheme.onTertiary.copy(0.5f),
+            )
+
+            ResultText(data.ratingResult)
+
+            ProbabilityText(data.probabilityResult)
+
+            AnimatedVisibility(
+                visible = isExpanded,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.horizontal),
+                    verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+                ) {
+                    itemsIndexed(
+                        items = data.probabilityInputs,
+                        span = { _, _ -> GridItemSpan(1) },
+                        key = { index, item -> "$index-${item.title}" },
+                    ) { index, input ->
+                        InputItem(
+                            data = input,
+                            onValueChange = {
+                                onEvent(RatingUiEvent.UpdateProbabilityInput(input.title, it))
+                            },
+                            isLast = index == data.probabilityInputs.lastIndex,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun InputItem(
+    data: RatingUiState.ProbabilityInput,
+    onValueChange: (String) -> Unit,
+    isLast: Boolean,
+) {
+    Column {
+        InputTitle(
+            modifier = Modifier.fillMaxWidth(),
+            title = data.title,
+        )
+
+        InputField(
+            modifier = Modifier.fillMaxWidth(),
+            value = data.value,
+            error = data.error,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done.takeIf { isLast } ?: ImeAction.Next,
+            ),
+            colors = NapoleonTheme.colors.tertiaryOutlinedTextField,
+            onValueChange = onValueChange,
+        )
     }
 }
 
@@ -44,5 +154,34 @@ private fun ResultText(
         text = result,
         style = MaterialTheme.typography.headlineMedium,
         color = MaterialTheme.colorScheme.onTertiary,
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold,
+    )
+}
+
+@Composable
+private fun ProbabilityText(
+    result: String,
+) {
+    Text(
+        text = result,
+        style = MaterialTheme.typography.headlineSmall,
+        color = MaterialTheme.colorScheme.onTertiary,
+        textAlign = TextAlign.Center,
+    )
+}
+
+@Composable
+private fun InputTitle(
+    modifier: Modifier = Modifier,
+    title: String,
+) {
+    Text(
+        modifier = modifier,
+        text = title,
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.onTertiary,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
     )
 }

@@ -15,4 +15,8 @@ interface RatingRepository {
     fun validateScore(value: String): ValidValueModel
 
     fun calculateRating(list: List<SubjectModel>): Double
+
+    fun calculateProbability(rating: Double, capacity: String, quota: String, average: String, deviation: String): Double
+
+    fun validateProbabilityInput(value: String): ValidValueModel
 }

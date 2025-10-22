@@ -3,7 +3,8 @@ package com.therxmv.napoleon.ui.rating.component
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.data.repository.rating.RatingRepository
-import com.therxmv.napoleon.ui.rating.component.RatingUiState.Subject
+import com.therxmv.napoleon.ui.rating.component.RatingUiState.ProbabilityInput
+import com.therxmv.napoleon.ui.rating.component.RatingUiState.SubjectInput
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,11 +27,13 @@ class RatingComponent(
 
     fun onEvent(event: RatingUiEvent) {
         when (event) {
-            RatingUiEvent.AddInput -> addNewInput()
+            RatingUiEvent.AddSubjectInput -> addNewSubject()
 
-            is RatingUiEvent.DeleteInput -> filterOutInput(event.id)
+            is RatingUiEvent.DeleteSubjectInput -> filterOutSubject(event.id)
 
-            is RatingUiEvent.UpdateInput -> updateInputState(event)
+            is RatingUiEvent.UpdateSubjectInput -> updateSubjectState(event)
+
+            is RatingUiEvent.UpdateProbabilityInput -> updateProbabilityState(event)
         }
     }
 
@@ -42,33 +45,39 @@ class RatingComponent(
         }
     }
 
-    private fun addNewInput() {
+    private fun addNewSubject() {
         _uiState.update { data ->
-            val newSubjects = listOf(Subject()) + data.subjects
-            val result = calculateRating(newSubjects)
+            val newSubjects = listOf(SubjectInput()) + data.subjectInputs
+
+            val (number, rating) = calculateRating(newSubjects)
+            val probability = calculateProbability(number, data.probabilityInputs)
 
             data.copy(
-                subjects = newSubjects,
-                result = result
+                subjectInputs = newSubjects,
+                ratingResult = rating,
+                probabilityResult = probability,
             )
         }
     }
 
-    private fun filterOutInput(id: String) {
+    private fun filterOutSubject(id: String) {
         _uiState.update { data ->
-            val newSubjects = data.subjects.filter { it.id != id }
-            val result = calculateRating(newSubjects)
+            val newSubjects = data.subjectInputs.filter { it.id != id }
+
+            val (number, rating) = calculateRating(newSubjects)
+            val probability = calculateProbability(number, data.probabilityInputs)
 
             data.copy(
-                subjects = newSubjects,
-                result = result,
+                subjectInputs = newSubjects,
+                ratingResult = rating,
+                probabilityResult = probability,
             )
         }
     }
 
-    private fun updateInputState(event: RatingUiEvent.UpdateInput) {
+    private fun updateSubjectState(event: RatingUiEvent.UpdateSubjectInput) {
         _uiState.update { data ->
-            val newSubjects = data.subjects.map { subject ->
+            val newSubjects = data.subjectInputs.map { subject ->
                 if (subject.id == event.id) {
                     val (credits, creditsError) = ratingRepository.validateCredits(event.credits ?: subject.credits)
                     val (score, scoreError) = ratingRepository.validateScore(event.score ?: subject.score)
@@ -82,20 +91,59 @@ class RatingComponent(
                 } else subject
             }
 
-            val result = calculateRating(newSubjects)
+            val (number, rating) = calculateRating(newSubjects)
+            val probability = calculateProbability(number, data.probabilityInputs)
 
             data.copy(
-                subjects = newSubjects,
-                result = result,
+                subjectInputs = newSubjects,
+                ratingResult = rating,
+                probabilityResult = probability,
             )
         }
     }
 
-    private fun calculateRating(list: List<Subject>): String {
+    private fun updateProbabilityState(event: RatingUiEvent.UpdateProbabilityInput) {
+        _uiState.update { data ->
+            val newInputs = data.probabilityInputs.map { input ->
+                if (input.title == event.id) {
+                    val (value, error) = ratingRepository.validateProbabilityInput(event.value)
+
+                    input.copy(
+                        value = value,
+                        error = error,
+                    )
+                } else input
+            }
+
+            val (number, rating) = calculateRating(data.subjectInputs)
+            val probability = calculateProbability(number, newInputs)
+
+            data.copy(
+                ratingResult = rating,
+                probabilityInputs = newInputs,
+                probabilityResult = probability,
+            )
+        }
+    }
+
+    private fun calculateRating(list: List<SubjectInput>): Pair<Double, String> {
         val rating = ratingRepository.calculateRating(list.toModel())
         val rounded = round(rating * 100) / 100
 
-        return "Ваш рейтинг: $rounded" // TODO translate
+        return rounded to "Ваш рейтинг $rounded" // TODO translate
+    }
+
+    private fun calculateProbability(rating: Double, list: List<ProbabilityInput>): String {
+        val capacity = list.first { it.title == ProbabilityInput.Id.Capacity.title }.value
+        val quota = list.first { it.title == ProbabilityInput.Id.Quota.title }.value
+        val average = list.first { it.title == ProbabilityInput.Id.Average.title }.value
+        val deviation = list.first { it.title == ProbabilityInput.Id.Deviation.title }.value
+
+        val rating = ratingRepository.calculateProbability(rating, capacity, quota, average, deviation)
+        val rounded = round(rating * 100).toString()
+        val percentages = if (rounded.endsWith(".0")) "${rounded.dropLast(2)}%" else "$rounded%"
+
+        return "Ймовірність стипендії $percentages" // TODO translate
     }
 
     private fun combineErrors(vararg errors: String?): String? {
@@ -105,18 +153,42 @@ class RatingComponent(
     }
 
     private fun createInitialData(): RatingUiState {
-        val subjects = ratingRepository.getRatingSync()?.subjects?.toUi()
-            ?: listOf(Subject(), Subject())
+        val subjectInputs = ratingRepository.getRatingSync()?.subjects?.toUi()
+            ?: listOf(SubjectInput(), SubjectInput())
+        val probabilityInputs = createProbabilityInputs()
 
-        val result = calculateRating(subjects)
+        val (number, rating) = calculateRating(subjectInputs)
+        val probability = calculateProbability(number, probabilityInputs)
 
         return RatingUiState( // TODO translate
             nameLabel = "Предмет",
             creditsLabel = "Кредити",
             scoreLabel = "Бал",
             addInputLabel = "+ Add Subject",
-            subjects = subjects,
-            result = result,
+            subjectInputs = subjectInputs,
+            ratingResult = rating,
+            probabilityInputs = probabilityInputs,
+            probabilityResult = probability,
         )
     }
+
+    private fun createProbabilityInputs(): List<ProbabilityInput> =
+        listOf(
+            ProbabilityInput(
+                title = ProbabilityInput.Id.Capacity.title,
+                value = "20",
+            ),
+            ProbabilityInput(
+                title = ProbabilityInput.Id.Quota.title,
+                value = "8",
+            ),
+            ProbabilityInput(
+                title = ProbabilityInput.Id.Average.title,
+                value = "75",
+            ),
+            ProbabilityInput(
+                title = ProbabilityInput.Id.Deviation.title,
+                value = "5",
+            ),
+        )
 }
