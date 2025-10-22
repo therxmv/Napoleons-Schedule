@@ -1,12 +1,10 @@
 package com.therxmv.napoleon.ui.rating.content
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.updateTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -29,12 +27,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -50,20 +50,51 @@ import com.therxmv.napoleon.ui.theme.NapoleonTheme
 fun RatingResult(
     modifier: Modifier = Modifier,
     data: RatingUiState,
-    heightFraction: Float,
+    minFraction: Float,
+    maxFraction: Float = 1f,
+    threshold: Float = 0.2f,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
-    var isExpanded by rememberSaveable { mutableStateOf(false) }
-    val transition = updateTransition(isExpanded)
-    val heightFraction by transition.animateFloat { target ->
-        1f.takeIf { target } ?: heightFraction
-    }
 
-    Surface( // to consume touch events and don't click on the button behind
+    var targetFraction by rememberSaveable { mutableFloatStateOf(minFraction) }
+    var dragFraction by rememberSaveable { mutableFloatStateOf(minFraction) }
+    val animatedFraction by animateFloatAsState(
+        targetValue = dragFraction,
+        animationSpec = spring(stiffness = Spring.StiffnessMedium),
+    )
+
+    // Surface consumes touch events and don't click on the button behind
+    Surface(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(heightFraction),
+            .fillMaxHeight(animatedFraction)
+            .pointerInput(Unit) {
+                detectVerticalDragGestures(
+                    onDragStart = {
+                        focusManager.clearFocus()
+                        targetFraction = dragFraction
+                    },
+                    onDragEnd = {
+                        dragFraction = when {
+                            // When collapsed
+                            targetFraction == minFraction && dragFraction > minFraction + threshold -> maxFraction
+                            targetFraction == minFraction -> minFraction
+
+                            // When expanded
+                            targetFraction == maxFraction && dragFraction < maxFraction - threshold -> minFraction
+                            else -> maxFraction
+                        }
+                    },
+                    onVerticalDrag = { pointer, y ->
+                        val maxHeight = size.height / dragFraction
+                        val fractionDelta = -y / maxHeight
+                        dragFraction = (dragFraction + fractionDelta).coerceIn(minFraction, maxFraction)
+
+                        pointer.consume()
+                    },
+                )
+            },
     ) {
         Column(
             modifier = modifier
@@ -78,11 +109,7 @@ fun RatingResult(
             HorizontalDivider(
                 modifier = Modifier
                     .width(50.dp)
-                    .clip(CircleShape)
-                    .clickable(onClick = {
-                        focusManager.clearFocus()
-                        isExpanded = isExpanded.not()
-                    }),
+                    .clip(CircleShape),
                 thickness = 6.dp,
                 color = MaterialTheme.colorScheme.onTertiary.copy(0.5f),
             )
@@ -91,29 +118,27 @@ fun RatingResult(
 
             ProbabilityText(data.probabilityResult)
 
-            AnimatedVisibility(
-                visible = isExpanded,
-                enter = fadeIn(),
-                exit = fadeOut(),
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .graphicsLayer {
+                        alpha = dragFraction
+                    },
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.horizontal),
+                verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
             ) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.horizontal),
-                    verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
-                ) {
-                    itemsIndexed(
-                        items = data.probabilityInputs,
-                        span = { _, _ -> GridItemSpan(1) },
-                        key = { index, item -> "$index-${item.title}" },
-                    ) { index, input ->
-                        InputItem(
-                            data = input,
-                            onValueChange = {
-                                onEvent(RatingUiEvent.UpdateProbabilityInput(input.title, it))
-                            },
-                            isLast = index == data.probabilityInputs.lastIndex,
-                        )
-                    }
+                itemsIndexed(
+                    items = data.probabilityInputs,
+                    span = { _, _ -> GridItemSpan(1) },
+                    key = { index, item -> "$index-${item.title}" },
+                ) { index, input ->
+                    InputItem(
+                        data = input,
+                        onValueChange = {
+                            onEvent(RatingUiEvent.UpdateProbabilityInput(input.title, it))
+                        },
+                        isLast = index == data.probabilityInputs.lastIndex,
+                    )
                 }
             }
         }

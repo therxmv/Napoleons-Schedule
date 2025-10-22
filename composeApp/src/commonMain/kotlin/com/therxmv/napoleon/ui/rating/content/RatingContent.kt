@@ -31,7 +31,7 @@ fun RatingContent(
         RatingResult(
             modifier = Modifier.align(Alignment.BottomCenter),
             data = data,
-            heightFraction = resultsSheetHeight,
+            minFraction = resultsSheetHeight,
             onEvent = onEvent,
         )
     }
