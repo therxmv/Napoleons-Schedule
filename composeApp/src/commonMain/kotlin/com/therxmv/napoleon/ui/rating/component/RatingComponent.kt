@@ -3,6 +3,7 @@ package com.therxmv.napoleon.ui.rating.component
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.Res
+import com.therxmv.napoleon.data.repository.info.InfoRepository
 import com.therxmv.napoleon.data.repository.rating.RatingRepository
 import com.therxmv.napoleon.ui.rating.component.RatingUiState.ProbabilityInput
 import com.therxmv.napoleon.ui.rating.component.RatingUiState.SubjectInput
@@ -17,6 +18,7 @@ import kotlin.math.round
 class RatingComponent(
     componentContext: ComponentContext,
     private val ratingRepository: RatingRepository,
+    private val infoRepository: InfoRepository,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ComponentContext by componentContext {
     val scope = coroutineScope(SupervisorJob())
@@ -133,7 +135,7 @@ class RatingComponent(
         val rating = ratingRepository.calculateRating(list.toModel())
         val rounded = round(rating * 100) / 100
 
-        return rounded to "${Res.string.rating_probability} $rounded"
+        return rounded to "${Res.string.rating_label} $rounded"
     }
 
     private fun calculateProbability(rating: Double, list: List<ProbabilityInput>): String {
@@ -172,6 +174,7 @@ class RatingComponent(
             ratingResult = rating,
             probabilityInputs = probabilityInputs,
             probabilityResult = probability,
+            infoData = createInfoData(),
         )
     }
 
@@ -194,4 +197,14 @@ class RatingComponent(
                 value = "5",
             ),
         )
+
+    private fun createInfoData(): RatingUiState.Info {
+        val link = infoRepository.getLinks().educationalPrograms
+
+        return RatingUiState.Info(
+            text = Res.string.rating_info_text,
+            link = link,
+            linkText = Res.string.rating_info_link_text,
+        )
+    }
 }

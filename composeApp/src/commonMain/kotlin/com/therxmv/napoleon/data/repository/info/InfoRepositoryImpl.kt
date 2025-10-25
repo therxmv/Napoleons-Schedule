@@ -17,6 +17,7 @@ class InfoRepositoryImpl(
 
         private const val MAIN_SITE_URL = "https://www.rshu.edu.ua/"
         private const val MAIN_STUDY_PROCESS_URL = "https://www.rshu.edu.ua/navchannia/orhanizatsiia-osvitnoho-protsesu"
+        private const val MAIN_EDUCATIONAL_PROGRAMS_URL = "https://www.rshu.edu.ua/navchannia/osvitni-prohramy"
     }
 
     override fun getLinks(): InfoLinksModel {
@@ -35,6 +36,7 @@ class InfoRepositoryImpl(
             telegramBot = TG_BOT_URL,
             mainSite = MAIN_SITE_URL,
             studyProcess = MAIN_STUDY_PROCESS_URL,
+            educationalPrograms = MAIN_EDUCATIONAL_PROGRAMS_URL,
         )
     }
 }

@@ -120,6 +120,7 @@ val navigationModule = module {
                         RatingComponent(
                             componentContext = context,
                             ratingRepository = get(),
+                            infoRepository = get(),
                             ioDispatcher = get(named(KoinDispatchers.IO)),
                         )
                     )

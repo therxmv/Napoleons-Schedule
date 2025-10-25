@@ -6,4 +6,5 @@ data class InfoLinksModel(
     val telegramBot: String,
     val mainSite: String,
     val studyProcess: String,
+    val educationalPrograms: String,
 )

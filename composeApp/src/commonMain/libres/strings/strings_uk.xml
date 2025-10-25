@@ -80,6 +80,9 @@
     <string name="rating_label">Ваш Рейтинг</string>
     <string name="rating_probability">Ймовірність стипендії</string>
 
+    <string name="rating_info_text">Інформацію про екзамени та кредити можна знайти </string>
+    <string name="rating_info_link_text">тут</string>
+
     <string name="rating_error_score_number">Бал має бути числом</string>
     <string name="rating_error_score_range">Бал має бути у межах</string>
     <string name="rating_error_credits_number">Кредити мають бути числом</string>

@@ -82,11 +82,8 @@
     <string name="rating_label">Your Rating</string>
     <string name="rating_probability">Probability of Grant</string>
 
-    <!-- Exams -->
-    <string name="exams_title">Exams Schedule for</string>
-    <string name="exams_list_title">Exams</string>
-    <string name="zalik_list_title">Zaliks</string>
-    <string name="exams_no_data">Exams are not yet available</string>
+    <string name="rating_info_text">Information about exams and credits you can find </string>
+    <string name="rating_info_link_text">here</string>
 
     <string name="rating_error_score_number">Score must be a number</string>
     <string name="rating_error_score_range">Score must be in range</string>
@@ -94,6 +91,12 @@
     <string name="rating_error_credits_range">Credits must be at least</string>
     <string name="rating_error_it_number">It must be a number</string>
     <string name="rating_error_it_range">It must be at least</string>
+
+    <!-- Exams -->
+    <string name="exams_title">Exams Schedule for</string>
+    <string name="exams_list_title">Exams</string>
+    <string name="zalik_list_title">Zaliks</string>
+    <string name="exams_no_data">Exams are not yet available</string>
 
     <!-- Error -->
     <string name="error_generic">Oops... Something went wrong :(</string>

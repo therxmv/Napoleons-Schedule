@@ -1,6 +1,7 @@
 package com.therxmv.napoleon.ui.rating.content
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,16 +26,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 import com.therxmv.napoleon.ui.rating.component.RatingUiState
 import com.therxmv.napoleon.ui.theme.NapoleonTheme
 import compose.icons.FeatherIcons
+import compose.icons.feathericons.Info
 import compose.icons.feathericons.Trash2
 
 @Composable
@@ -51,6 +59,10 @@ fun RatingInputs(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
     ) {
+        item {
+            InfoCard(data.infoData)
+        }
+
         item {
             AddInputButton(
                 modifier = Modifier.animateItem(),
@@ -283,4 +295,53 @@ fun InputField(
         maxLines = 1,
         colors = colors,
     )
+}
+
+@Composable
+private fun InfoCard(
+    data: RatingUiState.Info,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(NapoleonTheme.paddings.divider, MaterialTheme.colorScheme.surfaceTint, NapoleonTheme.shapes.allRounded)
+            .padding(NapoleonTheme.paddings.defaultValues),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = FeatherIcons.Info,
+            tint = MaterialTheme.colorScheme.surfaceTint,
+            contentDescription = null,
+        )
+        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+
+        Text(
+            text = buildAnnotatedString {
+                withStyle(
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.Normal,
+                    ).toSpanStyle(),
+                ) {
+                    append(data.text)
+                }
+
+                withLink(
+                    LinkAnnotation.Url(
+                        url = data.link,
+                        styles = TextLinkStyles(
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                color = MaterialTheme.colorScheme.surfaceTint,
+                            ).toSpanStyle()
+                        ),
+                    )
+                ) {
+                    append(data.linkText)
+                }
+            },
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimary,
+            ),
+        )
+    }
 }

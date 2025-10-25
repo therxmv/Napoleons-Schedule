@@ -18,6 +18,7 @@ data class RatingUiState(
     val ratingResult: String,
     val probabilityInputs: List<ProbabilityInput>,
     val probabilityResult: String,
+    val infoData: Info,
 ) {
     @OptIn(ExperimentalUuidApi::class)
     data class SubjectInput(
@@ -41,6 +42,12 @@ data class RatingUiState(
             Deviation(Res.string.rating_deviation),
         }
     }
+
+    data class Info(
+        val text: String,
+        val link: String,
+        val linkText: String,
+    )
 }
 
 fun RatingUiState.toModel(): RatingModel =
