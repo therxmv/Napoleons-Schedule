@@ -4,8 +4,8 @@ project-applicationId = "com.therxmv.napoleon"
 project-minSdk = "24"
 project-compileSdk = "36"
 project-targetSdk = "36"
-project-versionCode = "100"
-project-versionName = "1.0.0"
+project-versionCode = "110"
+project-versionName = "1.1.0"
 
 # Plugins
 agp = "8.11.1"
