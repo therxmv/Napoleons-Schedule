@@ -7,6 +7,7 @@
     <string name="bottom_profile_label">Profile</string>
 
     <!--Dashboard-->
+    <string name="dashboard_rating_card">Rating Calculator</string>
     <string name="dashboard_exams_card">Exams</string>
     <string name="dashboard_excel_card">Schedule in Excel</string>
     <string name="dashboard_timetable_card">Breaks Timetable</string>
@@ -67,12 +68,29 @@
 
     <!-- Rating -->
     <string name="rating_title">Rating calculator</string>
-    <string name="rating_input_credits">Credits:</string>
-    <string name="rating_input_placeholder">Enter your score</string>
-    <string name="rating_button_label">Calculate</string>
-    <string name="rating_result">Your rating score:\n</string>
-    <string name="rating_error">You entered invalid data</string>
-    <string name="rating_not_available">This feature is not yet available for your specialty</string>
+
+    <string name="rating_capacity">Number of Students</string>
+    <string name="rating_quota">Grant Quota</string>
+    <string name="rating_average">Average Group Rating</string>
+    <string name="rating_deviation">Rating Deviation</string>
+
+    <string name="rating_name_label">Subject</string>
+    <string name="rating_credits_label">Credits</string>
+    <string name="rating_score_label">Score</string>
+    <string name="rating_add_label">+ Add Subject</string>
+
+    <string name="rating_label">Your Rating</string>
+    <string name="rating_probability">Probability of Grant</string>
+
+    <string name="rating_info_text">Information about exams and credits you can find </string>
+    <string name="rating_info_link_text">here</string>
+
+    <string name="rating_error_score_number">Score must be a number</string>
+    <string name="rating_error_score_range">Score must be in range</string>
+    <string name="rating_error_credits_number">Credits must be a number</string>
+    <string name="rating_error_credits_range">Credits must be at least</string>
+    <string name="rating_error_it_number">It must be a number</string>
+    <string name="rating_error_it_range">It must be at least</string>
 
     <!-- Exams -->
     <string name="exams_title">Exams Schedule for</string>

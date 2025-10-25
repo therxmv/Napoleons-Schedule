@@ -7,6 +7,8 @@ import com.therxmv.napoleon.data.repository.info.InfoRepository
 import com.therxmv.napoleon.data.repository.info.InfoRepositoryImpl
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.data.repository.profile.ProfileRepositoryImpl
+import com.therxmv.napoleon.data.repository.rating.RatingRepository
+import com.therxmv.napoleon.data.repository.rating.RatingRepositoryImpl
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepositoryImpl
 import com.therxmv.napoleon.data.repository.timetable.TimetableRepository
@@ -44,6 +46,8 @@ val dataModule = module {
     singleOf(::TimetableRepositoryImpl) bind TimetableRepository::class
 
     singleOf(::InfoRepositoryImpl) bind InfoRepository::class
+
+    singleOf(::RatingRepositoryImpl) bind RatingRepository::class
 
     // Remote source
      singleOf(::NapoleonService) bind NapoleonApi::class

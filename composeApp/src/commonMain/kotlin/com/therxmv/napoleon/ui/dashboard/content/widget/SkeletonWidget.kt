@@ -18,7 +18,7 @@ fun SkeletonWidget(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(2f)
+            .aspectRatio(3f)
             .clip(NapoleonTheme.shapes.allRounded)
             .shimmerLoading(color),
     )

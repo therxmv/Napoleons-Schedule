@@ -5,8 +5,6 @@ import com.therxmv.napoleon.data.source.remote.napoleon.dto.ExamsDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.FacultiesDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.FacultyDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.LessonDto
-import com.therxmv.napoleon.data.source.remote.napoleon.dto.RatingDto
-import com.therxmv.napoleon.data.source.remote.napoleon.dto.RatingItemDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ShiftDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.SpecialtiesDto
@@ -68,27 +66,6 @@ object MockData {
                 LessonDto(lessonName = "Адміністрування баз даних проф. Викладач Ю.В.", lessonNumber = "1", link = "https://meet.google.com/xyc-chmy-yhh"),
                 LessonDto(lessonName = "Адміністрування баз даних проф. Викладач Ю.В.", lessonNumber = "2", link = "https://meet.google.com/xyc-chmy-yhh"),
                 LessonDto(lessonName = "Системне програмування ст.в. Викладач Т.Г.", lessonNumber = "2", link = null),
-            ),
-        )
-    )
-
-    val ratingDto = RatingDto(
-        list = listOf(
-            RatingItemDto(
-                name = "Філософія",
-                credits = 3,
-            ),
-            RatingItemDto(
-                name = "Аналіз даних",
-                credits = 4,
-            ),
-            RatingItemDto(
-                name = "Моделювання та проєктування програмного забезпечення",
-                credits = 5,
-            ),
-            RatingItemDto(
-                name = "Інтерфейси користувача та системні інтерфейси",
-                credits = 4,
             ),
         )
     )

@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.data.repository.model
+package com.therxmv.napoleon.data.repository.timetable.model
 
 data class TimetableModel(
     val firstShift: ShiftModel,

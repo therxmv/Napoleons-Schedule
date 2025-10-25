@@ -1,8 +1,8 @@
 package com.therxmv.napoleon.data.repository.converter
 
 import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.data.repository.model.LessonModel
-import com.therxmv.napoleon.data.repository.model.ScheduleModel
+import com.therxmv.napoleon.data.repository.specialty.model.LessonModel
+import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.LessonDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
 import kotlinx.coroutines.CoroutineDispatcher

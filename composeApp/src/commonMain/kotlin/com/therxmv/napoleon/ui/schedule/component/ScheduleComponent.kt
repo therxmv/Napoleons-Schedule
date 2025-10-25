@@ -5,9 +5,9 @@ import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.base.state.BaseState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
-import com.therxmv.napoleon.data.repository.model.ScheduleModel
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
+import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.remote.result.Result
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
@@ -56,6 +56,8 @@ class ScheduleComponent(
                     is Result.Failure -> BaseState.Error(result.reason.message, ::loadData)
                 }
             }
+
+            analyticsRepository.reportScheduleOpened(profile.facultyName, profile.specialtyName)
         }
     }
 

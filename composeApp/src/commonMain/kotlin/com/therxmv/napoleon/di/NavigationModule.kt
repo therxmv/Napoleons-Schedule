@@ -116,7 +116,14 @@ val navigationModule = module {
                 )
 
                 Rating -> fullEntry(
-                    Full.Rating(RatingComponent(context))
+                    Full.Rating(
+                        RatingComponent(
+                            componentContext = context,
+                            ratingRepository = get(),
+                            infoRepository = get(),
+                            ioDispatcher = get(named(KoinDispatchers.IO)),
+                        )
+                    )
                 )
             }
         }
@@ -137,5 +144,5 @@ val navigationModule = module {
         }
     }
 
-    singleOf(::ScheduleUiConverter)
+    single { ScheduleUiConverter(defaultDispatcher = get(named(KoinDispatchers.Default))) }
 }

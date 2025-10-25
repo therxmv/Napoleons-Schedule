@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.data.repository.model
+package com.therxmv.napoleon.data.repository.profile.model
 
 import kotlinx.serialization.Serializable
 

@@ -1,8 +1,8 @@
 package com.therxmv.napoleon.data.source.remote.napoleon.dto
 
-import com.therxmv.napoleon.data.repository.model.ExamModel
-import com.therxmv.napoleon.data.repository.model.ExamsModel
-import com.therxmv.napoleon.data.repository.model.ZalikModel
+import com.therxmv.napoleon.data.repository.specialty.model.ExamModel
+import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
+import com.therxmv.napoleon.data.repository.specialty.model.ZalikModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

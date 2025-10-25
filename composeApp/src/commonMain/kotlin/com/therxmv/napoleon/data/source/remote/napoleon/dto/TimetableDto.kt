@@ -1,7 +1,7 @@
 package com.therxmv.napoleon.data.source.remote.napoleon.dto
 
-import com.therxmv.napoleon.data.repository.model.ShiftModel
-import com.therxmv.napoleon.data.repository.model.TimetableModel
+import com.therxmv.napoleon.data.repository.timetable.model.ShiftModel
+import com.therxmv.napoleon.data.repository.timetable.model.TimetableModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

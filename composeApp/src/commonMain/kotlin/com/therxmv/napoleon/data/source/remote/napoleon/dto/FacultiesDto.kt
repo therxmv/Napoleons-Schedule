@@ -1,7 +1,7 @@
 package com.therxmv.napoleon.data.source.remote.napoleon.dto
 
-import com.therxmv.napoleon.data.repository.model.FacultiesModel
-import com.therxmv.napoleon.data.repository.model.FacultyModel
+import com.therxmv.napoleon.data.repository.faculty.model.FacultiesModel
+import com.therxmv.napoleon.data.repository.faculty.model.FacultyModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -7,9 +7,9 @@ import com.therxmv.napoleon.base.date.getTodayDateTime
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.info.InfoRepository
-import com.therxmv.napoleon.data.repository.model.ScheduleModel
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
+import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.remote.result.Result
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination
 import com.therxmv.napoleon.navigation.destination.slot.SlotDestination
@@ -18,6 +18,7 @@ import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Calendar
 import compose.icons.feathericons.Clock
+import compose.icons.feathericons.DivideCircle
 import compose.icons.feathericons.Folder
 import compose.icons.feathericons.Globe
 import compose.icons.feathericons.Layout
@@ -82,7 +83,8 @@ class DashboardComponent(
                 excelCard(links.excelSchedule).also(::add)
             }
 
-            examsCard().also(::add)
+            ratingCard().also(::add)
+            // TODO implement manual input & save examsCard().also(::add)
             timetableCard().also(::add)
 
             add(DashboardUiData.Card.EmptyDivider)
@@ -110,6 +112,17 @@ class DashboardComponent(
             title = Res.string.dashboard_exams_card,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Exams))
+            },
+            gridSpan = 1,
+            ratio = 1f,
+        )
+
+    private fun ratingCard(): DashboardUiData.Card =
+        DashboardUiData.Card.Default(
+            icon = FeatherIcons.DivideCircle,
+            title = Res.string.dashboard_rating_card,
+            onClick = {
+                onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Rating))
             },
             gridSpan = 1,
             ratio = 1f,
@@ -184,10 +197,8 @@ class DashboardComponent(
                         val scheduleWidget = DashboardUiData.Widget.TodaySchedule(expandToday)
                         _uiState.update { data ->
                             data.copy(
-                                widgets = data.widgets.map {
-                                    if (it is DashboardUiData.Widget.SkeletonTodaySchedule) {
-                                        scheduleWidget
-                                    } else it
+                                widgets = data.widgets.map { widget ->
+                                    scheduleWidget.takeIf { widget.isSchedule } ?: widget
                                 },
                                 cacheReason = result.reason?.message,
                             )
@@ -198,9 +209,7 @@ class DashboardComponent(
                 is Result.Failure -> {
                     _uiState.update { data ->
                         data.copy(
-                            widgets = data.widgets.filter {
-                                it !is DashboardUiData.Widget.TodaySchedule && it !is DashboardUiData.Widget.SkeletonTodaySchedule
-                            },
+                            widgets = data.widgets.filter { it.isSchedule.not() },
                         )
                     }
                 }

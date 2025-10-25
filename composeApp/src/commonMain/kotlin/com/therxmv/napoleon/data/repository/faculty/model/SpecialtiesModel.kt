@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.data.repository.model
+package com.therxmv.napoleon.data.repository.faculty.model
 
 data class YearsModel(
     val years: List<String>,

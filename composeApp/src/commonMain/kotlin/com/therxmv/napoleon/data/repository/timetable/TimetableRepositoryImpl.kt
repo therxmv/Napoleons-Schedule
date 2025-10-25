@@ -1,6 +1,6 @@
 package com.therxmv.napoleon.data.repository.timetable
 
-import com.therxmv.napoleon.data.repository.model.TimetableModel
+import com.therxmv.napoleon.data.repository.timetable.model.TimetableModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
 import com.therxmv.napoleon.data.source.remote.napoleon.NapoleonApi
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.toModel

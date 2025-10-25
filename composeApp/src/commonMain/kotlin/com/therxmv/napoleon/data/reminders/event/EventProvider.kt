@@ -4,7 +4,7 @@ import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.reminders.Faculty.PPF
 import com.therxmv.napoleon.data.reminders.event.model.EventModel
 import com.therxmv.napoleon.data.reminders.event.model.ReminderModel
-import com.therxmv.napoleon.data.repository.model.LessonModel
+import com.therxmv.napoleon.data.repository.specialty.model.LessonModel
 import io.ktor.util.date.GMTDate
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DayOfWeek

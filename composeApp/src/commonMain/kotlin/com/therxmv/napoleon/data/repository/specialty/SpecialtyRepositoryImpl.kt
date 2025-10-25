@@ -2,10 +2,9 @@ package com.therxmv.napoleon.data.repository.specialty
 
 import com.therxmv.napoleon.base.date.getNowMillis
 import com.therxmv.napoleon.data.repository.converter.ScheduleConverter
-import com.therxmv.napoleon.data.repository.model.ExamsModel
-import com.therxmv.napoleon.data.repository.model.ProfileModel
-import com.therxmv.napoleon.data.repository.model.RatingModel
-import com.therxmv.napoleon.data.repository.model.ScheduleModel
+import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
+import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
+import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
 import com.therxmv.napoleon.data.source.remote.napoleon.NapoleonApi
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
@@ -25,7 +24,6 @@ class SpecialtyRepositoryImpl(
     }
 
     private val cachedSchedule: MutableMap<String, CacheData<ScheduleModel>> = mutableMapOf()
-    private val cachedRating: MutableMap<String, CacheData<RatingModel>> = mutableMapOf()
     private val cachedExams: MutableMap<String, CacheData<ExamsModel>> = mutableMapOf()
 
     override suspend fun getSchedule(profile: ProfileModel): Result<ScheduleModel> {
@@ -50,32 +48,6 @@ class SpecialtyRepositoryImpl(
         ).also { result ->
             if (result is Result.Success) {
                 cachedSchedule[profile.specialtyName] = CacheData(result)
-            }
-        }
-    }
-
-    override suspend fun getRating(profile: ProfileModel): Result<RatingModel> {
-        val cachedResult = cachedRating[profile.specialtyName]?.let { cache ->
-            cache.result.takeIf { cache.timestamp + DEFAULT_TTL < getNowMillis() }
-        }
-
-        return cachedResult ?: Result.of(
-            block = {
-                napoleonApi
-                    .getRatingBySpecialty(
-                        faculty = profile.facultyPath,
-                        year = profile.year,
-                        specialty = profile.specialtyName,
-                    )
-                    .also { dataStoreSource.setRatingBySpecialty(profile.specialtyName, it) }
-                    .toModel()
-            },
-            fallbackBlock = {
-                requireNotNull(dataStoreSource.getRatingBySpecialty(profile.specialtyName)?.toModel())
-            },
-        ).also { result ->
-            if (result is Result.Success) {
-                cachedRating[profile.specialtyName] = CacheData(result)
             }
         }
     }
