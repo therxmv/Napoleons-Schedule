@@ -213,7 +213,7 @@ private fun InputLabel(
 }
 
 @Composable
-private fun ErrorText(
+fun ErrorText(
     modifier: Modifier = Modifier,
     error: String,
 ) {

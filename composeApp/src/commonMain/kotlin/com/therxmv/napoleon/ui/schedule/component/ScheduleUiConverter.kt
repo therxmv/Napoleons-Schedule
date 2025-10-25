@@ -4,38 +4,43 @@ import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.date.getTodayDateTime
 import com.therxmv.napoleon.data.repository.specialty.model.LessonModel
 import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
-class ScheduleUiConverter {
+class ScheduleUiConverter(
+    private val defaultDispatcher: CoroutineDispatcher,
+) {
 
     companion object {
         private const val END_OF_DAY = 17
     }
 
-    fun modelToUiData(
+    suspend fun modelToUiData(
         model: ScheduleModel,
         openLessonUrl: (String) -> Unit,
-    ): ScheduleUiData {
-        val selectedKey = model.lessonsByDays.findSelectedKey()
+    ): ScheduleUiData =
+        withContext(defaultDispatcher) {
+            val selectedKey = model.lessonsByDays.findSelectedKey()
 
-        return ScheduleUiData(
-            days = model.lessonsByDays.map {
-                val lessons = it.value
+            ScheduleUiData(
+                days = model.lessonsByDays.map {
+                    val lessons = it.value
 
-                if (lessons.isEmpty()) {
-                    ScheduleUiData.Day.Empty(
-                        name = "${it.key} - ${Res.string.schedule_no_lessons}",
-                    )
-                } else {
-                    ScheduleUiData.Day.Default(
-                        name = it.key,
-                        lessons = lessons.toUiData(openLessonUrl),
-                        isExpanded = it.key == selectedKey,
-                        expandEvent = ScheduleUiEvent.ExpandDay(it.key),
-                    )
+                    if (lessons.isEmpty()) {
+                        ScheduleUiData.Day.Empty(
+                            name = "${it.key} - ${Res.string.schedule_no_lessons}",
+                        )
+                    } else {
+                        ScheduleUiData.Day.Default(
+                            name = it.key,
+                            lessons = lessons.toUiData(openLessonUrl),
+                            isExpanded = it.key == selectedKey,
+                            expandEvent = ScheduleUiEvent.ExpandDay(it.key),
+                        )
+                    }
                 }
-            }
-        )
-    }
+            )
+        }
 
     private fun List<LessonModel>.toUiData(
         openLessonUrl: (String) -> Unit,
@@ -89,7 +94,7 @@ class ScheduleUiConverter {
                 val entry = entryList[indexByHour]
 
                 entry.key.takeIf { entry.value.isNotEmpty() }
-                    // "+ entryList" in case slice returns only Friday, so it could take Monday or next day
+                // "+ entryList" in case slice returns only Friday, so it could take Monday or next day
                     ?: (entryList.slice(indexByHour..entryList.lastIndex) + entryList).firstNotEmptyKey()
             }
 

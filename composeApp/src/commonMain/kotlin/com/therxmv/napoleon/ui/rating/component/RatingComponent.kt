@@ -2,9 +2,11 @@ package com.therxmv.napoleon.ui.rating.component
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.rating.RatingRepository
 import com.therxmv.napoleon.ui.rating.component.RatingUiState.ProbabilityInput
 import com.therxmv.napoleon.ui.rating.component.RatingUiState.SubjectInput
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +17,7 @@ import kotlin.math.round
 class RatingComponent(
     componentContext: ComponentContext,
     private val ratingRepository: RatingRepository,
+    private val ioDispatcher: CoroutineDispatcher,
 ) : ComponentContext by componentContext {
     val scope = coroutineScope(SupervisorJob())
 
@@ -38,7 +41,7 @@ class RatingComponent(
     }
 
     private fun observeAndSaveRating() {
-        scope.launch {
+        scope.launch(ioDispatcher) {
             _uiState.collect {
                 ratingRepository.saveRating(it.toModel())
             }
@@ -130,7 +133,7 @@ class RatingComponent(
         val rating = ratingRepository.calculateRating(list.toModel())
         val rounded = round(rating * 100) / 100
 
-        return rounded to "Ваш рейтинг $rounded" // TODO translate
+        return rounded to "${Res.string.rating_probability} $rounded"
     }
 
     private fun calculateProbability(rating: Double, list: List<ProbabilityInput>): String {
@@ -143,7 +146,7 @@ class RatingComponent(
         val rounded = round(rating * 100).toString()
         val percentages = if (rounded.endsWith(".0")) "${rounded.dropLast(2)}%" else "$rounded%"
 
-        return "Ймовірність стипендії $percentages" // TODO translate
+        return "${Res.string.rating_probability} $percentages"
     }
 
     private fun combineErrors(vararg errors: String?): String? {
@@ -160,11 +163,11 @@ class RatingComponent(
         val (number, rating) = calculateRating(subjectInputs)
         val probability = calculateProbability(number, probabilityInputs)
 
-        return RatingUiState( // TODO translate
-            nameLabel = "Предмет",
-            creditsLabel = "Кредити",
-            scoreLabel = "Бал",
-            addInputLabel = "+ Add Subject",
+        return RatingUiState(
+            nameLabel = Res.string.rating_name_label,
+            creditsLabel = Res.string.rating_credits_label,
+            scoreLabel = Res.string.rating_score_label,
+            addInputLabel = Res.string.rating_add_label,
             subjectInputs = subjectInputs,
             ratingResult = rating,
             probabilityInputs = probabilityInputs,

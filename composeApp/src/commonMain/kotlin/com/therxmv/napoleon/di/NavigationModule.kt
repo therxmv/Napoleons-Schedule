@@ -120,6 +120,7 @@ val navigationModule = module {
                         RatingComponent(
                             componentContext = context,
                             ratingRepository = get(),
+                            ioDispatcher = get(named(KoinDispatchers.IO)),
                         )
                     )
                 )
@@ -142,5 +143,5 @@ val navigationModule = module {
         }
     }
 
-    singleOf(::ScheduleUiConverter)
+    single { ScheduleUiConverter(defaultDispatcher = get(named(KoinDispatchers.Default))) }
 }

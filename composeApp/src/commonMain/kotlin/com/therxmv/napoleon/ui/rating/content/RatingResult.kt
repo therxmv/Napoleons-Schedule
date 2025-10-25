@@ -168,6 +168,13 @@ private fun InputItem(
             colors = NapoleonTheme.colors.tertiaryOutlinedTextField,
             onValueChange = onValueChange,
         )
+
+        if (data.error != null) {
+            ErrorText(
+                modifier = Modifier.fillMaxWidth(),
+                error = data.error,
+            )
+        }
     }
 }
 

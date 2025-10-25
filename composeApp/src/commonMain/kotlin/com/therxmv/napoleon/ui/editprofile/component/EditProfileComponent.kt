@@ -232,16 +232,16 @@ class EditProfileComponent(
 
             analyticsRepository.reportSpecialtySaved(faculty.facultyName, specialty)
 
-            withContext(mainDispatcher) {
-                navigateAfterSave()
-            }
+            navigateAfterSave()
         }
     }
 
-    private fun navigateAfterSave() {
-        when (currentDestination) {
-            FullScreen.CreateProfile -> navigateTo(BottomNav.Dashboard)
-            else -> goBack()
+    private suspend fun navigateAfterSave() {
+        withContext(mainDispatcher) {
+            when (currentDestination) {
+                FullScreen.CreateProfile -> navigateTo(BottomNav.Dashboard)
+                else -> goBack()
+            }
         }
     }
 

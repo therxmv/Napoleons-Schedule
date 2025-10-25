@@ -1,6 +1,7 @@
 package com.therxmv.napoleon.ui.rating.component
 
 import androidx.compose.runtime.Immutable
+import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.rating.model.RatingModel
 import com.therxmv.napoleon.data.repository.rating.model.SubjectModel
 import com.therxmv.napoleon.ui.rating.component.RatingUiState.SubjectInput
@@ -21,9 +22,9 @@ data class RatingUiState(
     @OptIn(ExperimentalUuidApi::class)
     data class SubjectInput(
         val id: String = Uuid.random().toHexDashString(),
-        val name: String = "Предмет", // TODO translate
+        val name: String = Res.string.rating_name_label,
         val credits: String = "3",
-        val score: String = "60",
+        val score: String = "74",
         val error: String? = null,
     )
 
@@ -33,11 +34,11 @@ data class RatingUiState(
         val value: String,
         val error: String? = null,
     ) {
-        enum class Id(val title: String) { // TODO translate
-            Capacity("Кількість студентів"),
-            Quota("Квота на стипендію"),
-            Average("Середній бал групи"),
-            Deviation("Відхилення балу"),
+        enum class Id(val title: String) {
+            Capacity(Res.string.rating_capacity),
+            Quota(Res.string.rating_quota),
+            Average(Res.string.rating_average),
+            Deviation(Res.string.rating_deviation),
         }
     }
 }

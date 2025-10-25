@@ -7,6 +7,7 @@
     <string name="bottom_profile_label">Профіль</string>
 
     <!--Dashboard-->
+    <string name="dashboard_rating_card">Калькулятор Рейтингу</string>
     <string name="dashboard_exams_card">Екзамени</string>
     <string name="dashboard_excel_card">Розклад у Excel</string>
     <string name="dashboard_timetable_card">Розклад Дзвінків</string>
@@ -65,12 +66,26 @@
 
     <!-- Rating -->
     <string name="rating_title">Калькулятор рейтингу</string>
-    <string name="rating_input_credits">Кредити:</string>
-    <string name="rating_input_placeholder">Введіть Ваш бал</string>
-    <string name="rating_button_label">Порахувати</string>
-    <string name="rating_result">Ваш рейтинговий бал: </string>
-    <string name="rating_error">Ви ввели некоректні данні</string>
-    <string name="rating_not_available">Ця функція ще не доступна для вашої спеціальності</string>
+
+    <string name="rating_capacity">Кількість студентів</string>
+    <string name="rating_quota">Квота на стипендію</string>
+    <string name="rating_average">Середній бал групи</string>
+    <string name="rating_deviation">Відхилення балу</string>
+
+    <string name="rating_name_label">Предмет</string>
+    <string name="rating_credits_label">Кредити</string>
+    <string name="rating_score_label">Бал</string>
+    <string name="rating_add_label">+ Додати Предмет</string>
+
+    <string name="rating_label">Ваш Рейтинг</string>
+    <string name="rating_probability">Ймовірність стипендії</string>
+
+    <string name="rating_error_score_number">Бал має бути числом</string>
+    <string name="rating_error_score_range">Бал має бути у межах</string>
+    <string name="rating_error_credits_number">Кредити мають бути числом</string>
+    <string name="rating_error_credits_range">Кредити мають бути хоча б</string>
+    <string name="rating_error_it_number">Має бути числом</string>
+    <string name="rating_error_it_range">Має бути хоча б</string>
 
     <!-- Exams -->
     <string name="exams_title">Розклад екзаменів для</string>

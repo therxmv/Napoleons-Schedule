@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.data.repository.rating
 
+import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.rating.model.RatingModel
 import com.therxmv.napoleon.data.repository.rating.model.SubjectModel
 import com.therxmv.napoleon.data.repository.rating.model.ValidValueModel
@@ -12,7 +13,7 @@ import kotlin.math.sqrt
 
 class RatingRepositoryImpl(
     private val dataStoreSource: DataStoreSource,
-) : RatingRepository { // TODO translate
+) : RatingRepository {
 
     companion object {
         private const val MIN_CREDITS = 1
@@ -44,30 +45,30 @@ class RatingRepositoryImpl(
         runBlocking { dataStoreSource.getRating() }
 
     override fun validateCredits(value: String): ValidValueModel {
-        val intCredits = value.toIntOrNull() ?: return ValidValueModel(value, "Credits must be a number")
+        val intCredits = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_credits_number)
 
         if (intCredits < MIN_CREDITS) {
-            return ValidValueModel(value, "Credits must be at least $MIN_CREDITS")
+            return ValidValueModel(value, "${Res.string.rating_error_credits_range} $MIN_CREDITS")
         }
 
         return ValidValueModel(value)
     }
 
     override fun validateScore(value: String): ValidValueModel {
-        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, "Score must be a number")
+        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_score_number)
 
         if (intScore < MIN_SCORE || intScore > MAX_SCORE) {
-            return ValidValueModel(value, "Score must be at least $MIN_SCORE and at most $MAX_SCORE")
+            return ValidValueModel(value, "${Res.string.rating_error_score_range} $MIN_SCORE-$MAX_SCORE")
         }
 
         return ValidValueModel(value)
     }
 
     override fun validateProbabilityInput(value: String): ValidValueModel {
-        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, "Score must be a number")
+        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_it_number)
 
         if (intScore < MIN_PROBABILITY_VALUE) {
-            return ValidValueModel(value, "Score must be at least $MIN_PROBABILITY_VALUE")
+            return ValidValueModel(value, "${Res.string.rating_error_it_range} $MIN_PROBABILITY_VALUE")
         }
 
         return ValidValueModel(value)

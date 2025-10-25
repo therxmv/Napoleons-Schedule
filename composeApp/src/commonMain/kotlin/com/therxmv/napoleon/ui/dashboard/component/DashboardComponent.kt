@@ -84,7 +84,7 @@ class DashboardComponent(
             }
 
             ratingCard().also(::add)
-            examsCard().also(::add)
+            // TODO implement manual input & save examsCard().also(::add)
             timetableCard().also(::add)
 
             add(DashboardUiData.Card.EmptyDivider)
@@ -120,7 +120,7 @@ class DashboardComponent(
     private fun ratingCard(): DashboardUiData.Card =
         DashboardUiData.Card.Default(
             icon = FeatherIcons.DivideCircle,
-            title = "Rating", // TODO translate
+            title = Res.string.dashboard_rating_card,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Rating))
             },
