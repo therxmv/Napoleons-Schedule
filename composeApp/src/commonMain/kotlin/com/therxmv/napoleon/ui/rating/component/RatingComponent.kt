@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.ui.rating.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.Res
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.round
 
+@Stable
 class RatingComponent(
     componentContext: ComponentContext,
     private val ratingRepository: RatingRepository,

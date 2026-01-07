@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.ui.editprofile.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.Res
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@Stable
 class EditProfileComponent(
     componentContext: ComponentContext,
     private val facultyRepository: FacultyRepository,

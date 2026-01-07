@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.ui.timetable.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.Res
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Stable
 class TimetableComponent(
     componentContext: ComponentContext,
     private val dismiss: () -> Unit,

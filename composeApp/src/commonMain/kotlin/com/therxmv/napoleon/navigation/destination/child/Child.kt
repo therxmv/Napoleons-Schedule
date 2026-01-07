@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.navigation.destination.child
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.therxmv.napoleon.navigation.bottom.BottomNavigationComponent
 import com.therxmv.napoleon.navigation.destination.slot.SlotDestination
@@ -11,10 +12,12 @@ import com.therxmv.napoleon.ui.profile.component.ProfileComponent
 import com.therxmv.napoleon.ui.rating.component.RatingComponent
 import com.therxmv.napoleon.ui.schedule.component.ScheduleComponent
 
+@Stable
 sealed interface Child {
 
     data class BottomNavigation(val component: BottomNavigationComponent, val child: Bottom) : Child
 
+    @Stable
     sealed interface Bottom {
         data class Dashboard(val component: DashboardComponent) : Bottom
 
@@ -25,6 +28,7 @@ sealed interface Child {
 
     data class FullScreen(val component: FullScreenComponent, val child: Full) : Child
 
+    @Stable
     sealed interface Full {
         data class EditProfile(val component: EditProfileComponent) : Full
 

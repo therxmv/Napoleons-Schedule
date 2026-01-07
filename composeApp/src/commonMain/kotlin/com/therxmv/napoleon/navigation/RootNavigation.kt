@@ -44,18 +44,7 @@ import com.therxmv.napoleon.ui.timetable.TimetableDialog
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun RootNavigation(component: RootComponent) {
-    ScaffoldChildStack(
-        component = component,
-        animation = stackAnimation(
-            animator = fade(),
-            predictiveBackParams = {
-                PredictiveBackParams(
-                    backHandler = component.backHandler,
-                    onBack = component::onBackClicked,
-                )
-            },
-        ),
-    ) { paddingValues, active ->
+    ScaffoldChildStack(component = component) { paddingValues, active ->
         val isHandlerEnabled by rememberUpdatedState(component.canGoBack())
         BackHandler(enabled = isHandlerEnabled, onBack = component::onBackClicked)
 
@@ -83,7 +72,6 @@ fun RootNavigation(component: RootComponent) {
 @Composable
 private fun ScaffoldChildStack(
     component: RootComponent,
-    animation: StackAnimation<Any, Child>? = null,
     content: @Composable AnimatedVisibilityScope.(PaddingValues, com.arkivanov.decompose.Child.Created<Any, Child>) -> Unit,
 ) {
     val stack by component.stack.subscribeAsState()
@@ -127,7 +115,15 @@ private fun ScaffoldChildStack(
     ) { paddingValues ->
         ChildStack(
             stack = stack,
-            animation = animation,
+            animation = stackAnimation(
+                animator = fade(),
+                predictiveBackParams = {
+                    PredictiveBackParams(
+                        backHandler = component.backHandler,
+                        onBack = component::onBackClicked,
+                    )
+                },
+            ),
             content = {
                 this.content(paddingValues, it)
             },

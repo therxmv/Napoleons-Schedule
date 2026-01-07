@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.ui.profile.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.state.BaseState
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+@Stable
 class ProfileComponent(
     componentContext: ComponentContext,
     private val profileRepository: ProfileRepository,

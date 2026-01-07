@@ -1,5 +1,8 @@
 package com.therxmv.napoleon.base.state
 
+import androidx.compose.runtime.Stable
+
+@Stable
 sealed interface BaseState<out T> {
 
     data object Idle : BaseState<Nothing>

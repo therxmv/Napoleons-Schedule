@@ -1,6 +1,7 @@
 package com.therxmv.napoleon.ui.schedule.component
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import com.therxmv.napoleon.Res
 
 @Immutable
@@ -8,6 +9,7 @@ data class ScheduleUiData(
     val days: List<Day>,
 ) {
 
+    @Stable
     sealed interface Day {
 
         val name: String
@@ -28,6 +30,7 @@ data class ScheduleUiData(
         ) : Day
     }
 
+    @Stable
     sealed interface Lesson {
 
         val id: String

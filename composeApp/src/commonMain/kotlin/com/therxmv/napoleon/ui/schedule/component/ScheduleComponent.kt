@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.ui.schedule.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.base.state.BaseState
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Stable
 class ScheduleComponent(
     componentContext: ComponentContext,
     private val specialtyRepository: SpecialtyRepository,
