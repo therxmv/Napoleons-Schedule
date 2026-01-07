@@ -14,10 +14,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Copy
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 expect suspend fun Clipboard.copyText(text: String)
 
@@ -68,5 +70,21 @@ fun CopyTextButton(
         },
     ) {
         Text(label)
+    }
+}
+
+@Preview
+@Composable
+private fun CopyIconButtonPreview() {
+    LeonPreview {
+        CopyIconButton(textToCopy = "text")
+    }
+}
+
+@Preview
+@Composable
+private fun CopyTextButtonPreview() {
+    LeonPreview {
+        CopyTextButton(label = "Copy", textToCopy = "text")
     }
 }

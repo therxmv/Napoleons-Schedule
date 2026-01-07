@@ -31,12 +31,15 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.ui.profile.component.ProfileUiData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiEvent
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit2
 import compose.icons.feathericons.User
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ProfileContent(
@@ -191,6 +194,24 @@ private fun UserAvatar() {
             imageVector = FeatherIcons.User,
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
             contentDescription = "Avatar",
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ProfileContentPreview() {
+    LeonPreview {
+        ProfileContent(
+            data = ProfileUiData(
+                infoTitle = Res.string.profile_info_title,
+                facultyLabel = Res.string.profile_faculty_label,
+                faculty = "ФМІ",
+                specialtyLabel = Res.string.profile_specialty_label,
+                specialty = "ІПЗ-41",
+                editButtonLabel = Res.string.profile_edit_button,
+            ),
+            onEvent = {},
         )
     }
 }

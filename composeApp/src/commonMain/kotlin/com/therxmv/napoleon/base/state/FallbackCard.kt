@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun FallbackCard(
@@ -41,5 +42,13 @@ fun FallbackCard(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onErrorContainer,
         )
+    }
+}
+
+@Preview
+@Composable
+private fun FallbackCardPreview() {
+    LeonTheme {
+        FallbackCard("Reason")
     }
 }

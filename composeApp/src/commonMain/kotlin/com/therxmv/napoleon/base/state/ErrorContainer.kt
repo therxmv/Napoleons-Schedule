@@ -21,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ErrorContainer(
@@ -88,6 +90,27 @@ private fun RetryButton(
             imageVector = Icons.Default.Refresh,
             contentDescription = "retry",
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ErrorContainerPreview() {
+    LeonPreview {
+        ErrorContainer(
+            message = "Error Message",
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ErrorContainerWithRetryPreview() {
+    LeonPreview {
+        ErrorContainer(
+            message = "Error Message",
+            onRetry = {},
         )
     }
 }

@@ -10,11 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.extensions.thenIf
 import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEvent
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ScheduleContent(
@@ -57,5 +59,30 @@ fun ScheduleContent(
         item {
             Spacer(modifier = Modifier.height(100.dp))
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ScheduleContentPreview() {
+    LeonPreview {
+        ScheduleContent(
+            data = ScheduleUiData(
+                days = listOf(
+                    ScheduleUiData.Day.Default(
+                        name = "Monday",
+                        lessons = listOf(),
+                        isExpanded = true,
+                        expandEvent = ScheduleUiEvent.ExpandDay("Monday"),
+                    ),
+                    ScheduleUiData.Day.Empty("Tuesday"),
+                    ScheduleUiData.Day.Empty("Wednesday"),
+                    ScheduleUiData.Day.Empty("Thursday"),
+                    ScheduleUiData.Day.Empty("Friday"),
+                ),
+            ),
+            fallbackReason = "Fallback Reason",
+            onEvent = {},
+        )
     }
 }

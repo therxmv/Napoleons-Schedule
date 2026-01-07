@@ -37,10 +37,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiEvent
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun EditProfileContent(
@@ -188,5 +191,34 @@ private fun Dropdown(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun EditProfileContentPreview() {
+    LeonPreview {
+        EditProfileContent(
+            data = EditProfileUiData(
+                facultyDropdown = EditProfileUiData.Dropdown(
+                    placeholder = Res.string.edit_profile_faculty_placeholder,
+                    value = "ФМІ",
+                    items = listOf("ФМІ"),
+                    onClick = {},
+                ),
+                yearDropdown = EditProfileUiData.Dropdown(
+                    placeholder = Res.string.edit_profile_year_placeholder,
+                    items = listOf("4"),
+                    onClick = {},
+                ),
+                specialtyDropdown = EditProfileUiData.Dropdown(
+                    placeholder = Res.string.edit_profile_specialty_placeholder,
+                    onClick = {},
+                ),
+                saveLabel = Res.string.edit_profile_save_button,
+            ),
+            fallbackReason = "Fallback Reason",
+            onEvent = {},
+        )
     }
 }
