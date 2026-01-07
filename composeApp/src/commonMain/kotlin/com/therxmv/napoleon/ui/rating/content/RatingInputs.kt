@@ -36,6 +36,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
@@ -216,11 +218,10 @@ private fun InputLabel(
     modifier: Modifier = Modifier,
     label: String,
 ) {
-    Text(
+    LeonText(
         modifier = modifier,
         text = label,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.onSurface
+        size = LeonTextSize.Body2,
     )
 }
 
@@ -229,11 +230,11 @@ fun ErrorText(
     modifier: Modifier = Modifier,
     error: String,
 ) {
-    Text(
+    LeonText(
         modifier = modifier,
         text = error,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.error
+        size = LeonTextSize.Body2,
+        color = MaterialTheme.colorScheme.error,
     )
 }
 
@@ -315,7 +316,7 @@ private fun InfoCard(
         )
         Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
-        Text(
+        Text( // TODO LeonText for AnnotatedString
             text = buildAnnotatedString {
                 withStyle(
                     style = MaterialTheme.typography.titleMedium.copy(
@@ -339,8 +340,9 @@ private fun InfoCard(
                     append(data.linkText)
                 }
             },
-            style = MaterialTheme.typography.bodyLarge.copy(
+            style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.Normal,
             ),
         )
     }

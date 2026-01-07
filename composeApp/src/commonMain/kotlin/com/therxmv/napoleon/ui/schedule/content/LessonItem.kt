@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -18,9 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.extensions.thenIf
 import com.therxmv.napoleon.base.ui.CopyIconButton
@@ -128,21 +129,20 @@ private fun RowScope.EmptyLesson(
 
 @Composable
 private fun PrefixText(text: String) {
-    Text(
-        modifier = Modifier
-            .sizeIn(minWidth = 24.dp),
+    LeonText(
+        modifier = Modifier.sizeIn(minWidth = 24.dp),
         text = text,
-        fontWeight = FontWeight.Bold,
+        weight = LeonTextWeight.Bold,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 }
 
 @Composable
 private fun SuffixText(text: String) {
-    Text(
+    LeonText(
         text = text,
-        style = MaterialTheme.typography.bodySmall,
-        fontWeight = FontWeight.Bold,
+        size = LeonTextSize.Body2,
+        weight = LeonTextWeight.Bold,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 }
@@ -152,7 +152,7 @@ private fun Name(
     modifier: Modifier = Modifier,
     name: String,
 ) {
-    Text(
+    LeonText(
         modifier = modifier,
         text = name,
         overflow = TextOverflow.Ellipsis,

@@ -14,13 +14,14 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
@@ -49,11 +50,10 @@ fun ErrorContainer(
         ErrorIcon()
         Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
 
-        Text(
+        LeonText(
             text = message,
-            style = MaterialTheme.typography.headlineMedium,
+            size = LeonTextSize.Title1,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurface,
         )
 
         if (onRetry != null) {

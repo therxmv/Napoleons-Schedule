@@ -24,7 +24,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -36,12 +35,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
@@ -156,6 +157,7 @@ private fun InputItem(
             modifier = Modifier.fillMaxWidth(),
             title = data.title,
         )
+        // TODO add little spacer
 
         InputField(
             modifier = Modifier.fillMaxWidth(),
@@ -182,12 +184,12 @@ private fun InputItem(
 private fun ResultText(
     result: String,
 ) {
-    Text(
+    LeonText(
         text = result,
-        style = MaterialTheme.typography.headlineMedium,
+        size = LeonTextSize.Title1,
         color = MaterialTheme.colorScheme.onTertiary,
+        weight = LeonTextWeight.Bold,
         textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold,
     )
 }
 
@@ -195,9 +197,9 @@ private fun ResultText(
 private fun ProbabilityText(
     result: String,
 ) {
-    Text(
+    LeonText(
         text = result,
-        style = MaterialTheme.typography.headlineSmall,
+        size = LeonTextSize.Title1,
         color = MaterialTheme.colorScheme.onTertiary,
         textAlign = TextAlign.Center,
     )
@@ -208,10 +210,9 @@ private fun InputTitle(
     modifier: Modifier = Modifier,
     title: String,
 ) {
-    Text(
+    LeonText(
         modifier = modifier,
         text = title,
-        style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.onTertiary,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,

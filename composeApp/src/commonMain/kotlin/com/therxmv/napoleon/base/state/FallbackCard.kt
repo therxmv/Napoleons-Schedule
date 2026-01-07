@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
@@ -37,9 +38,9 @@ fun FallbackCard(
         )
         Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
-        Text(
+        LeonText(
             text = reason,
-            style = MaterialTheme.typography.bodyLarge,
+            size = LeonTextSize.Body1,
             color = MaterialTheme.colorScheme.onErrorContainer,
         )
     }

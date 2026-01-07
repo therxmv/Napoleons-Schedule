@@ -28,9 +28,11 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.PreviewMockData
@@ -106,18 +108,18 @@ private fun InfoCard(
             .background(MaterialTheme.colorScheme.primary)
             .padding(16.dp)
     ) {
-        Text(
+        LeonText(
             modifier = Modifier.weight(1f),
             text = titleText,
-            fontSize = 20.sp,
+            size = LeonTextSize.Title2,
             color = MaterialTheme.colorScheme.onPrimary,
         )
 
-        Text(
+        LeonText(
             text = nameText,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 20.sp,
+            size = LeonTextSize.Title2,
             color = MaterialTheme.colorScheme.onPrimary,
+            weight = LeonTextWeight.Bold
         )
     }
 }
@@ -132,9 +134,9 @@ private fun CardTitle(
         modifier = Modifier.padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
+        LeonText(
             text = title,
-            fontSize = 18.sp,
+            size = LeonTextSize.Title2,
         )
 
         Spacer(modifier = Modifier.weight(1f))

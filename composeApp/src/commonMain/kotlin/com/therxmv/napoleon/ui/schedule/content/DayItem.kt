@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -23,10 +22,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
@@ -116,14 +115,12 @@ fun DefaultDay(
             modifier = Modifier.padding(LeonTheme.paddings.startAndHalfVerticalValues),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Name(
+            LeonText(
                 modifier = Modifier.weight(1f),
-                name = data.name,
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.contentColorFor(color),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                ),
+                text = data.name,
+                size = LeonTextSize.Title2,
+                color = MaterialTheme.colorScheme.contentColorFor(color),
+                weight = LeonTextWeight.Bold,
             )
 
             CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.contentColorFor(color)) {
@@ -146,27 +143,11 @@ fun EmptyDay(
             .padding(LeonTheme.paddings.defaultValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Name(
+        LeonText(
             modifier = Modifier.weight(1f),
-            name = data.name,
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontWeight = FontWeight.Normal,
-                fontSize = 20.sp,
-            ),
+            text = data.name,
+            size = LeonTextSize.Title2,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
-}
-
-@Composable
-private fun Name(
-    modifier: Modifier = Modifier,
-    name: String,
-    style: TextStyle,
-) {
-    Text(
-        modifier = modifier,
-        text = name,
-        style = style,
-    )
 }
