@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.Res
+import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiEvent
 import compose.icons.FeatherIcons
@@ -203,14 +203,7 @@ private fun UserAvatar() {
 private fun ProfileContentPreview() {
     LeonPreview {
         ProfileContent(
-            data = ProfileUiData(
-                infoTitle = Res.string.profile_info_title,
-                facultyLabel = Res.string.profile_faculty_label,
-                faculty = "ФМІ",
-                specialtyLabel = Res.string.profile_specialty_label,
-                specialty = "ІПЗ-41",
-                editButtonLabel = Res.string.profile_edit_button,
-            ),
+            data = PreviewMockData.profileUiData,
             onEvent = {},
         )
     }

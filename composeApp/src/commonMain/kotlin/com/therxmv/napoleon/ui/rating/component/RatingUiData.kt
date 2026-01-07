@@ -4,12 +4,12 @@ import androidx.compose.runtime.Immutable
 import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.rating.model.RatingModel
 import com.therxmv.napoleon.data.repository.rating.model.SubjectModel
-import com.therxmv.napoleon.ui.rating.component.RatingUiState.SubjectInput
+import com.therxmv.napoleon.ui.rating.component.RatingUiData.SubjectInput
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Immutable
-data class RatingUiState(
+data class RatingUiData(
     val nameLabel: String,
     val creditsLabel: String,
     val scoreLabel: String,
@@ -50,7 +50,7 @@ data class RatingUiState(
     )
 }
 
-fun RatingUiState.toModel(): RatingModel =
+fun RatingUiData.toModel(): RatingModel =
     RatingModel(
         subjects = subjectInputs.toModel(),
     )

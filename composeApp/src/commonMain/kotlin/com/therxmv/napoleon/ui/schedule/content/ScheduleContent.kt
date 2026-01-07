@@ -14,6 +14,7 @@ import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.extensions.thenIf
 import com.therxmv.napoleon.base.state.FallbackCard
+import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEvent
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -67,20 +68,7 @@ fun ScheduleContent(
 private fun ScheduleContentPreview() {
     LeonPreview {
         ScheduleContent(
-            data = ScheduleUiData(
-                days = listOf(
-                    ScheduleUiData.Day.Default(
-                        name = "Monday",
-                        lessons = listOf(),
-                        isExpanded = true,
-                        expandEvent = ScheduleUiEvent.ExpandDay("Monday"),
-                    ),
-                    ScheduleUiData.Day.Empty("Tuesday"),
-                    ScheduleUiData.Day.Empty("Wednesday"),
-                    ScheduleUiData.Day.Empty("Thursday"),
-                    ScheduleUiData.Day.Empty("Friday"),
-                ),
-            ),
+            data = PreviewMockData.scheduleUiData,
             fallbackReason = "Fallback Reason",
             onEvent = {},
         )

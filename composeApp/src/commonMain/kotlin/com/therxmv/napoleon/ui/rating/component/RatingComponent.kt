@@ -6,8 +6,8 @@ import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.info.InfoRepository
 import com.therxmv.napoleon.data.repository.rating.RatingRepository
-import com.therxmv.napoleon.ui.rating.component.RatingUiState.ProbabilityInput
-import com.therxmv.napoleon.ui.rating.component.RatingUiState.SubjectInput
+import com.therxmv.napoleon.ui.rating.component.RatingUiData.ProbabilityInput
+import com.therxmv.napoleon.ui.rating.component.RatingUiData.SubjectInput
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -159,7 +159,7 @@ class RatingComponent(
         return errorList?.joinToString("\n")
     }
 
-    private fun createInitialData(): RatingUiState {
+    private fun createInitialData(): RatingUiData {
         val subjectInputs = ratingRepository.getRatingSync()?.subjects?.toUi()
             ?: listOf(SubjectInput(), SubjectInput())
         val probabilityInputs = createProbabilityInputs()
@@ -167,7 +167,7 @@ class RatingComponent(
         val (number, rating) = calculateRating(subjectInputs)
         val probability = calculateProbability(number, probabilityInputs)
 
-        return RatingUiState(
+        return RatingUiData(
             nameLabel = Res.string.rating_name_label,
             creditsLabel = Res.string.rating_credits_label,
             scoreLabel = Res.string.rating_score_label,
@@ -200,10 +200,10 @@ class RatingComponent(
             ),
         )
 
-    private fun createInfoData(): RatingUiState.Info {
+    private fun createInfoData(): RatingUiData.Info {
         val link = infoRepository.getLinks().educationalPrograms
 
-        return RatingUiState.Info(
+        return RatingUiData.Info(
             text = Res.string.rating_info_text,
             link = link,
             linkText = Res.string.rating_info_link_text,

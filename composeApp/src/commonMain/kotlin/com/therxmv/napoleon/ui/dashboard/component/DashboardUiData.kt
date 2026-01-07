@@ -29,5 +29,44 @@ data class DashboardUiData(
         ) : Card(gridSpan)
 
         data object EmptyDivider : Card(2)
+
+        companion object {
+
+            fun defaultSmallSquare(
+                icon: ImageVector,
+                title: String,
+                onClick: () -> Unit,
+            ): Default = Default(
+                icon = icon,
+                title = title,
+                onClick = onClick,
+                gridSpan = 1,
+                ratio = 1f,
+            )
+
+            fun defaultWideRectangle(
+                icon: ImageVector,
+                title: String,
+                onClick: () -> Unit,
+            ): Default = Default(
+                icon = icon,
+                title = title,
+                onClick = onClick,
+                gridSpan = 2,
+                ratio = 4f,
+            )
+
+            fun defaultSmallRectangle(
+                icon: ImageVector,
+                title: String,
+                onClick: () -> Unit,
+            ): Default = Default(
+                icon = icon,
+                title = title,
+                onClick = onClick,
+                gridSpan = 1,
+                ratio = 2f,
+            )
+        }
     }
 }

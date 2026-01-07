@@ -43,13 +43,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
-import com.therxmv.napoleon.ui.rating.component.RatingUiState
 
 @Composable
 fun RatingResult(
     modifier: Modifier = Modifier,
-    data: RatingUiState,
+    data: RatingUiData,
     minFraction: Float,
     maxFraction: Float = 1f,
     threshold: Float = 0.2f,
@@ -147,7 +147,7 @@ fun RatingResult(
 
 @Composable
 private fun InputItem(
-    data: RatingUiState.ProbabilityInput,
+    data: RatingUiData.ProbabilityInput,
     onValueChange: (String) -> Unit,
     isLast: Boolean,
 ) {

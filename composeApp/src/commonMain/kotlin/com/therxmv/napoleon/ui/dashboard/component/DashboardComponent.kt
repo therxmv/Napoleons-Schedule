@@ -100,81 +100,65 @@ class DashboardComponent(
     }
 
     private fun excelCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultWideRectangle(
             icon = FeatherIcons.Layout,
             title = Res.string.dashboard_excel_card,
             onClick = { openUrl(url) },
-            gridSpan = 2,
-            ratio = 4f,
         )
 
     private fun examsCard(): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultSmallSquare(
             icon = FeatherIcons.Calendar,
             title = Res.string.dashboard_exams_card,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Exams))
             },
-            gridSpan = 1,
-            ratio = 1f,
         )
 
     private fun ratingCard(): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultSmallSquare(
             icon = FeatherIcons.DivideCircle,
             title = Res.string.dashboard_rating_card,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Rating))
             },
-            gridSpan = 1,
-            ratio = 1f,
         )
 
     private fun timetableCard(): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultSmallSquare(
             icon = FeatherIcons.Clock,
             title = Res.string.dashboard_timetable_card,
             onClick = {
                 onEvent(DashboardUiEvent.OpenDialog(SlotDestination.TimetableDialog))
             },
-            gridSpan = 1,
-            ratio = 1f,
         )
 
     private fun tgChannelCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultSmallRectangle(
             icon = FeatherIcons.Send,
             title = Res.string.dashboard_tg_channel_card,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
     private fun tgBotCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultSmallRectangle(
             icon = FeatherIcons.MessageCircle,
             title = Res.string.dashboard_tg_bot_card,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
     private fun siteCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultSmallRectangle(
             icon = FeatherIcons.Globe,
             title = Res.string.dashboard_site_card,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
     private fun processCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+        DashboardUiData.Card.defaultSmallRectangle(
             icon = FeatherIcons.Folder,
             title = Res.string.dashboard_process_card,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
     private fun openUrl(url: String) {

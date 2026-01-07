@@ -38,8 +38,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
+import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
-import com.therxmv.napoleon.ui.rating.component.RatingUiState
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Info
 import compose.icons.feathericons.Trash2
@@ -47,7 +47,7 @@ import compose.icons.feathericons.Trash2
 @Composable
 fun RatingInputs(
     modifier: Modifier = Modifier,
-    data: RatingUiState,
+    data: RatingUiData,
     heightFraction: Float,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
@@ -106,7 +106,7 @@ fun RatingInputs(
 @Composable
 private fun SubjectItem(
     modifier: Modifier = Modifier,
-    data: RatingUiState.SubjectInput,
+    data: RatingUiData.SubjectInput,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
     Row(
@@ -299,7 +299,7 @@ fun InputField(
 
 @Composable
 private fun InfoCard(
-    data: RatingUiState.Info,
+    data: RatingUiData.Info,
 ) {
     Row(
         modifier = Modifier
