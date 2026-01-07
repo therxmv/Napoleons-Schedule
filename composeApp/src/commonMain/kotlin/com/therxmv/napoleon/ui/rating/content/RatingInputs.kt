@@ -36,10 +36,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 import com.therxmv.napoleon.ui.rating.component.RatingUiState
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Info
 import compose.icons.feathericons.Trash2
@@ -55,9 +55,9 @@ fun RatingInputs(
         modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(heightFraction),
-        contentPadding = NapoleonTheme.paddings.defaultValues,
+        contentPadding = LeonTheme.paddings.defaultValues,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
     ) {
         item {
             InfoCard(data.infoData)
@@ -93,7 +93,7 @@ fun RatingInputs(
             )
 
             if (input.error != null) {
-                Spacer(modifier = Modifier.height(NapoleonTheme.paddings.halfVertical))
+                Spacer(modifier = Modifier.height(LeonTheme.paddings.halfVertical))
                 ErrorText(
                     modifier = Modifier.animateItem(),
                     error = input.error,
@@ -112,10 +112,10 @@ private fun SubjectItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(NapoleonTheme.shapes.allRounded)
+            .clip(LeonTheme.shapes.allRounded)
             .background(MaterialTheme.colorScheme.primary)
-            .padding(vertical = NapoleonTheme.paddings.halfVertical, horizontal = NapoleonTheme.paddings.halfHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.halfHorizontal),
+            .padding(vertical = LeonTheme.paddings.halfVertical, horizontal = LeonTheme.paddings.halfHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.halfHorizontal),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         InputField(
@@ -191,8 +191,8 @@ private fun InputLabels(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = NapoleonTheme.paddings.halfHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.halfHorizontal),
+            .padding(horizontal = LeonTheme.paddings.halfHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.halfHorizontal),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         InputLabel(
@@ -263,12 +263,12 @@ private fun AddInputButton(
 ) {
     Button(
         modifier = modifier,
-        colors = NapoleonTheme.colors.button,
-        shape = RoundedCornerShape(NapoleonTheme.shapes.cornerRadius.times(2)),
+        colors = LeonTheme.colors.button,
+        shape = RoundedCornerShape(LeonTheme.shapes.cornerRadius.times(2)),
         onClick = onClick,
     ) {
         Text(
-            modifier = Modifier.padding(NapoleonTheme.paddings.defaultValues),
+            modifier = Modifier.padding(LeonTheme.paddings.defaultValues),
             text = label,
             style = MaterialTheme.typography.titleMedium,
         )
@@ -281,7 +281,7 @@ fun InputField(
     value: String,
     error: String?,
     keyboardOptions: KeyboardOptions,
-    colors: TextFieldColors = NapoleonTheme.colors.primaryOutlinedTextField,
+    colors: TextFieldColors = LeonTheme.colors.primaryOutlinedTextField,
     onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -289,7 +289,7 @@ fun InputField(
         value = value,
         onValueChange = onValueChange,
         isError = error != null,
-        shape = NapoleonTheme.shapes.allRounded,
+        shape = LeonTheme.shapes.allRounded,
         textStyle = TextStyle(fontWeight = FontWeight.Bold),
         keyboardOptions = keyboardOptions,
         maxLines = 1,
@@ -304,8 +304,8 @@ private fun InfoCard(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .border(NapoleonTheme.paddings.divider, MaterialTheme.colorScheme.surfaceTint, NapoleonTheme.shapes.allRounded)
-            .padding(NapoleonTheme.paddings.defaultValues),
+            .border(LeonTheme.paddings.divider, MaterialTheme.colorScheme.surfaceTint, LeonTheme.shapes.allRounded)
+            .padding(LeonTheme.paddings.defaultValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -313,7 +313,7 @@ private fun InfoCard(
             tint = MaterialTheme.colorScheme.surfaceTint,
             contentDescription = null,
         )
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
         Text(
             text = buildAnnotatedString {

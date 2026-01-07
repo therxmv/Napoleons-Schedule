@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiEvent
@@ -17,7 +18,6 @@ import com.therxmv.napoleon.ui.dashboard.content.card.CardDivider
 import com.therxmv.napoleon.ui.dashboard.content.card.DashboardCard
 import com.therxmv.napoleon.ui.dashboard.content.widget.ScheduleWidget
 import com.therxmv.napoleon.ui.dashboard.content.widget.SkeletonWidget
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @Composable
 fun DashboardContent(
@@ -28,9 +28,9 @@ fun DashboardContent(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(2),
-        contentPadding = NapoleonTheme.paddings.defaultValues,
-        horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.horizontal),
-        verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+        contentPadding = LeonTheme.paddings.defaultValues,
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
     ) {
         if (data.cacheReason != null) {
             item(span = { GridItemSpan(2) }) {

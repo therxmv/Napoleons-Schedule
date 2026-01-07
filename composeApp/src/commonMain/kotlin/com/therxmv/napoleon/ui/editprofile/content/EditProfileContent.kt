@@ -37,10 +37,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiEvent
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @Composable
 fun EditProfileContent(
@@ -52,29 +52,29 @@ fun EditProfileContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(NapoleonTheme.paddings.defaultValues)
+            .padding(LeonTheme.paddings.defaultValues)
             .focusable(), // Didn't work without focusable on API 26,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (fallbackReason != null) {
             FallbackCard(fallbackReason)
-            Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
         }
 
         Dropdown(
             data = data.facultyDropdown,
         )
-        Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
 
         Dropdown(
             data = data.yearDropdown,
         )
-        Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
 
         Dropdown(
             data = data.specialtyDropdown,
         )
-        Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical.times(2)))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.times(2)))
 
         SaveButton(
             label = data.saveLabel,
@@ -95,10 +95,10 @@ private fun SaveButton(
     Button(
         enabled = isEnabled,
         onClick = onClick,
-        colors = NapoleonTheme.colors.button,
+        colors = LeonTheme.colors.button,
     ) {
         Text(
-            modifier = Modifier.padding(NapoleonTheme.paddings.defaultValues),
+            modifier = Modifier.padding(LeonTheme.paddings.defaultValues),
             text = label,
             style = MaterialTheme.typography.titleMedium,
         )
@@ -116,8 +116,8 @@ private fun Dropdown(
     val isEnabled = remember(data) { data.items.isNotEmpty() }
     val isExpanded by derivedStateOf { isFocused && isEnabled }
 
-    val bottomCornerRadius = NapoleonTheme.shapes.noneCornerRadius
-        .takeIf { isExpanded } ?: NapoleonTheme.shapes.cornerRadius
+    val bottomCornerRadius = LeonTheme.shapes.noneCornerRadius
+        .takeIf { isExpanded } ?: LeonTheme.shapes.cornerRadius
     val bottomRadius by animateDpAsState(targetValue = bottomCornerRadius)
 
     ExposedDropdownMenuBox(
@@ -142,10 +142,10 @@ private fun Dropdown(
             placeholder = {
                 Text(text = data.placeholder)
             },
-            colors = NapoleonTheme.colors.dropDownTextField,
+            colors = LeonTheme.colors.dropDownTextField,
             shape = RoundedCornerShape(
-                topStart = NapoleonTheme.shapes.cornerRadius,
-                topEnd = NapoleonTheme.shapes.cornerRadius,
+                topStart = LeonTheme.shapes.cornerRadius,
+                topEnd = LeonTheme.shapes.cornerRadius,
                 bottomEnd = bottomRadius,
                 bottomStart = bottomRadius,
             ),
@@ -157,15 +157,15 @@ private fun Dropdown(
             modifier = Modifier.exposedDropdownSize(),
             expanded = isExpanded && data.items.isNotEmpty(),
             onDismissRequest = { focusManager.clearFocus() },
-            shape = NapoleonTheme.shapes.onlyBottomRounded,
+            shape = LeonTheme.shapes.onlyBottomRounded,
             offset = DpOffset(0.dp, (-6).dp), // removes menu's extra padding
             containerColor = Color.Transparent,
             shadowElevation = 0.dp,
         ) {
             data.items.forEachIndexed { index, item ->
                 val isLast = index == data.items.lastIndex
-                val shape = NapoleonTheme.shapes.onlyBottomRounded
-                    .takeIf { isLast } ?: NapoleonTheme.shapes.noneRounded
+                val shape = LeonTheme.shapes.onlyBottomRounded
+                    .takeIf { isLast } ?: LeonTheme.shapes.noneRounded
 
                 DropdownMenuItem(
                     modifier = Modifier
@@ -182,7 +182,7 @@ private fun Dropdown(
 
                 if (isLast.not()) {
                     HorizontalDivider(
-                        thickness = NapoleonTheme.paddings.divider,
+                        thickness = LeonTheme.paddings.divider,
                         color = MaterialTheme.colorScheme.surface,
                     )
                 }

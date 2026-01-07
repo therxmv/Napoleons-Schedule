@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.ui.theme.values
+package com.therxmv.leonui.theme.values
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Immutable
@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data class NapoleonShapes(
+data class LeonShapes(
     val cornerRadius: Dp = 14.dp,
     val noneCornerRadius: Dp = 4.dp,
     val onlyTopRounded: Shape = RoundedCornerShape(

@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.ui.theme.values
+package com.therxmv.leonui.theme.values
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable
@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data class NapoleonPaddings(
+data class LeonPaddings(
     val horizontal: Dp = 16.dp,
     val vertical: Dp = 16.dp,
     val halfHorizontal: Dp = horizontal / 2,

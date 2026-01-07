@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
+import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
 
@@ -24,9 +24,9 @@ fun FallbackCard(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(NapoleonTheme.shapes.allRounded)
+            .clip(LeonTheme.shapes.allRounded)
             .background(MaterialTheme.colorScheme.errorContainer)
-            .padding(NapoleonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.defaultValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -34,7 +34,7 @@ fun FallbackCard(
             tint = MaterialTheme.colorScheme.error,
             contentDescription = null,
         )
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
         Text(
             text = reason,

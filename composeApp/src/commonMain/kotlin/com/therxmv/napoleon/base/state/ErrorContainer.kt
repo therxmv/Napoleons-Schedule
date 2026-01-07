@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
+import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
 
@@ -45,7 +45,7 @@ fun ErrorContainer(
         verticalArrangement = Arrangement.Center,
     ) {
         ErrorIcon()
-        Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
 
         Text(
             text = message,

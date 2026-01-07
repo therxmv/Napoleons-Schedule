@@ -22,7 +22,7 @@ android {
         minSdk = libs.versions.project.minSdk.get().toInt()
         targetSdk = libs.versions.project.targetSdk.get().toInt()
 
-        applicationId = libs.versions.project.applicationId.get().plus(".androidApp")
+        applicationId = libs.versions.project.applicationId.get().plus(".napoleon.androidApp")
         versionCode = libs.versions.project.versionCode.get().toInt()
         versionName = libs.versions.project.versionName.get()
     }

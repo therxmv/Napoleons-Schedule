@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @Composable
 fun ExamsContent(
@@ -26,8 +26,8 @@ fun ExamsContent(
 ) {
     LazyColumn(
         modifier = modifier
-            .padding(NapoleonTheme.paddings.defaultValues),
-        verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+            .padding(LeonTheme.paddings.defaultValues),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
     ) {
         if (fallbackReason != null) {
             item {
@@ -80,7 +80,7 @@ private fun ExamItem(
             color = MaterialTheme.colorScheme.surfaceTint,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
         Column {
             Text(

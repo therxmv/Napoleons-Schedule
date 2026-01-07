@@ -27,11 +27,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEvent
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 fun LazyListScope.dayOfWeek(
     modifier: Modifier = Modifier,
@@ -97,23 +97,23 @@ fun DefaultDay(
     onCopyEvent: () -> Unit,
     onExpand: () -> Unit,
 ) {
-    val bottomCornerRadius = NapoleonTheme.shapes.noneCornerRadius.value
-        .takeIf { data.isExpanded } ?: NapoleonTheme.shapes.cornerRadius.value
+    val bottomCornerRadius = LeonTheme.shapes.noneCornerRadius.value
+        .takeIf { data.isExpanded } ?: LeonTheme.shapes.cornerRadius.value
     val bottomRadius by animateFloatAsState(targetValue = bottomCornerRadius)
 
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = color,
         shape = RoundedCornerShape(
-            topStart = NapoleonTheme.shapes.cornerRadius,
-            topEnd = NapoleonTheme.shapes.cornerRadius,
+            topStart = LeonTheme.shapes.cornerRadius,
+            topEnd = LeonTheme.shapes.cornerRadius,
             bottomEnd = bottomRadius.dp,
             bottomStart = bottomRadius.dp,
         ),
         onClick = onExpand,
     ) {
         Row(
-            modifier = Modifier.padding(NapoleonTheme.paddings.startAndHalfVerticalValues),
+            modifier = Modifier.padding(LeonTheme.paddings.startAndHalfVerticalValues),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Name(
@@ -142,8 +142,8 @@ fun EmptyDay(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .border(NapoleonTheme.paddings.divider, color, NapoleonTheme.shapes.allRounded)
-            .padding(NapoleonTheme.paddings.defaultValues),
+            .border(LeonTheme.paddings.divider, color, LeonTheme.shapes.allRounded)
+            .padding(LeonTheme.paddings.defaultValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Name(

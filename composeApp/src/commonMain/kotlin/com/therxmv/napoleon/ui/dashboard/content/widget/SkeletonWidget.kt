@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.extensions.shimmerLoading
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @Composable
 fun SkeletonWidget(
@@ -19,7 +19,7 @@ fun SkeletonWidget(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(3f)
-            .clip(NapoleonTheme.shapes.allRounded)
+            .clip(LeonTheme.shapes.allRounded)
             .shimmerLoading(color),
     )
 }

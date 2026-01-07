@@ -33,8 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @Composable
 fun CardDivider(
@@ -43,12 +43,12 @@ fun CardDivider(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = NapoleonTheme.paddings.vertical),
+            .padding(vertical = LeonTheme.paddings.vertical),
         contentAlignment = Alignment.Center,
     ) {
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(0.5f),
-            thickness = NapoleonTheme.paddings.divider,
+            thickness = LeonTheme.paddings.divider,
         )
     }
 }
@@ -84,10 +84,10 @@ private fun VerticalCard(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(data.ratio)
-            .clip(NapoleonTheme.shapes.allRounded)
+            .clip(LeonTheme.shapes.allRounded)
             .background(background)
             .clickable(onClick = data.onClick)
-            .padding(NapoleonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.defaultValues),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -95,7 +95,7 @@ private fun VerticalCard(
             icon = data.icon,
             color = MaterialTheme.colorScheme.contentColorFor(background),
         )
-        Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
         Title(
             text = data.title,
             color = MaterialTheme.colorScheme.contentColorFor(background),
@@ -113,10 +113,10 @@ private fun HorizontalCard(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(data.ratio)
-            .clip(RoundedCornerShape(NapoleonTheme.shapes.cornerRadius.times(2)))
+            .clip(RoundedCornerShape(LeonTheme.shapes.cornerRadius.times(2)))
             .background(background)
             .clickable(onClick = data.onClick)
-            .padding(NapoleonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.defaultValues),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -124,7 +124,7 @@ private fun HorizontalCard(
             icon = data.icon,
             color = MaterialTheme.colorScheme.contentColorFor(background),
         )
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
         Title(
             text = data.title,
             color = MaterialTheme.colorScheme.contentColorFor(background),

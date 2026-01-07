@@ -21,11 +21,11 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.extensions.thenIf
 import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Link
 
@@ -36,7 +36,7 @@ fun Lesson(
     onCopyEvent: () -> Unit,
 ) {
     val shape = remember(isLast) {
-        NapoleonTheme.shapes.onlyBottomRounded.takeIf { isLast } ?: NapoleonTheme.shapes.noneRounded
+        LeonTheme.shapes.onlyBottomRounded.takeIf { isLast } ?: LeonTheme.shapes.noneRounded
     }
 
     LessonRow(
@@ -58,7 +58,7 @@ private fun RowScope.OnlineLesson(
     onCopyEvent: () -> Unit,
 ) {
     PrefixText(data.number)
-    Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
     Name(
         modifier = Modifier.weight(1f),
@@ -75,7 +75,7 @@ private fun RowScope.OfflineLesson(
     data: ScheduleUiData.Lesson.Offline,
 ) {
     PrefixText(data.number)
-    Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
     Name(
         modifier = Modifier.weight(1f),
@@ -83,7 +83,7 @@ private fun RowScope.OfflineLesson(
     )
 
     if (data.classroom != null) {
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
         SuffixText(data.classroom)
     }
 
@@ -98,7 +98,7 @@ private fun RowScope.TimeLesson(
 ) {
     if (data.time != null) {
         PrefixText(data.time)
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
     }
 
     Name(
@@ -117,7 +117,7 @@ private fun RowScope.EmptyLesson(
 ) {
     if (data.number != null) {
         PrefixText(data.number)
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
     }
 
     Name(
@@ -168,14 +168,14 @@ private fun LessonRow(
 ) {
     Row(
         modifier = Modifier
-            .padding(top = NapoleonTheme.paddings.divider)
+            .padding(top = LeonTheme.paddings.divider)
             .fillMaxWidth()
             .clip(shape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .thenIf(onClick != null) {
                 clickable { onClick?.invoke() }
             }
-            .padding(NapoleonTheme.paddings.startAndHalfVerticalValues),
+            .padding(LeonTheme.paddings.startAndHalfVerticalValues),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )

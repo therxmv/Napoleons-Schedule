@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.extensions.thenIf
 import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEvent
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @Composable
 fun ScheduleContent(
@@ -26,7 +26,7 @@ fun ScheduleContent(
     val dayModifier = remember {
         { isFirst: Boolean ->
             Modifier.thenIf(isFirst.not()) {
-                padding(top = NapoleonTheme.paddings.vertical)
+                padding(top = LeonTheme.paddings.vertical)
             }
         }
     }
@@ -36,12 +36,12 @@ fun ScheduleContent(
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
-        contentPadding = NapoleonTheme.paddings.defaultValues,
+        contentPadding = LeonTheme.paddings.defaultValues,
     ) {
         if (fallbackReason != null) {
             item {
                 FallbackCard(fallbackReason)
-                Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+                Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
             }
         }
 

@@ -13,11 +13,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.navigation.destination.child.Child
 import com.therxmv.napoleon.ui.dashboard.DashboardScreen
 import com.therxmv.napoleon.ui.profile.ProfileScreen
 import com.therxmv.napoleon.ui.schedule.ScheduleScreen
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,7 +91,7 @@ fun BottomNavBar(
     ) {
         data.tabs.forEach { data ->
             NavigationBarItem(
-                colors = NapoleonTheme.colors.navBarItem,
+                colors = LeonTheme.colors.navBarItem,
                 selected = data.isSelected,
                 onClick = data.onClick,
                 icon = {

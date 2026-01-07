@@ -31,9 +31,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.profile.component.ProfileUiData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiEvent
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit2
 import compose.icons.feathericons.User
@@ -47,12 +47,12 @@ fun ProfileContent(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(NapoleonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.defaultValues),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
             UserAvatar()
-            Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
         }
 
         item {
@@ -80,13 +80,13 @@ private fun SpecialtyInfoCard(
     InfoCard(
         titleText = data.facultyLabel,
         nameText = data.faculty,
-        shape = NapoleonTheme.shapes.onlyTopRounded,
+        shape = LeonTheme.shapes.onlyTopRounded,
     )
-    Spacer(modifier = Modifier.height(NapoleonTheme.paddings.divider))
+    Spacer(modifier = Modifier.height(LeonTheme.paddings.divider))
     InfoCard(
         titleText = data.specialtyLabel,
         nameText = data.specialty,
-        shape = NapoleonTheme.shapes.onlyBottomRounded,
+        shape = LeonTheme.shapes.onlyBottomRounded,
     )
 }
 
@@ -138,7 +138,7 @@ private fun CardTitle(
 
         TextButton(
             onClick = onEditClick,
-            colors = NapoleonTheme.colors.textButton,
+            colors = LeonTheme.colors.textButton,
         ) {
             Text(
                 text = editLabel,

@@ -42,9 +42,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 import com.therxmv.napoleon.ui.rating.component.RatingUiState
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 
 @Composable
 fun RatingResult(
@@ -99,12 +99,12 @@ fun RatingResult(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .clip(NapoleonTheme.shapes.onlyTopRounded)
+                .clip(LeonTheme.shapes.onlyTopRounded)
                 .background(MaterialTheme.colorScheme.tertiary)
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(NapoleonTheme.paddings.defaultValues),
+                .padding(LeonTheme.paddings.defaultValues),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+            verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
         ) {
             HorizontalDivider(
                 modifier = Modifier
@@ -124,8 +124,8 @@ fun RatingResult(
                         alpha = dragFraction
                     },
                 columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.horizontal),
-                verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+                horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal),
+                verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
             ) {
                 itemsIndexed(
                     items = data.probabilityInputs,
@@ -165,7 +165,7 @@ private fun InputItem(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done.takeIf { isLast } ?: ImeAction.Next,
             ),
-            colors = NapoleonTheme.colors.tertiaryOutlinedTextField,
+            colors = LeonTheme.colors.tertiaryOutlinedTextField,
             onValueChange = onValueChange,
         )
 

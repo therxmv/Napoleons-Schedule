@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.unit.dp
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
+import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Copy
 import kotlinx.coroutines.launch
@@ -59,7 +59,7 @@ fun CopyTextButton(
     val coroutineScope = rememberCoroutineScope()
 
     TextButton(
-        colors = NapoleonTheme.colors.textButton,
+        colors = LeonTheme.colors.textButton,
         onClick = {
             coroutineScope.launch {
                 localClipboard.copyText(textToCopy)
