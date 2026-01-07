@@ -9,4 +9,5 @@ plugins {
     alias(libs.plugins.firebase.crashlytics).apply(false)
 
     alias(libs.plugins.libres).apply(false)
+    alias(libs.plugins.kotlin.multiplatform.library) apply false
 }

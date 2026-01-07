@@ -15,14 +15,14 @@ plugins {
 }
 
 android {
-    namespace = libs.versions.project.applicationId.get()
+    namespace = libs.versions.project.applicationId.get().plus(".napoleon")
     compileSdk = libs.versions.project.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.project.minSdk.get().toInt()
         targetSdk = libs.versions.project.targetSdk.get().toInt()
 
-        applicationId = libs.versions.project.applicationId.get() + ".androidApp"
+        applicationId = libs.versions.project.applicationId.get().plus(".androidApp")
         versionCode = libs.versions.project.versionCode.get().toInt()
         versionName = libs.versions.project.versionName.get()
     }
@@ -66,6 +66,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":leonui"))
+
                 implementation(compose.runtime)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)

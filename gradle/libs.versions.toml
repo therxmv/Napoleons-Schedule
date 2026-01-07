@@ -1,6 +1,6 @@
 [versions]
 # Project
-project-applicationId = "com.therxmv.napoleon"
+project-applicationId = "com.therxmv"
 project-minSdk = "24"
 project-compileSdk = "36"
 project-targetSdk = "36"
@@ -105,6 +105,7 @@ datastore = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
