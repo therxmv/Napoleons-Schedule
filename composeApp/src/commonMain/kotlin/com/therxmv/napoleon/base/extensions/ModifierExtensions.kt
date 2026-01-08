@@ -19,16 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 
-inline fun Modifier.thenIf(
-    predicate: Boolean,
-    modifier: Modifier.() -> Modifier,
-): Modifier =
-    if (predicate) {
-        this.modifier()
-    } else {
-        this
-    }
-
 // TODO improve
 @Composable
 fun Modifier.shimmerLoading(

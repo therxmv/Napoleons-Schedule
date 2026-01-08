@@ -5,6 +5,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+// TODO change to object
 @Immutable
 data class LeonPaddings(
     val horizontal: Dp = 16.dp,

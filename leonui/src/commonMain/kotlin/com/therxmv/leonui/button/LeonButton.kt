@@ -9,20 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
-
-// TODO move
-inline fun Modifier.applyIf(
-    predicate: Boolean,
-    modifier: Modifier.() -> Modifier,
-): Modifier =
-    if (predicate) {
-        this.modifier()
-    } else {
-        this
-    }
 
 @Composable
 fun LeonButton(

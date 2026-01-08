@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.base.extensions.thenIf
 import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
@@ -28,7 +28,7 @@ fun ScheduleContent(
 ) {
     val dayModifier = remember {
         { isFirst: Boolean ->
-            Modifier.thenIf(isFirst.not()) {
+            Modifier.applyIf(isFirst.not()) {
                 padding(top = LeonTheme.paddings.vertical)
             }
         }

@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+// TODO change to object
 @Immutable
 data class LeonShapes(
     val cornerRadius: Dp = 14.dp,

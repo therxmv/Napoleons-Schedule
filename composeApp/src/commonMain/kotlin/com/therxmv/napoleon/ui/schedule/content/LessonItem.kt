@@ -19,11 +19,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.base.extensions.thenIf
 import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
@@ -172,7 +172,7 @@ private fun LessonRow(
             .fillMaxWidth()
             .clip(shape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
-            .thenIf(onClick != null) {
+            .applyIf(onClick != null) {
                 clickable { onClick?.invoke() }
             }
             .padding(LeonTheme.paddings.startAndHalfVerticalValues),

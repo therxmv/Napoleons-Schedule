@@ -9,7 +9,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.therxmv.leonui.theme.LeonTheme
 
 @Stable
 sealed interface LeonButtonStyle {
@@ -21,7 +20,10 @@ sealed interface LeonButtonStyle {
 
     object Default : LeonButtonStyle {
         override val colors: ButtonColors
-            @Composable get() = LeonTheme.colors.button.default
+            @Composable get() = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.tertiary,
+                contentColor = MaterialTheme.colorScheme.onTertiary,
+            )
 
         override val contentPadding: PaddingValues
             get() = ButtonDefaults.ContentPadding
@@ -30,7 +32,10 @@ sealed interface LeonButtonStyle {
 
     object Outlined : LeonButtonStyle {
         override val colors: ButtonColors
-            @Composable get() = LeonTheme.colors.button.outlined
+            @Composable get() = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+            )
 
         override val contentPadding: PaddingValues
             get() = ButtonDefaults.ContentPadding
@@ -44,7 +49,10 @@ sealed interface LeonButtonStyle {
 
     object Text : LeonButtonStyle {
         override val colors: ButtonColors
-            @Composable get() = LeonTheme.colors.button.text
+            @Composable get() = ButtonDefaults.textButtonColors(
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.surfaceTint,
+            )
 
         override val contentPadding: PaddingValues
             get() = PaddingValues()
