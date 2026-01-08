@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,6 +36,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.state.FallbackCard
@@ -79,31 +79,12 @@ fun EditProfileContent(
         )
         Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.times(2)))
 
-        SaveButton(
+        LeonButton(
             label = data.saveLabel,
             isEnabled = data.isAllSelected,
             onClick = {
                 onEvent(EditProfileUiEvent.SaveProfile)
             },
-        )
-    }
-}
-
-@Composable
-private fun SaveButton(
-    label: String,
-    isEnabled: Boolean,
-    onClick: () -> Unit,
-) {
-    Button(
-        enabled = isEnabled,
-        onClick = onClick,
-        colors = LeonTheme.colors.button,
-    ) {
-        Text(
-            modifier = Modifier.padding(LeonTheme.paddings.defaultValues),
-            text = label,
-            style = MaterialTheme.typography.titleMedium,
         )
     }
 }

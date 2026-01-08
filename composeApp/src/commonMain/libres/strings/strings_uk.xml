@@ -75,7 +75,7 @@
     <string name="rating_name_label">Предмет</string>
     <string name="rating_credits_label">Кредити</string>
     <string name="rating_score_label">Бал</string>
-    <string name="rating_add_label">+ Додати Предмет</string>
+    <string name="rating_add_label">Додати Предмет</string>
 
     <string name="rating_label">Ваш Рейтинг</string>
     <string name="rating_probability">Ймовірність стипендії</string>

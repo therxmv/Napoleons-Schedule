@@ -24,4 +24,5 @@ data class LeonShapes(
         bottomEnd = cornerRadius,
         bottomStart = cornerRadius,
     ),
+    val button: Shape = RoundedCornerShape(cornerRadius.times(2)),
 )

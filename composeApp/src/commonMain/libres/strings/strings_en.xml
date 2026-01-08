@@ -77,7 +77,7 @@
     <string name="rating_name_label">Subject</string>
     <string name="rating_credits_label">Credits</string>
     <string name="rating_score_label">Score</string>
-    <string name="rating_add_label">+ Add Subject</string>
+    <string name="rating_add_label">Add Subject</string>
 
     <string name="rating_label">Your Rating</string>
     <string name="rating_probability">Probability of Grant</string>

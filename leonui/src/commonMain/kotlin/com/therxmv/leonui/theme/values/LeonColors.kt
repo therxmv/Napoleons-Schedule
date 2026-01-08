@@ -5,6 +5,8 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -15,16 +17,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 object LeonColors {
-    val button: ButtonColors
-        @Composable get() = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
-            contentColor = MaterialTheme.colorScheme.onTertiary,
-        )
 
-    val textButton: ButtonColors
-        @Composable get() = ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colorScheme.surfaceTint,
-        )
+    val button = Button
+    object Button {
+        val default: ButtonColors
+            @Composable get() = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.tertiary,
+                contentColor = MaterialTheme.colorScheme.onTertiary,
+            )
+
+        val outlined: ButtonColors
+            @Composable get() = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+            )
+
+        val text: ButtonColors
+            @Composable get() = ButtonDefaults.textButtonColors(
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.surfaceTint,
+            )
+
+        val icon: IconButtonColors
+            @Composable get() = IconButtonDefaults.iconButtonColors()
+
+        val filledIcon: IconButtonColors
+            @Composable get() = IconButtonDefaults.filledIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.tertiary,
+                contentColor = MaterialTheme.colorScheme.onTertiary,
+            )
+    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     val dropDownTextField: TextFieldColors

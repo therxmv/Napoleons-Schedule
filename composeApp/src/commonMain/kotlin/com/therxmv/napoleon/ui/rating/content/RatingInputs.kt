@@ -9,15 +9,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -35,15 +31,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.button.LeonButton
+import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Info
+import compose.icons.feathericons.Plus
 import compose.icons.feathericons.Trash2
 
 @Composable
@@ -66,10 +64,11 @@ fun RatingInputs(
         }
 
         item {
-            AddInputButton(
+            LeonButton(
                 modifier = Modifier.animateItem(),
                 label = data.addInputLabel,
                 onClick = { onEvent(RatingUiEvent.AddSubjectInput) },
+                prefixIcon = FeatherIcons.Plus,
             )
         }
 
@@ -174,8 +173,10 @@ private fun SubjectItem(
             }
         )
 
-        DeleteIcon(
+        LeonIconButton(
             modifier = Modifier.weight(0.5f),
+            icon = FeatherIcons.Trash2,
+            tint = MaterialTheme.colorScheme.onPrimary,
             onClick = {
                 onEvent(RatingUiEvent.DeleteSubjectInput(data.id))
             },
@@ -235,45 +236,8 @@ fun ErrorText(
         text = error,
         size = LeonTextSize.Body2,
         color = MaterialTheme.colorScheme.error,
+        weight = LeonTextWeight.Bold,
     )
-}
-
-@Composable
-private fun DeleteIcon(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
-    IconButton(
-        modifier = modifier,
-        onClick = onClick,
-    ) {
-        Icon(
-            modifier = Modifier.size(20.dp),
-            imageVector = FeatherIcons.Trash2,
-            contentDescription = "Delete",
-            tint = LocalCopyIconColor.current,
-        )
-    }
-}
-
-@Composable
-private fun AddInputButton(
-    modifier: Modifier = Modifier,
-    label: String,
-    onClick: () -> Unit,
-) {
-    Button(
-        modifier = modifier,
-        colors = LeonTheme.colors.button,
-        shape = RoundedCornerShape(LeonTheme.shapes.cornerRadius.times(2)),
-        onClick = onClick,
-    ) {
-        Text(
-            modifier = Modifier.padding(LeonTheme.paddings.defaultValues),
-            text = label,
-            style = MaterialTheme.typography.titleMedium,
-        )
-    }
 }
 
 @Composable

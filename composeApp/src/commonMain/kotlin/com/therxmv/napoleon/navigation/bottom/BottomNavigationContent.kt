@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -14,6 +13,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.Res
@@ -87,9 +87,10 @@ fun TopLeftAppBar(
 private fun AppBarAction(
     data: AppBarData.Action,
 ) {
-    IconButton(onClick = data.onClick) {
-        Icon(imageVector = data.icon, contentDescription = null)
-    }
+    LeonIconButton(
+        icon = data.icon,
+        onClick = data.onClick,
+    )
 }
 
 @Composable

@@ -3,8 +3,9 @@ package com.therxmv.napoleon.ui.timetable.content
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import com.therxmv.leonui.button.LeonButton
+import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.ui.CopyTextButton
@@ -40,14 +41,11 @@ fun TimetableContent(
             )
         },
         dismissButton = {
-            TextButton(
-                colors = LeonTheme.colors.textButton,
-                onClick = {
-                    onEvent(TimetableUiEvent.Dismiss)
-                },
-            ) {
-                Text(data.closeLabel)
-            }
+            LeonButton(
+                style = LeonButtonStyle.Text,
+                label = data.closeLabel,
+                onClick = { onEvent(TimetableUiEvent.Dismiss) },
+            )
         },
     )
 }
