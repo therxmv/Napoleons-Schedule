@@ -139,7 +139,7 @@ fun EmptyDay(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .border(LeonTheme.paddings.divider, color, LeonTheme.shapes.allRounded)
+            .border(LeonTheme.paddings.border, color, LeonTheme.shapes.allRounded)
             .padding(LeonTheme.paddings.defaultValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {

@@ -46,6 +46,8 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.components.uiToolingPreview)
+
+                implementation(libs.icons.feather)
             }
         }
 

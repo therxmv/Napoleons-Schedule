@@ -10,9 +10,10 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.therxmv.leonui.card.LeonCard
+import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiEvent
@@ -37,7 +38,10 @@ fun DashboardContent(
     ) {
         if (data.cacheReason != null) {
             item(span = { GridItemSpan(2) }) {
-                FallbackCard(data.cacheReason)
+                LeonCard(
+                    text = data.cacheReason,
+                    type = LeonCardType.Error,
+                )
             }
         }
 

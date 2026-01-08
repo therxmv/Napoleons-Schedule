@@ -27,9 +27,8 @@ fun LeonButton(
     val colors = style.colors
     Button(
         modifier = modifier
-            .applyIf(style is LeonButtonStyle.Outlined) {
-                val outline = style as LeonButtonStyle.Outlined
-                border(outline.borderWidth, outline.borderColor, LeonTheme.shapes.button)
+            .applyIf(style.withBorder()) {
+                border(LeonTheme.paddings.border, LeonButtonStyle.borderColor, LeonTheme.shapes.button)
             },
         colors = colors,
         shape = LeonTheme.shapes.button,

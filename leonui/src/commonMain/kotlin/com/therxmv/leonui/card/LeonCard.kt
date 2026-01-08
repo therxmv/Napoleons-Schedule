@@ -1,55 +1,62 @@
-package com.therxmv.napoleon.base.state
+package com.therxmv.leonui.card
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.AnnotatedString
+import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
-import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.theme.LeonTheme
-import compose.icons.FeatherIcons
-import compose.icons.feathericons.AlertTriangle
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun FallbackCard(
-    reason: String,
+fun LeonCard(
+    modifier: Modifier = Modifier,
+    text: String,
+    type: LeonCardType,
+) {
+    LeonCard(
+        modifier = modifier,
+        text = AnnotatedString(text),
+        type = type,
+    )
+}
+
+@Composable
+fun LeonCard(
+    modifier: Modifier = Modifier,
+    text: AnnotatedString,
+    type: LeonCardType,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clip(LeonTheme.shapes.allRounded)
-            .background(MaterialTheme.colorScheme.errorContainer)
+            .background(type.containerColor)
+            .applyIf(type.withBorder()) {
+                border(LeonTheme.paddings.border, type.accent, LeonTheme.shapes.allRounded)
+            }
             .padding(LeonTheme.paddings.defaultValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            imageVector = FeatherIcons.AlertTriangle,
-            tint = MaterialTheme.colorScheme.error,
+            imageVector = type.icon,
+            tint = type.accent,
             contentDescription = null,
         )
         Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
 
         LeonText(
-            text = reason,
-            size = LeonTextSize.Body1,
-            color = MaterialTheme.colorScheme.onErrorContainer,
+            text = text,
+            color = type.contentColor,
         )
-    }
-}
-
-@Preview
-@Composable
-private fun FallbackCardPreview() {
-    LeonTheme {
-        FallbackCard("Reason")
     }
 }

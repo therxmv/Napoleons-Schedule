@@ -7,8 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 
 @Stable
 sealed interface LeonButtonStyle {
@@ -39,12 +37,6 @@ sealed interface LeonButtonStyle {
 
         override val contentPadding: PaddingValues
             get() = ButtonDefaults.ContentPadding
-
-        val borderWidth: Dp
-            get() = 2.dp
-
-        val borderColor: Color
-            @Composable get() = MaterialTheme.colorScheme.tertiary
     }
 
     object Text : LeonButtonStyle {
@@ -56,5 +48,13 @@ sealed interface LeonButtonStyle {
 
         override val contentPadding: PaddingValues
             get() = PaddingValues()
+    }
+
+    fun withBorder(): Boolean =
+        this is Outlined
+
+    companion object {
+        val borderColor: Color
+            @Composable get() = MaterialTheme.colorScheme.tertiary
     }
 }

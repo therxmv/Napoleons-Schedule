@@ -1,7 +1,6 @@
 package com.therxmv.napoleon.ui.rating.content
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,38 +8,33 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonIconButton
+import com.therxmv.leonui.card.LeonCard
+import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.text.withLeonLink
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 import compose.icons.FeatherIcons
-import compose.icons.feathericons.Info
 import compose.icons.feathericons.Plus
 import compose.icons.feathericons.Trash2
 
@@ -266,48 +260,19 @@ fun InputField(
 private fun InfoCard(
     data: RatingUiData.Info,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(LeonTheme.paddings.divider, MaterialTheme.colorScheme.surfaceTint, LeonTheme.shapes.allRounded)
-            .padding(LeonTheme.paddings.defaultValues),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = FeatherIcons.Info,
-            tint = MaterialTheme.colorScheme.surfaceTint,
-            contentDescription = null,
-        )
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+    LeonCard(
+        text = buildAnnotatedString {
+            append(data.text)
 
-        Text( // TODO LeonText for AnnotatedString
-            text = buildAnnotatedString {
-                withStyle(
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Normal,
-                    ).toSpanStyle(),
-                ) {
-                    append(data.text)
-                }
-
-                withLink(
-                    LinkAnnotation.Url(
-                        url = data.link,
-                        styles = TextLinkStyles(
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.surfaceTint,
-                            ).toSpanStyle()
-                        ),
-                    )
-                ) {
-                    append(data.linkText)
-                }
-            },
-            style = MaterialTheme.typography.titleMedium.copy(
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontWeight = FontWeight.Normal,
-            ),
-        )
-    }
+            withLeonLink(
+                url = data.link,
+                size = LeonTextSize.Body1,
+                weight = LeonTextWeight.Bold,
+                color = MaterialTheme.colorScheme.surfaceTint,
+            ) {
+                append(data.linkText)
+            }
+        },
+        type = LeonCardType.Info,
+    )
 }

@@ -14,8 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.therxmv.leonui.card.LeonCard
+import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
 
 @Composable
@@ -31,7 +32,10 @@ fun ExamsContent(
     ) {
         if (fallbackReason != null) {
             item {
-                FallbackCard(fallbackReason)
+                LeonCard(
+                    text = fallbackReason,
+                    type = LeonCardType.Error,
+                )
             }
         }
 

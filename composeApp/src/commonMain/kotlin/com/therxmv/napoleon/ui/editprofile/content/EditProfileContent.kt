@@ -37,9 +37,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.button.LeonButton
+import com.therxmv.leonui.card.LeonCard
+import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiEvent
@@ -60,7 +61,10 @@ fun EditProfileContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (fallbackReason != null) {
-            FallbackCard(fallbackReason)
+            LeonCard(
+                text = fallbackReason,
+                type = LeonCardType.Error,
+            )
             Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
         }
 

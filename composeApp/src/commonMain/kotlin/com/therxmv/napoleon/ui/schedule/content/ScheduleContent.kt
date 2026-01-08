@@ -10,10 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.card.LeonCard
+import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.base.state.FallbackCard
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEvent
@@ -43,7 +44,10 @@ fun ScheduleContent(
     ) {
         if (fallbackReason != null) {
             item {
-                FallbackCard(fallbackReason)
+                LeonCard(
+                    text = fallbackReason,
+                    type = LeonCardType.Error,
+                )
                 Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
             }
         }
