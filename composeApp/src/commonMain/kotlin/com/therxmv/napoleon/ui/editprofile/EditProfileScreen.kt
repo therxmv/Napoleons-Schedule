@@ -3,9 +3,9 @@ package com.therxmv.napoleon.ui.editprofile
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.therxmv.leonui.state.LeonLoader
 import com.therxmv.napoleon.base.state.BaseState
-import com.therxmv.napoleon.base.state.ErrorContainer
-import com.therxmv.napoleon.base.state.LoadingContainer
+import com.therxmv.napoleon.base.state.LeonStateError
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileComponent
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.editprofile.content.EditProfileContent
@@ -27,9 +27,9 @@ fun EditProfileScreen(
             )
         }
 
-        BaseState.Loading -> LoadingContainer()
+        BaseState.Loading -> LeonLoader()
 
-        is BaseState.Error -> ErrorContainer(uiState)
+        is BaseState.Error -> LeonStateError(uiState)
 
         BaseState.Idle -> Unit
     }

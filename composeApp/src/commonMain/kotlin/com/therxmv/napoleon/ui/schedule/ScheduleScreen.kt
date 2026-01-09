@@ -8,9 +8,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import com.therxmv.leonui.state.LeonLoader
 import com.therxmv.napoleon.base.state.BaseState
-import com.therxmv.napoleon.base.state.ErrorContainer
-import com.therxmv.napoleon.base.state.LoadingContainer
+import com.therxmv.napoleon.base.state.LeonStateError
 import com.therxmv.napoleon.ui.schedule.component.ScheduleComponent
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEffect
@@ -36,9 +36,9 @@ fun ScheduleScreen(
             )
         }
 
-        BaseState.Loading -> LoadingContainer()
+        BaseState.Loading -> LeonLoader()
 
-        is BaseState.Error -> ErrorContainer(uiState)
+        is BaseState.Error -> LeonStateError(uiState)
 
         BaseState.Idle -> Unit
     }
