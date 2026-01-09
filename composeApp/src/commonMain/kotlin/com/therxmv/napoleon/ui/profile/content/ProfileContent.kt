@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonButtonStyle
+import com.therxmv.leonui.list.LeonDividerType
+import com.therxmv.leonui.list.LeonHorizontalDivider
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
@@ -85,7 +87,12 @@ private fun SpecialtyInfoCard(
         nameText = data.faculty,
         shape = LeonTheme.shapes.onlyTopRounded,
     )
-    Spacer(modifier = Modifier.height(LeonTheme.paddings.divider))
+
+    LeonHorizontalDivider(
+        type = LeonDividerType.Full,
+        color = MaterialTheme.colorScheme.surface,
+    )
+
     InfoCard(
         titleText = data.specialtyLabel,
         nameText = data.specialty,

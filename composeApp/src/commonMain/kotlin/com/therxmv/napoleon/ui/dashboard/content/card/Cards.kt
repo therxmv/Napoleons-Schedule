@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,6 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.list.LeonDividerType
+import com.therxmv.leonui.list.LeonHorizontalDivider
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 
@@ -46,9 +47,9 @@ fun CardDivider(
             .padding(vertical = LeonTheme.paddings.vertical),
         contentAlignment = Alignment.Center,
     ) {
-        HorizontalDivider(
+        LeonHorizontalDivider(
             modifier = Modifier.fillMaxWidth(0.5f),
-            thickness = LeonTheme.paddings.divider,
+            type = LeonDividerType.Full,
         )
     }
 }

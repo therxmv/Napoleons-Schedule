@@ -15,15 +15,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -41,9 +38,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.input.LeonTextInput
 import com.therxmv.leonui.input.LeonTextInputStyle
+import com.therxmv.leonui.list.LeonDividerType
+import com.therxmv.leonui.list.LeonHorizontalDivider
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
@@ -111,11 +109,8 @@ fun RatingResultAndProbability(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
         ) {
-            HorizontalDivider(
-                modifier = Modifier
-                    .width(50.dp)
-                    .clip(CircleShape),
-                thickness = 6.dp,
+            LeonHorizontalDivider(
+                type = LeonDividerType.Small,
                 color = MaterialTheme.colorScheme.onTertiary.copy(0.5f),
             )
 

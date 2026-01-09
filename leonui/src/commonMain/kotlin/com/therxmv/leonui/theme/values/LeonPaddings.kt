@@ -21,8 +21,8 @@ data class LeonPaddings(
         horizontal = horizontal,
         vertical = vertical,
     ),
-    val divider: Dp = 2.dp,
-    val border: Dp = 2.dp,
+    val divider: Dp = 3.dp,
+    val border: Dp = 3.dp,
     val buttonText: PaddingValues = PaddingValues(
         horizontal = 16.dp,
         vertical = 12.dp,

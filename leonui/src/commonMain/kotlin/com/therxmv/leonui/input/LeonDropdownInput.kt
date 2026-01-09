@@ -9,7 +9,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Text
@@ -30,6 +29,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.list.LeonDividerType
+import com.therxmv.leonui.list.LeonHorizontalDivider
 import com.therxmv.leonui.theme.LeonTheme
 
 @Immutable
@@ -93,7 +94,7 @@ fun LeonDropdownInput(
             expanded = isExpanded && data.items.isNotEmpty(),
             onDismissRequest = { focusManager.clearFocus() },
             shape = LeonTheme.shapes.onlyBottomRounded,
-            offset = DpOffset(0.dp, (-6).dp), // removes menu's extra padding
+            offset = DpOffset(0.dp, (-8 + LeonTheme.paddings.divider.value).dp), // removes menu's extra padding
             containerColor = Color.Transparent,
             shadowElevation = 0.dp,
         ) {
@@ -116,8 +117,8 @@ fun LeonDropdownInput(
                 )
 
                 if (isLast.not()) {
-                    HorizontalDivider(
-                        thickness = LeonTheme.paddings.divider,
+                    LeonHorizontalDivider(
+                        type = LeonDividerType.Full,
                         color = MaterialTheme.colorScheme.surface,
                     )
                 }
