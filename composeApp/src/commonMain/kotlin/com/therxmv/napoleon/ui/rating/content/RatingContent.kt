@@ -24,14 +24,14 @@ fun RatingContent(
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
-        RatingInputs(
+        RatingSubjectInputs(
             modifier = Modifier.align(Alignment.TopCenter),
             data = data,
             heightFraction = inputsHeight,
             onEvent = onEvent,
         )
 
-        RatingResult(
+        RatingResultAndProbability(
             modifier = Modifier.align(Alignment.BottomCenter),
             data = data,
             minFraction = resultsSheetHeight,

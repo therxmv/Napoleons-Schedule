@@ -7,10 +7,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -40,6 +42,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.input.LeonTextInput
+import com.therxmv.leonui.input.LeonTextInputStyle
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
@@ -48,7 +52,7 @@ import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 
 @Composable
-fun RatingResult(
+fun RatingResultAndProbability(
     modifier: Modifier = Modifier,
     data: RatingUiData,
     minFraction: Float,
@@ -115,9 +119,20 @@ fun RatingResult(
                 color = MaterialTheme.colorScheme.onTertiary.copy(0.5f),
             )
 
-            ResultText(data.ratingResult)
+            LeonText(
+                text = data.ratingResult,
+                size = LeonTextSize.Title1,
+                color = MaterialTheme.colorScheme.onTertiary,
+                weight = LeonTextWeight.Bold,
+                textAlign = TextAlign.Center,
+            )
 
-            ProbabilityText(data.probabilityResult)
+            LeonText(
+                text = data.probabilityResult,
+                size = LeonTextSize.Title1,
+                color = MaterialTheme.colorScheme.onTertiary,
+                textAlign = TextAlign.Center,
+            )
 
             LazyVerticalGrid(
                 modifier = Modifier
@@ -153,13 +168,16 @@ private fun InputItem(
     isLast: Boolean,
 ) {
     Column {
-        InputTitle(
+        LeonText(
             modifier = Modifier.fillMaxWidth(),
-            title = data.title,
+            text = data.title,
+            color = MaterialTheme.colorScheme.onTertiary,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
-        // TODO add little spacer
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.halfVertical))
 
-        InputField(
+        LeonTextInput(
             modifier = Modifier.fillMaxWidth(),
             value = data.value,
             error = data.error,
@@ -167,8 +185,8 @@ private fun InputItem(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done.takeIf { isLast } ?: ImeAction.Next,
             ),
-            colors = LeonTheme.colors.tertiaryOutlinedTextField,
             onValueChange = onValueChange,
+            style = LeonTextInputStyle.Tertiary,
         )
 
         if (data.error != null) {
@@ -178,43 +196,4 @@ private fun InputItem(
             )
         }
     }
-}
-
-@Composable
-private fun ResultText(
-    result: String,
-) {
-    LeonText(
-        text = result,
-        size = LeonTextSize.Title1,
-        color = MaterialTheme.colorScheme.onTertiary,
-        weight = LeonTextWeight.Bold,
-        textAlign = TextAlign.Center,
-    )
-}
-
-@Composable
-private fun ProbabilityText(
-    result: String,
-) {
-    LeonText(
-        text = result,
-        size = LeonTextSize.Title1,
-        color = MaterialTheme.colorScheme.onTertiary,
-        textAlign = TextAlign.Center,
-    )
-}
-
-@Composable
-private fun InputTitle(
-    modifier: Modifier = Modifier,
-    title: String,
-) {
-    LeonText(
-        modifier = modifier,
-        text = title,
-        color = MaterialTheme.colorScheme.onTertiary,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-    )
 }

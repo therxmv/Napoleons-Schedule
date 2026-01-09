@@ -12,21 +12,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
+import com.therxmv.leonui.input.LeonTextInput
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
@@ -39,7 +36,7 @@ import compose.icons.feathericons.Plus
 import compose.icons.feathericons.Trash2
 
 @Composable
-fun RatingInputs(
+fun RatingSubjectInputs(
     modifier: Modifier = Modifier,
     data: RatingUiData,
     heightFraction: Float,
@@ -113,7 +110,7 @@ private fun SubjectItem(
         horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.halfHorizontal),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        InputField(
+        LeonTextInput(
             modifier = Modifier.weight(2f),
             value = data.name,
             error = data.error,
@@ -131,7 +128,7 @@ private fun SubjectItem(
             }
         )
 
-        InputField(
+        LeonTextInput(
             modifier = Modifier.weight(1f),
             value = data.credits,
             error = data.error,
@@ -149,7 +146,7 @@ private fun SubjectItem(
             }
         )
 
-        InputField(
+        LeonTextInput(
             modifier = Modifier.weight(1f),
             value = data.score,
             error = data.error,
@@ -231,28 +228,6 @@ fun ErrorText(
         size = LeonTextSize.Body2,
         color = MaterialTheme.colorScheme.error,
         weight = LeonTextWeight.Bold,
-    )
-}
-
-@Composable
-fun InputField(
-    modifier: Modifier = Modifier,
-    value: String,
-    error: String?,
-    keyboardOptions: KeyboardOptions,
-    colors: TextFieldColors = LeonTheme.colors.primaryOutlinedTextField,
-    onValueChange: (String) -> Unit,
-) {
-    OutlinedTextField(
-        modifier = modifier,
-        value = value,
-        onValueChange = onValueChange,
-        isError = error != null,
-        shape = LeonTheme.shapes.allRounded,
-        textStyle = TextStyle(fontWeight = FontWeight.Bold),
-        keyboardOptions = keyboardOptions,
-        maxLines = 1,
-        colors = colors,
     )
 }
 
