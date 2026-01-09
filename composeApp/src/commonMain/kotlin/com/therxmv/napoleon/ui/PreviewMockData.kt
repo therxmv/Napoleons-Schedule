@@ -1,5 +1,6 @@
 package com.therxmv.napoleon.ui
 
+import com.therxmv.leonui.input.LeonDropdownInputData
 import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
@@ -53,18 +54,18 @@ object PreviewMockData {
     )
 
     val editProfileUiData = EditProfileUiData(
-        facultyDropdown = EditProfileUiData.Dropdown(
+        facultyDropdown = LeonDropdownInputData(
             placeholder = Res.string.edit_profile_faculty_placeholder,
             value = "ФМІ",
             items = listOf("ФМІ"),
             onClick = {},
         ),
-        yearDropdown = EditProfileUiData.Dropdown(
+        yearDropdown = LeonDropdownInputData(
             placeholder = Res.string.edit_profile_year_placeholder,
             items = listOf("4"),
             onClick = {},
         ),
-        specialtyDropdown = EditProfileUiData.Dropdown(
+        specialtyDropdown = LeonDropdownInputData(
             placeholder = Res.string.edit_profile_specialty_placeholder,
             onClick = {},
         ),

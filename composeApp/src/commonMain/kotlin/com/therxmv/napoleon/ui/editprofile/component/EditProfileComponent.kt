@@ -3,6 +3,7 @@ package com.therxmv.napoleon.ui.editprofile.component
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.therxmv.leonui.input.LeonDropdownInputData
 import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.state.BaseState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
@@ -156,17 +157,17 @@ class EditProfileComponent(
 
     private fun createInitialData(facultyItems: List<String>, facultyName: String?): EditProfileUiData =
         EditProfileUiData(
-            facultyDropdown = EditProfileUiData.Dropdown(
+            facultyDropdown = LeonDropdownInputData(
                 placeholder = Res.string.edit_profile_faculty_placeholder,
                 value = facultyName,
                 items = facultyItems,
                 onClick = ::onFacultyClick,
             ),
-            yearDropdown = EditProfileUiData.Dropdown(
+            yearDropdown = LeonDropdownInputData(
                 placeholder = Res.string.edit_profile_year_placeholder,
                 onClick = ::onYearClick,
             ),
-            specialtyDropdown = EditProfileUiData.Dropdown(
+            specialtyDropdown = LeonDropdownInputData(
                 placeholder = Res.string.edit_profile_specialty_placeholder,
                 onClick = ::onSpecialtyClick,
             ),
