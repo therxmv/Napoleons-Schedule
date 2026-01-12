@@ -71,93 +71,93 @@ class DashboardComponent(
     private fun generateData(): DashboardUiData =
         DashboardUiData(
             widgets = generateWidgets(),
-            cards = generateCards(),
+            tiles = generateTiles(),
         )
 
     private fun generateWidgets(): List<DashboardUiData.Widget> =
         listOf(DashboardUiData.Widget.SkeletonTodaySchedule)
 
-    private fun generateCards(): List<DashboardUiData.Card> {
+    private fun generateTiles(): List<DashboardUiData.Tile> {
         val links = infoRepository.getLinks()
 
         return buildList {
             if (links.excelSchedule != null) {
-                excelCard(links.excelSchedule).also(::add)
+                excelTile(links.excelSchedule).also(::add)
             }
 
-            ratingCard().also(::add)
-            // TODO implement manual input & save examsCard().also(::add)
-            timetableCard().also(::add)
+            ratingTile().also(::add)
+            // TODO implement manual input & save examsTile().also(::add)
+            timetableTile().also(::add)
 
-            add(DashboardUiData.Card.EmptyDivider)
-            siteCard(links.mainSite).also(::add)
-            processCard(links.studyProcess).also(::add)
+            add(DashboardUiData.Tile.EmptyDivider)
+            siteTile(links.mainSite).also(::add)
+            processTile(links.studyProcess).also(::add)
 
-            add(DashboardUiData.Card.EmptyDivider)
-            tgChannelCard(links.telegramChannel).also(::add)
-            tgBotCard(links.telegramBot).also(::add)
+            add(DashboardUiData.Tile.EmptyDivider)
+            tgChannelTile(links.telegramChannel).also(::add)
+            tgBotTile(links.telegramBot).also(::add)
         }
     }
 
-    private fun excelCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.defaultWideRectangle(
+    private fun excelTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultWideRectangle(
             icon = FeatherIcons.Layout,
-            title = Res.string.dashboard_excel_card,
+            title = Res.string.dashboard_excel_tile,
             onClick = { openUrl(url) },
         )
 
-    private fun examsCard(): DashboardUiData.Card =
-        DashboardUiData.Card.defaultSmallSquare(
+    private fun examsTile(): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultSmallSquare(
             icon = FeatherIcons.Calendar,
-            title = Res.string.dashboard_exams_card,
+            title = Res.string.dashboard_exams_tile,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Exams))
             },
         )
 
-    private fun ratingCard(): DashboardUiData.Card =
-        DashboardUiData.Card.defaultSmallSquare(
+    private fun ratingTile(): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultSmallSquare(
             icon = FeatherIcons.DivideCircle,
-            title = Res.string.dashboard_rating_card,
+            title = Res.string.dashboard_rating_tile,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Rating))
             },
         )
 
-    private fun timetableCard(): DashboardUiData.Card =
-        DashboardUiData.Card.defaultSmallSquare(
+    private fun timetableTile(): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultSmallSquare(
             icon = FeatherIcons.Clock,
-            title = Res.string.dashboard_timetable_card,
+            title = Res.string.dashboard_timetable_tile,
             onClick = {
                 onEvent(DashboardUiEvent.OpenDialog(SlotDestination.TimetableDialog))
             },
         )
 
-    private fun tgChannelCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.defaultSmallRectangle(
+    private fun tgChannelTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultSmallRectangle(
             icon = FeatherIcons.Send,
-            title = Res.string.dashboard_tg_channel_card,
+            title = Res.string.dashboard_tg_channel_tile,
             onClick = { openUrl(url) },
         )
 
-    private fun tgBotCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.defaultSmallRectangle(
+    private fun tgBotTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultSmallRectangle(
             icon = FeatherIcons.MessageCircle,
-            title = Res.string.dashboard_tg_bot_card,
+            title = Res.string.dashboard_tg_bot_tile,
             onClick = { openUrl(url) },
         )
 
-    private fun siteCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.defaultSmallRectangle(
+    private fun siteTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultSmallRectangle(
             icon = FeatherIcons.Globe,
-            title = Res.string.dashboard_site_card,
+            title = Res.string.dashboard_site_tile,
             onClick = { openUrl(url) },
         )
 
-    private fun processCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.defaultSmallRectangle(
+    private fun processTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.defaultSmallRectangle(
             icon = FeatherIcons.Folder,
-            title = Res.string.dashboard_process_card,
+            title = Res.string.dashboard_process_tile,
             onClick = { openUrl(url) },
         )
 

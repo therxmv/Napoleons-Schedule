@@ -22,31 +22,31 @@ object PreviewMockData {
 
     val dashboardUiData = DashboardUiData(
         widgets = listOf(DashboardUiData.Widget.SkeletonTodaySchedule),
-        cards = listOf(
-            DashboardUiData.Card.defaultWideRectangle(
+        tiles = listOf(
+            DashboardUiData.Tile.defaultWideRectangle(
                 icon = FeatherIcons.Layout,
-                title = Res.string.dashboard_excel_card,
+                title = Res.string.dashboard_excel_tile,
                 onClick = {},
             ),
-            DashboardUiData.Card.defaultSmallSquare(
+            DashboardUiData.Tile.defaultSmallSquare(
                 icon = FeatherIcons.DivideCircle,
-                title = Res.string.dashboard_rating_card,
+                title = Res.string.dashboard_rating_tile,
                 onClick = {},
             ),
-            DashboardUiData.Card.defaultSmallSquare(
+            DashboardUiData.Tile.defaultSmallSquare(
                 icon = FeatherIcons.Clock,
-                title = Res.string.dashboard_timetable_card,
+                title = Res.string.dashboard_timetable_tile,
                 onClick = {},
             ),
-            DashboardUiData.Card.EmptyDivider,
-            DashboardUiData.Card.defaultSmallRectangle(
+            DashboardUiData.Tile.EmptyDivider,
+            DashboardUiData.Tile.defaultSmallRectangle(
                 icon = FeatherIcons.Globe,
-                title = Res.string.dashboard_site_card,
+                title = Res.string.dashboard_site_tile,
                 onClick = {},
             ),
-            DashboardUiData.Card.defaultSmallRectangle(
+            DashboardUiData.Tile.defaultSmallRectangle(
                 icon = FeatherIcons.Folder,
-                title = Res.string.dashboard_process_card,
+                title = Res.string.dashboard_process_tile,
                 onClick = {},
             ),
         ),

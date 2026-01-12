@@ -1,6 +1,9 @@
 package com.therxmv.napoleon.ui.dashboard.content
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -9,16 +12,18 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
+import com.therxmv.leonui.list.LeonDividerType
+import com.therxmv.leonui.list.LeonHorizontalDivider
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.leonui.tile.LeonTile
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiEvent
-import com.therxmv.napoleon.ui.dashboard.content.card.CardDivider
-import com.therxmv.napoleon.ui.dashboard.content.card.DashboardCard
 import com.therxmv.napoleon.ui.dashboard.content.widget.ScheduleWidget
 import com.therxmv.napoleon.ui.dashboard.content.widget.SkeletonWidget
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -47,7 +52,7 @@ fun DashboardContent(
 
         widgets(data.widgets, onEvent)
 
-        cards(data.cards)
+        tiles(data.tiles)
     }
 }
 
@@ -79,7 +84,7 @@ private fun LazyGridScope.widgets(
     }
 }
 
-private fun LazyGridScope.cards(list: List<DashboardUiData.Card>) {
+private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
     itemsIndexed(
         items = list,
         span = { _, data -> GridItemSpan(data.gridSpan) },
@@ -89,16 +94,32 @@ private fun LazyGridScope.cards(list: List<DashboardUiData.Card>) {
             .takeIf { index % 2 == 0 } ?: MaterialTheme.colorScheme.tertiaryContainer
 
         when (data) {
-            is DashboardUiData.Card.Default -> {
-                DashboardCard(
+            is DashboardUiData.Tile.Default -> {
+                LeonTile(
                     modifier = Modifier.animateItem(),
-                    data = data,
+                    size = data.size,
+                    type = data.type,
+                    icon = data.icon,
+                    title = data.title,
+                    ratio = data.ratio,
                     background = background,
+                    onClick = data.onClick,
                 )
             }
 
-            DashboardUiData.Card.EmptyDivider -> {
-                CardDivider(modifier = Modifier.animateItem())
+            DashboardUiData.Tile.EmptyDivider -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = LeonTheme.paddings.vertical)
+                        .animateItem(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    LeonHorizontalDivider(
+                        modifier = Modifier.fillMaxWidth(0.5f),
+                        type = LeonDividerType.Full,
+                    )
+                }
             }
         }
     }

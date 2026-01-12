@@ -2,12 +2,14 @@ package com.therxmv.napoleon.ui.dashboard.component
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.therxmv.leonui.tile.LeonTileSize
+import com.therxmv.leonui.tile.LeonTileType
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 
 @Immutable
 data class DashboardUiData(
     val widgets: List<Widget>,
-    val cards: List<Card>,
+    val tiles: List<Tile>,
     val cacheReason: String? = null,
 ) {
     sealed interface Widget {
@@ -18,7 +20,7 @@ data class DashboardUiData(
         data class TodaySchedule(val day: ScheduleUiData.Day) : Widget
     }
 
-    sealed class Card(open val gridSpan: Int) {
+    sealed class Tile(open val gridSpan: Int) {
 
         data class Default(
             val icon: ImageVector,
@@ -26,11 +28,28 @@ data class DashboardUiData(
             val onClick: () -> Unit,
             override val gridSpan: Int,
             val ratio: Float,
-        ) : Card(gridSpan)
+        ) : Tile(gridSpan) {
 
-        data object EmptyDivider : Card(2)
+            val size: LeonTileSize
+                get() = if (isSquare() || isSingleColumn().not()) LeonTileSize.Big else LeonTileSize.Small
+
+            val type: LeonTileType
+                get() = if (isSingleColumn() && isSquare()) LeonTileType.Vertical else LeonTileType.Horizontal
+
+            fun isSquare(): Boolean = ratio == SQUARE_RATIO
+            fun isSingleColumn(): Boolean = gridSpan == ONE_COLUMN
+        }
+
+        data object EmptyDivider : Tile(TWO_COLUMN)
 
         companion object {
+
+            private const val SQUARE_RATIO = 1f
+            private const val HALF_RATIO = 2f
+            private const val QUARTER_RATIO = 4f
+
+            private const val ONE_COLUMN = 1
+            private const val TWO_COLUMN = 2
 
             fun defaultSmallSquare(
                 icon: ImageVector,
@@ -40,8 +59,8 @@ data class DashboardUiData(
                 icon = icon,
                 title = title,
                 onClick = onClick,
-                gridSpan = 1,
-                ratio = 1f,
+                gridSpan = ONE_COLUMN,
+                ratio = SQUARE_RATIO,
             )
 
             fun defaultWideRectangle(
@@ -52,8 +71,8 @@ data class DashboardUiData(
                 icon = icon,
                 title = title,
                 onClick = onClick,
-                gridSpan = 2,
-                ratio = 4f,
+                gridSpan = TWO_COLUMN,
+                ratio = QUARTER_RATIO,
             )
 
             fun defaultSmallRectangle(
@@ -64,8 +83,8 @@ data class DashboardUiData(
                 icon = icon,
                 title = title,
                 onClick = onClick,
-                gridSpan = 1,
-                ratio = 2f,
+                gridSpan = ONE_COLUMN,
+                ratio = HALF_RATIO,
             )
         }
     }

@@ -7,14 +7,14 @@
     <string name="bottom_profile_label">Profile</string>
 
     <!--Dashboard-->
-    <string name="dashboard_rating_card">Rating Calculator</string>
-    <string name="dashboard_exams_card">Exams</string>
-    <string name="dashboard_excel_card">Schedule in Excel</string>
-    <string name="dashboard_timetable_card">Breaks Timetable</string>
-    <string name="dashboard_tg_channel_card">Telegram Channel</string>
-    <string name="dashboard_tg_bot_card">Telegram Bot</string>
-    <string name="dashboard_site_card">Website</string>
-    <string name="dashboard_process_card">Educational Process</string>
+    <string name="dashboard_rating_tile">Rating Calculator</string>
+    <string name="dashboard_exams_tile">Exams</string>
+    <string name="dashboard_excel_tile">Schedule in Excel</string>
+    <string name="dashboard_timetable_tile">Breaks Timetable</string>
+    <string name="dashboard_tg_channel_tile">Telegram Channel</string>
+    <string name="dashboard_tg_bot_tile">Telegram Bot</string>
+    <string name="dashboard_site_tile">Website</string>
+    <string name="dashboard_process_tile">Educational Process</string>
 
     <!--Profile-->
     <string name="profile_welcome">Welcome</string>

@@ -7,14 +7,14 @@
     <string name="bottom_profile_label">Профіль</string>
 
     <!--Dashboard-->
-    <string name="dashboard_rating_card">Калькулятор Рейтингу</string>
-    <string name="dashboard_exams_card">Екзамени</string>
-    <string name="dashboard_excel_card">Розклад у Excel</string>
-    <string name="dashboard_timetable_card">Розклад Дзвінків</string>
-    <string name="dashboard_tg_channel_card">Телеграм Канал</string>
-    <string name="dashboard_tg_bot_card">Телеграм Бот</string>
-    <string name="dashboard_site_card">Вебсайт</string>
-    <string name="dashboard_process_card">Освітній Процес</string>
+    <string name="dashboard_rating_tile">Калькулятор Рейтингу</string>
+    <string name="dashboard_exams_tile">Екзамени</string>
+    <string name="dashboard_excel_tile">Розклад у Excel</string>
+    <string name="dashboard_timetable_tile">Розклад Дзвінків</string>
+    <string name="dashboard_tg_channel_tile">Телеграм Канал</string>
+    <string name="dashboard_tg_bot_tile">Телеграм Бот</string>
+    <string name="dashboard_site_tile">Вебсайт</string>
+    <string name="dashboard_process_tile">Освітній Процес</string>
 
     <!--Profile-->
     <string name="profile_welcome">Вітаємо</string>
