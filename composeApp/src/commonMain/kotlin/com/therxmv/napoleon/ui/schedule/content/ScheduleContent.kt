@@ -53,7 +53,7 @@ fun ScheduleContent(
         }
 
         data.days.forEachIndexed { index, day ->
-            dayOfWeek(
+            scheduleDayOfWeekItem(
                 modifier = dayModifier(index == 0),
                 data = day,
                 color = evenColor.takeIf { index % 2 == 0 } ?: oddColor,

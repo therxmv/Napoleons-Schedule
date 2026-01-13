@@ -1,25 +1,15 @@
 package com.therxmv.napoleon.ui.schedule.content
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
@@ -31,25 +21,15 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Link
 
 @Composable
-fun Lesson(
+fun RowScope.ScheduleLessonContent(
     data: ScheduleUiData.Lesson,
-    isLast: Boolean,
     onCopyEvent: () -> Unit,
 ) {
-    val shape = remember(isLast) {
-        LeonTheme.shapes.onlyBottomRounded.takeIf { isLast } ?: LeonTheme.shapes.noneRounded
-    }
-
-    LessonRow(
-        shape = shape,
-        onClick = (data as? ScheduleUiData.Lesson.Online)?.onClick,
-    ) {
-        when (data) {
-            is ScheduleUiData.Lesson.Offline -> OfflineLesson(data)
-            is ScheduleUiData.Lesson.Online -> OnlineLesson(data, onCopyEvent)
-            is ScheduleUiData.Lesson.ByTime -> TimeLesson(data)
-            is ScheduleUiData.Lesson.Empty -> EmptyLesson(data)
-        }
+    when (data) {
+        is ScheduleUiData.Lesson.Offline -> OfflineLesson(data)
+        is ScheduleUiData.Lesson.Online -> OnlineLesson(data, onCopyEvent)
+        is ScheduleUiData.Lesson.ByTime -> TimeLesson(data)
+        is ScheduleUiData.Lesson.Empty -> EmptyLesson(data)
     }
 }
 
@@ -157,26 +137,5 @@ private fun Name(
         text = name,
         overflow = TextOverflow.Ellipsis,
         maxLines = 5,
-    )
-}
-
-@Composable
-private fun LessonRow(
-    shape: Shape,
-    onClick: (() -> Unit)?,
-    content: @Composable (RowScope.() -> Unit),
-) {
-    Row(
-        modifier = Modifier
-            .padding(top = LeonTheme.paddings.divider)
-            .fillMaxWidth()
-            .clip(shape)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .applyIf(onClick != null) {
-                clickable { onClick?.invoke() }
-            }
-            .padding(LeonTheme.paddings.startAndHalfVerticalValues),
-        verticalAlignment = Alignment.CenterVertically,
-        content = content,
     )
 }
