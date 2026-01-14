@@ -6,17 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_NO
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonPreview(content: @Composable () -> Unit) {
-    LeonTheme(isDarkTheme = false) {
-        Surface(content = content)
-    }
+    LeonTheme(content = content)
 }
 
 @Composable
@@ -36,3 +36,15 @@ fun LeonComponentPreview(
         )
     }
 }
+
+// TODO Dark mode doesn't work yet
+@Preview(
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true,
+)
+@Preview(
+    uiMode = UI_MODE_NIGHT_YES,
+)
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.SOURCE)
+annotation class LeonPreview

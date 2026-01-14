@@ -13,7 +13,6 @@ import com.therxmv.napoleon.base.ui.CopyTextButton
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.timetable.component.TimetableUiData
 import com.therxmv.napoleon.ui.timetable.component.TimetableUiEvent
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TimetableContent(
@@ -57,7 +56,7 @@ fun TimetableContent(
     )
 }
 
-@Preview
+@LeonPreview
 @Composable
 private fun TimetableContentPreview() {
     LeonPreview {

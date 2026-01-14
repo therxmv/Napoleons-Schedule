@@ -18,7 +18,6 @@ import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEvent
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ScheduleContent(
@@ -67,7 +66,7 @@ fun ScheduleContent(
     }
 }
 
-@Preview
+@LeonPreview
 @Composable
 private fun ScheduleContentPreview() {
     LeonPreview {

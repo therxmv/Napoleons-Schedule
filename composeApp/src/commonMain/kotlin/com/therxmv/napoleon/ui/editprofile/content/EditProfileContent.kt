@@ -18,7 +18,6 @@ import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiEvent
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun EditProfileContent(
@@ -61,7 +60,7 @@ fun EditProfileContent(
     }
 }
 
-@Preview
+@LeonPreview
 @Composable
 private fun EditProfileContentPreview() {
     LeonPreview {

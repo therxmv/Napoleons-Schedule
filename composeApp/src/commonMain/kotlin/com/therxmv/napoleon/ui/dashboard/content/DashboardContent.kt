@@ -26,7 +26,6 @@ import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiEvent
 import com.therxmv.napoleon.ui.dashboard.content.widget.ScheduleWidget
 import com.therxmv.napoleon.ui.dashboard.content.widget.SkeletonWidget
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun DashboardContent(
@@ -125,7 +124,7 @@ private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
     }
 }
 
-@Preview
+@LeonPreview
 @Composable
 private fun DashboardContentPreview() {
     LeonPreview {

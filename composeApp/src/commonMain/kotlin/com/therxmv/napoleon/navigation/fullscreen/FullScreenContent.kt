@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.napoleon.navigation.destination.child.Child
@@ -18,7 +19,6 @@ import com.therxmv.napoleon.ui.exam.ExamsScreen
 import com.therxmv.napoleon.ui.rating.RatingScreen
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowLeft
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun FullScreenContent(

@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.tooling.preview.Preview
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.button.LeonIconButton
@@ -14,7 +15,6 @@ import com.therxmv.leonui.theme.LeonPreview
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Copy
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 expect suspend fun Clipboard.copyText(text: String)
 

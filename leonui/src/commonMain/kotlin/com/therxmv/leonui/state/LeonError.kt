@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.button.LeonIconButtonStyle
@@ -24,7 +25,6 @@ import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonError(

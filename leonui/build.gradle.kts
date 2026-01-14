@@ -19,33 +19,24 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "leonuiKit"
-
-    iosX64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
-
-    iosArm64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
-
-    iosSimulatorArm64 {
-        binaries.framework {
-            baseName = xcfName
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "leonuiKit"
         }
     }
 
     sourceSets {
         commonMain {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.tooling)
+                implementation(libs.compose.tooling.preview)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.material.icons)
 
                 implementation(libs.icons.feather)
             }
@@ -53,10 +44,8 @@ kotlin {
 
         androidMain {
             dependencies {
-                // For some reason @Preview doesn't work without these dependencies
+                // TODO For some reason @Preview doesn't work without these dependencies
                 implementation(libs.androidx.activity.compose)
-                implementation(compose.uiTooling)
-                implementation(compose.preview)
                 implementation("androidx.emoji2:emoji2:1.5.0")
                 implementation("androidx.customview:customview-poolingcontainer:1.1.0")
             }

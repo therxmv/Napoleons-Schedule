@@ -68,11 +68,11 @@ kotlin {
             dependencies {
                 implementation(project(":leonui"))
 
-                implementation(compose.runtime)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.uiTooling)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.tooling)
+                implementation(libs.compose.tooling.preview)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.material.icons)
                 implementation(libs.compose.backhandler)
 
                 implementation(libs.kotlinx.coroutines.core)

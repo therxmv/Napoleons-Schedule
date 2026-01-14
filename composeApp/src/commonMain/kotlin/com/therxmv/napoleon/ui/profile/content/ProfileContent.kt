@@ -41,7 +41,6 @@ import com.therxmv.napoleon.ui.profile.component.ProfileUiEvent
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit2
 import compose.icons.feathericons.User
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ProfileContent(
@@ -195,7 +194,7 @@ private fun UserAvatar() {
     }
 }
 
-@Preview
+@LeonPreview
 @Composable
 private fun ProfileContentPreview() {
     LeonPreview {

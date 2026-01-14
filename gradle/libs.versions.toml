@@ -10,13 +10,15 @@ project-versionName = "1.1.0"
 # Plugins
 agp = "8.11.1"
 kotlin = "2.2.0"
-composePlugin = "1.8.2"
+composePlugin = "1.10.0"
 firebase = "4.4.3"
 firebase-crashlytics = "3.0.6"
 
 # Libs
 androidx-appcompat = "1.7.1"
 androidx-activity = "1.10.1"
+material3 = "1.9.0"
+material-icons = "1.7.3"
 
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.9.0"
@@ -45,6 +47,12 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composePlugin" }
+compose-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composePlugin" }
+compose-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composePlugin" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
+compose-material-icons = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "material-icons" }
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }

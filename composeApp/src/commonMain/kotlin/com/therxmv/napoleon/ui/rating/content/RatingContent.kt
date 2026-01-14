@@ -10,7 +10,6 @@ import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun RatingContent(
@@ -40,7 +39,7 @@ fun RatingContent(
     }
 }
 
-@Preview
+@LeonPreview
 @Composable
 private fun RatingContentPreview() {
     LeonPreview {

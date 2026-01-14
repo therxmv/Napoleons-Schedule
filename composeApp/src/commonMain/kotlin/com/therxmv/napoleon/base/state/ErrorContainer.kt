@@ -1,9 +1,9 @@
 package com.therxmv.napoleon.base.state
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.therxmv.leonui.state.LeonError
 import com.therxmv.leonui.theme.LeonPreview
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonStateError(
