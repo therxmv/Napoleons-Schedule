@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
 import com.therxmv.leonui.extensions.applyIf
+import com.therxmv.leonui.theme.LeonComponentPreview
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonHorizontalDivider(
@@ -26,4 +28,14 @@ fun LeonHorizontalDivider(
         thickness = type.thickness,
         color = color,
     )
+}
+
+@Preview
+@Composable
+private fun LeonHorizontalDividerPreview() {
+    LeonComponentPreview {
+        LeonHorizontalDivider(type = LeonDividerType.Small)
+
+        LeonHorizontalDivider(type = LeonDividerType.Full)
+    }
 }

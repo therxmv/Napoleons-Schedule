@@ -8,6 +8,6 @@ sealed class LeonDividerType(
     val width: Dp = Dp.Unspecified,
     val thickness: Dp = LeonTheme.paddings.divider,
 ) {
-    object Small : LeonDividerType(width = 50.dp, thickness = LeonTheme.paddings.divider.times(2))
-    object Full : LeonDividerType()
+    data object Small : LeonDividerType(width = 50.dp, thickness = LeonTheme.paddings.divider.times(2))
+    data object Full : LeonDividerType()
 }

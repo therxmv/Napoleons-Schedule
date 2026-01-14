@@ -20,9 +20,11 @@ import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.button.LeonIconButtonStyle
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonError(
@@ -60,5 +62,16 @@ fun LeonError(
                 style = LeonIconButtonStyle.Filled,
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LeonErrorPreview() {
+    LeonComponentPreview {
+        LeonError(
+            message = "This is an example of error message.",
+            onRetry = {},
+        )
     }
 }

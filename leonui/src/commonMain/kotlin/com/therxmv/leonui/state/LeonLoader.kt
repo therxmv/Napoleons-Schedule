@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.theme.LeonComponentPreview
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonLoader(
@@ -22,5 +24,13 @@ fun LeonLoader(
         CircularProgressIndicator(
             modifier = Modifier.size(size),
         )
+    }
+}
+
+@Preview
+@Composable
+private fun LeonLoaderPreview() {
+    LeonComponentPreview {
+        LeonLoader()
     }
 }

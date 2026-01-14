@@ -1,18 +1,21 @@
 package com.therxmv.leonui.input
 
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonTextInput(
     modifier: Modifier = Modifier,
     value: String,
-    error: String?,
-    keyboardOptions: KeyboardOptions,
     onValueChange: (String) -> Unit,
+    error: String? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     style: LeonTextInputStyle = LeonTextInputStyle.Primary,
 ) {
     OutlinedTextField(
@@ -26,4 +29,21 @@ fun LeonTextInput(
         maxLines = 1,
         colors = style.colors,
     )
+}
+
+@Preview
+@Composable
+private fun LeonTextInputPreview() {
+    LeonComponentPreview(color = MaterialTheme.colorScheme.primary) {
+        LeonTextInput(
+            value = "input value",
+            onValueChange = {},
+        )
+
+        LeonTextInput(
+            value = "error value",
+            error = "error",
+            onValueChange = {},
+        )
+    }
 }

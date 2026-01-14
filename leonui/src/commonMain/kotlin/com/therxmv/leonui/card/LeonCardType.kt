@@ -23,7 +23,7 @@ sealed interface LeonCardType {
     val contentColor: Color
         @Composable get
 
-    object Info : LeonCardType {
+    data object Info : LeonCardType {
         override val icon
             get() = FeatherIcons.Info
 
@@ -37,7 +37,7 @@ sealed interface LeonCardType {
             @Composable get() = MaterialTheme.colorScheme.onSurface
     }
 
-    object Error : LeonCardType {
+    data object Error : LeonCardType {
         override val icon
             get() = FeatherIcons.AlertTriangle
 

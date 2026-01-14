@@ -5,6 +5,6 @@ import androidx.compose.runtime.Stable
 @Stable
 sealed interface LeonTileType {
 
-    object Vertical : LeonTileType
-    object Horizontal : LeonTileType
+    data object Vertical : LeonTileType
+    data object Horizontal : LeonTileType
 }

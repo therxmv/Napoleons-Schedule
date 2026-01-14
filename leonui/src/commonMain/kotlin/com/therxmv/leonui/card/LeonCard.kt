@@ -15,7 +15,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.AnnotatedString
 import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun LeonCard(
@@ -59,4 +63,24 @@ fun LeonCard(
             color = type.contentColor,
         )
     }
+}
+
+@Preview
+@Composable
+private fun LeonCardPreview(
+    @PreviewParameter(LeonCardTypeProvider::class) type: LeonCardType,
+) {
+    LeonComponentPreview {
+        LeonCard(
+            text = "This is an example of\n$type LeonCard",
+            type = type,
+        )
+    }
+}
+
+private class LeonCardTypeProvider : PreviewParameterProvider<LeonCardType> {
+    override val values = sequenceOf(
+        LeonCardType.Info,
+        LeonCardType.Error,
+    )
 }

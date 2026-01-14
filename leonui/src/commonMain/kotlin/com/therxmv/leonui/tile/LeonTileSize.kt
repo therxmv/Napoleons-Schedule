@@ -8,6 +8,6 @@ import com.therxmv.leonui.text.LeonTextSize
 @Stable
 sealed class LeonTileSize(val iconSize: Dp, val textSize: LeonTextSize) {
 
-    object Small : LeonTileSize(24.dp, LeonTextSize.Body1)
-    object Big : LeonTileSize(36.dp, LeonTextSize.Title1)
+    data object Small : LeonTileSize(24.dp, LeonTextSize.Body1)
+    data object Big : LeonTileSize(36.dp, LeonTextSize.Title1)
 }

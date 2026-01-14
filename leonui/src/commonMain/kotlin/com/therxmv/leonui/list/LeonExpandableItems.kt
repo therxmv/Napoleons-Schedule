@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +19,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.extensions.applyIf
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LeonExpandableHeader(
@@ -91,4 +95,37 @@ fun LeonEmptyExpandableItem(
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
+}
+
+@Preview
+@Composable
+private fun LeonExpandableItemsPreview() {
+    LeonComponentPreview {
+        LeonExpandableHeader(
+            color = MaterialTheme.colorScheme.tertiary,
+            isExpanded = false,
+            content = { LeonText("Collapsed Header") },
+        )
+
+        LeonEmptyExpandableItem(
+            color = MaterialTheme.colorScheme.tertiary,
+            content = { LeonText("Empty Header") },
+        )
+
+        Column {
+            LeonExpandableHeader(
+                color = MaterialTheme.colorScheme.primary,
+                isExpanded = true,
+                content = { LeonText("Expanded Header") },
+            )
+
+            repeat(4) {
+                LeonExpandableSubItem(
+                    isLast = it == 3,
+                    onClick = {},
+                    content = { LeonText("item$it") },
+                )
+            }
+        }
+    }
 }

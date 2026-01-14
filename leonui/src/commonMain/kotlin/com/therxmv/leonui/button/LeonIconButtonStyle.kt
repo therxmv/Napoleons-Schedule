@@ -12,12 +12,12 @@ sealed interface LeonIconButtonStyle {
     val colors: IconButtonColors
         @Composable get
 
-    object Default : LeonIconButtonStyle {
+    data object Default : LeonIconButtonStyle {
         override val colors: IconButtonColors
             @Composable get() = IconButtonDefaults.iconButtonColors()
     }
 
-    object Filled : LeonIconButtonStyle {
+    data object Filled : LeonIconButtonStyle {
         override val colors: IconButtonColors
             @Composable get() = IconButtonDefaults.filledIconButtonColors(
                 containerColor = MaterialTheme.colorScheme.tertiary,

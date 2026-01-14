@@ -53,7 +53,12 @@ kotlin {
 
         androidMain {
             dependencies {
-
+                // For some reason @Preview doesn't work without these dependencies
+                implementation(libs.androidx.activity.compose)
+                implementation(compose.uiTooling)
+                implementation(compose.preview)
+                implementation("androidx.emoji2:emoji2:1.5.0")
+                implementation("androidx.customview:customview-poolingcontainer:1.1.0")
             }
         }
 

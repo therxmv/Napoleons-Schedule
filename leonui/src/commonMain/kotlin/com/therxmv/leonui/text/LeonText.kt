@@ -9,6 +9,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import com.therxmv.leonui.theme.LeonComponentPreview
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun LeonText(
@@ -59,5 +63,27 @@ fun LeonText(
         ),
         overflow = overflow,
         maxLines = maxLines,
+    )
+}
+
+@Preview
+@Composable
+private fun LeonTextPreview(
+    @PreviewParameter(LeonTextSizeProvider::class) size: LeonTextSize,
+) {
+    val text = "This is an example of $size text."
+    LeonComponentPreview {
+        LeonText(text = text, size = size, weight = LeonTextWeight.Normal)
+
+        LeonText(text = text, size = size, weight = LeonTextWeight.Bold)
+    }
+}
+
+private class LeonTextSizeProvider : PreviewParameterProvider<LeonTextSize> {
+    override val values = sequenceOf(
+        LeonTextSize.Title1,
+        LeonTextSize.Title2,
+        LeonTextSize.Body1,
+        LeonTextSize.Body2,
     )
 }

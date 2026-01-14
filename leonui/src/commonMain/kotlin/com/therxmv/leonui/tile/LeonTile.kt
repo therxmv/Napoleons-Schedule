@@ -27,7 +27,13 @@ import androidx.compose.ui.unit.Dp
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Headphones
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun LeonTile(
@@ -151,5 +157,41 @@ private fun Title(text: String, size: LeonTextSize, color: Color) {
         size = size,
         weight = LeonTextWeight.Bold,
         textAlign = TextAlign.Center,
+    )
+}
+
+@Preview
+@Composable
+private fun LeonTilePreview(
+    @PreviewParameter(LeonTileSizeProvider::class) size: LeonTileSize,
+) {
+    val text = "$size Tile"
+    LeonComponentPreview {
+        LeonTile(
+            size = size,
+            type = LeonTileType.Vertical,
+            icon = FeatherIcons.Headphones,
+            title = text,
+            ratio = 1f,
+            background = MaterialTheme.colorScheme.primary,
+            onClick = {},
+        )
+
+        LeonTile(
+            size = size,
+            type = LeonTileType.Horizontal,
+            icon = FeatherIcons.Headphones,
+            title = text,
+            ratio = 2f,
+            background = MaterialTheme.colorScheme.primary,
+            onClick = {},
+        )
+    }
+}
+
+private class LeonTileSizeProvider : PreviewParameterProvider<LeonTileSize> {
+    override val values = sequenceOf(
+        LeonTileSize.Big,
+        LeonTileSize.Small,
     )
 }

@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.FontWeight
 @Stable
 sealed class LeonTextWeight(val value: FontWeight) {
 
-    object Normal : LeonTextWeight(FontWeight.Normal)
+    data object Normal : LeonTextWeight(FontWeight.Normal)
 
-    object Bold : LeonTextWeight(FontWeight.Bold)
+    data object Bold : LeonTextWeight(FontWeight.Bold)
 }

@@ -12,7 +12,14 @@ import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.ArrowLeft
+import compose.icons.feathericons.ArrowRight
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun LeonButton(
@@ -28,7 +35,11 @@ fun LeonButton(
     Button(
         modifier = modifier
             .applyIf(style.withBorder()) {
-                border(LeonTheme.paddings.border, LeonButtonStyle.borderColor, LeonTheme.shapes.button)
+                border(
+                    LeonTheme.paddings.border,
+                    LeonButtonStyle.borderColor,
+                    LeonTheme.shapes.button
+                )
             },
         colors = colors,
         shape = LeonTheme.shapes.button,
@@ -62,4 +73,45 @@ fun LeonButton(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun LeonButtonPreview(
+    @PreviewParameter(LeonButtonStyleProvider::class) style: LeonButtonStyle,
+) {
+    val label = "Continue"
+    LeonComponentPreview {
+        LeonButton(
+            label = label,
+            style = style,
+            onClick = {},
+        )
+        LeonButton(
+            label = label,
+            style = style,
+            isEnabled = false,
+            onClick = {},
+        )
+        LeonButton(
+            label = label,
+            style = style,
+            prefixIcon = FeatherIcons.ArrowLeft,
+            onClick = {},
+        )
+        LeonButton(
+            label = label,
+            style = style,
+            suffixIcon = FeatherIcons.ArrowRight,
+            onClick = {},
+        )
+    }
+}
+
+private class LeonButtonStyleProvider : PreviewParameterProvider<LeonButtonStyle> {
+    override val values = sequenceOf(
+        LeonButtonStyle.Default,
+        LeonButtonStyle.Outlined,
+        LeonButtonStyle.Text,
+    )
 }

@@ -17,7 +17,7 @@ sealed interface LeonButtonStyle {
     val contentPadding: PaddingValues
         get() = ButtonDefaults.ContentPadding
 
-    object Default : LeonButtonStyle {
+    data object Default : LeonButtonStyle {
         override val colors: ButtonColors
             @Composable get() = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.tertiary,
@@ -25,7 +25,7 @@ sealed interface LeonButtonStyle {
             )
     }
 
-    object Outlined : LeonButtonStyle {
+    data object Outlined : LeonButtonStyle {
         override val colors: ButtonColors
             @Composable get() = ButtonDefaults.outlinedButtonColors(
                 containerColor = Color.Transparent,
@@ -33,7 +33,7 @@ sealed interface LeonButtonStyle {
             )
     }
 
-    object Text : LeonButtonStyle {
+    data object Text : LeonButtonStyle {
         override val colors: ButtonColors
             @Composable get() = ButtonDefaults.textButtonColors(
                 containerColor = Color.Transparent,

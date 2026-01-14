@@ -21,7 +21,7 @@ sealed interface LeonTextInputStyle {
     val textStyle: TextStyle
         get() = LeonTextSize.Body1.toTextStyle(weight = LeonTextWeight.Bold)
 
-    object Primary : LeonTextInputStyle {
+    data object Primary : LeonTextInputStyle {
         override val colors: TextFieldColors
             @Composable get() = getTextFieldColors(
                 accent = MaterialTheme.colorScheme.primary,
@@ -29,7 +29,7 @@ sealed interface LeonTextInputStyle {
             )
     }
 
-    object Tertiary : LeonTextInputStyle {
+   data  object Tertiary : LeonTextInputStyle {
         override val colors: TextFieldColors
             @Composable get() = getTextFieldColors(
                 accent = MaterialTheme.colorScheme.tertiary,
