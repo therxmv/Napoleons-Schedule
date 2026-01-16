@@ -33,7 +33,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.compose.runtime)
-                implementation(libs.compose.tooling)
                 implementation(libs.compose.tooling.preview)
                 implementation(libs.compose.material3)
                 implementation(libs.compose.material.icons)
@@ -46,6 +45,7 @@ kotlin {
             dependencies {
                 // TODO For some reason @Preview doesn't work without these dependencies
                 implementation(libs.androidx.activity.compose)
+                implementation(libs.compose.tooling)
                 implementation("androidx.emoji2:emoji2:1.5.0")
                 implementation("androidx.customview:customview-poolingcontainer:1.1.0")
             }

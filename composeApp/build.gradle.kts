@@ -69,7 +69,6 @@ kotlin {
                 implementation(project(":leonui"))
 
                 implementation(libs.compose.runtime)
-                implementation(libs.compose.tooling)
                 implementation(libs.compose.tooling.preview)
                 implementation(libs.compose.material3)
                 implementation(libs.compose.material.icons)
@@ -97,6 +96,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.androidx.appcompat)
+                implementation(libs.compose.tooling)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.ktor.client.okhttp)
