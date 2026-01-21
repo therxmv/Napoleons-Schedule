@@ -1,27 +1,33 @@
 package com.therxmv.leonui.animation
 
-import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
+import com.therxmv.leonui.theme.LeonPreview
+import com.therxmv.leonui.theme.LeonTheme
 
-// TODO improve
 @Composable
-fun Modifier.shimmerLoading(
+fun Modifier.shimmerAnimation(
     color: Color,
 ): Modifier {
     var size by remember { mutableStateOf(IntSize.Zero) }
@@ -29,28 +35,53 @@ fun Modifier.shimmerLoading(
     val transition = rememberInfiniteTransition()
 
     val translateAnimation by transition.animateFloat(
-        initialValue = -100f,
-        targetValue = size.width * 1.1f,
+        initialValue = START,
+        targetValue = size.width * END_MULTIPLIER,
         animationSpec = infiniteRepeatable(
-            animation = tween(
-                durationMillis = 2000,
-                easing = LinearEasing,
-            ),
+            animation = slowOutFastInAnimation,
             repeatMode = RepeatMode.Restart,
         ),
     )
 
     return onSizeChanged { size = it }.drawBehind {
+        val colors = listOf(
+            color.copy(MIN_ALPHA),
+            color.copy(MAX_ALPHA),
+        )
+        val startXY = translateAnimation - size.width / 2
+        val endXY = translateAnimation * END_MULTIPLIER
+
         drawRect(
             brush = Brush.linearGradient(
-                colorStops = arrayOf(
-                    0f to color.copy(0.3f),
-                    0.5f to color.copy(0.8f),
-                    1f to color.copy(0.3f),
-                ),
-                start = Offset(x = translateAnimation - size.width / 2, y = translateAnimation - size.width / 2),
-                end = Offset(x = translateAnimation * 1.1f, y = translateAnimation * 1.1f),
+                colors = colors + colors.reversed(),
+                start = Offset(x = startXY, y = startXY),
+                end = Offset(x = endXY, y = endXY),
             )
+        )
+    }
+}
+
+private val slowOutFastInAnimation = tween<Float>(
+    durationMillis = 2000,
+    easing = CubicBezierEasing(0.3f, 0.3f, 1f, 0.2f),
+)
+
+private const val MIN_ALPHA = 0.3f
+private const val MAX_ALPHA = 0.7f
+
+private const val START = -100f
+private const val END_MULTIPLIER = 1.1f
+
+@LeonPreview
+@Composable
+private fun ShimmerAnimationPreview() {
+    LeonPreview {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(3f)
+                .clip(LeonTheme.shapes.allRounded)
+                .shimmerAnimation(MaterialTheme.colorScheme.tertiary),
         )
     }
 }
