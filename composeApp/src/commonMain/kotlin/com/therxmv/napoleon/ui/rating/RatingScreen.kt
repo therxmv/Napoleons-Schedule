@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.therxmv.napoleon.base.state.ClearFocusWhenKeyboardIsHidden
+import com.therxmv.leonui.state.ClearFocusWhenKeyboardIsHidden
 import com.therxmv.napoleon.ui.rating.component.RatingComponent
 import com.therxmv.napoleon.ui.rating.content.RatingContent
 

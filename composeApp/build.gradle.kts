@@ -15,14 +15,14 @@ plugins {
 }
 
 android {
-    namespace = libs.versions.project.applicationId.get().plus(".napoleon")
+    namespace = "com.therxmv.napoleon"
     compileSdk = libs.versions.project.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.project.minSdk.get().toInt()
         targetSdk = libs.versions.project.targetSdk.get().toInt()
 
-        applicationId = libs.versions.project.applicationId.get().plus(".napoleon.androidApp")
+        applicationId = "com.therxmv.napoleon.androidApp"
         versionCode = libs.versions.project.versionCode.get().toInt()
         versionName = libs.versions.project.versionName.get()
     }

@@ -3,9 +3,9 @@ package com.therxmv.napoleon.ui.editprofile
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.therxmv.leonui.state.LeonError
 import com.therxmv.leonui.state.LeonLoader
-import com.therxmv.napoleon.base.state.BaseState
-import com.therxmv.napoleon.base.state.LeonStateError
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileComponent
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.editprofile.content.EditProfileContent
@@ -18,7 +18,7 @@ fun EditProfileScreen(
     val uiState = component.uiState.collectAsStateWithLifecycle().value
 
     when (uiState) {
-        is BaseState.Ready<EditProfileUiData> -> {
+        is LeonState.Ready<EditProfileUiData> -> {
             EditProfileContent(
                 modifier = modifier,
                 data = uiState.data,
@@ -27,10 +27,10 @@ fun EditProfileScreen(
             )
         }
 
-        BaseState.Loading -> LeonLoader()
+        LeonState.Loading -> LeonLoader()
 
-        is BaseState.Error -> LeonStateError(uiState)
+        is LeonState.Error -> LeonError(uiState)
 
-        BaseState.Idle -> Unit
+        LeonState.Idle -> Unit
     }
 }

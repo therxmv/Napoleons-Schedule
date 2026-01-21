@@ -3,8 +3,8 @@ package com.therxmv.napoleon.ui.timetable.component
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.base.state.BaseState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.timetable.TimetableRepository
@@ -27,7 +27,7 @@ class TimetableComponent(
 ) : ComponentContext by componentContext {
     private val scope = coroutineScope(SupervisorJob())
 
-    private val _uiState = MutableStateFlow<BaseState<TimetableUiData>>(BaseState.Idle)
+    private val _uiState = MutableStateFlow<LeonState<TimetableUiData>>(LeonState.Idle)
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -37,12 +37,12 @@ class TimetableComponent(
 
     private fun loadData() {
         scope.launch {
-            _uiState.update { BaseState.Ready(createLoadingData()) }
+            _uiState.update { LeonState.Ready(createLoadingData()) }
 
             val result = timetableRepository.getTimetable()
 
             _uiState.update {
-                val state = (it as? BaseState.Ready) ?: return@update it
+                val state = (it as? LeonState.Ready) ?: return@update it
 
                 when (result) {
                     is Result.Success<TimetableModel> -> {

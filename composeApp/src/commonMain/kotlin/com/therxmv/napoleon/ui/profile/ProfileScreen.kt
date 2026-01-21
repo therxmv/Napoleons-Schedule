@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.therxmv.leonui.state.LeonError
 import com.therxmv.leonui.state.LeonLoader
-import com.therxmv.napoleon.base.state.BaseState
-import com.therxmv.napoleon.base.state.LeonStateError
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.ui.profile.component.ProfileComponent
 import com.therxmv.napoleon.ui.profile.component.ProfileUiData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiEvent
@@ -20,7 +20,7 @@ fun ProfileScreen(
     val uiState = component.uiState.collectAsStateWithLifecycle().value
 
     when (uiState) {
-        is BaseState.Ready<ProfileUiData> -> {
+        is LeonState.Ready<ProfileUiData> -> {
             ProfileContent(
                 modifier = modifier,
                 data = uiState.data,
@@ -28,11 +28,11 @@ fun ProfileScreen(
             )
         }
 
-        BaseState.Loading -> LeonLoader()
+        LeonState.Loading -> LeonLoader()
 
-        is BaseState.Error -> LeonStateError(uiState)
+        is LeonState.Error -> LeonError(uiState)
 
-        BaseState.Idle -> Unit
+        LeonState.Idle -> Unit
     }
 
     LaunchedEffect(Unit) {

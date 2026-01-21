@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.base.extensions
+package com.therxmv.leonui.animation
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

@@ -1,4 +1,4 @@
-package com.therxmv.napoleon.base.state
+package com.therxmv.leonui.state
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime

@@ -7,7 +7,7 @@ plugins {
 
 kotlin {
     androidLibrary {
-        namespace = libs.versions.project.applicationId.get().plus(".leonui")
+        namespace = "com.therxmv.leonui"
         compileSdk = libs.versions.project.compileSdk.get().toInt()
         minSdk = libs.versions.project.minSdk.get().toInt()
     }

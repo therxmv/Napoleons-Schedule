@@ -1,22 +1,10 @@
 package com.therxmv.napoleon.data.reminders
 
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.DEFAULT_ALL
-import androidx.core.app.NotificationCompat.PRIORITY_HIGH
 import androidx.core.content.ContextCompat
-import com.therxmv.napoleon.AppActivity
-import com.therxmv.napoleon.R
-import com.therxmv.napoleon.data.reminders.Reminders.REMINDER_BODY
-import com.therxmv.napoleon.data.reminders.Reminders.REMINDER_CHANNEL_ID
-import com.therxmv.napoleon.data.reminders.Reminders.REMINDER_ID
-import com.therxmv.napoleon.data.reminders.Reminders.REMINDER_TITLE
 
 class ReminderReceiver : BroadcastReceiver() {
 
@@ -34,26 +22,26 @@ class ReminderReceiver : BroadcastReceiver() {
     }
 
     private fun NotificationManager.sendReminder(context: Context, intent: Intent) {
-        val id = intent.getIntExtra(REMINDER_ID, DEFAULT_ID)
-        val title = intent.getStringExtra(REMINDER_TITLE)
-        val body = intent.getStringExtra(REMINDER_BODY)
-
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            0,
-            AppActivity.createIntent(context),
-            FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT,
-        )
-
-        val notification = NotificationCompat.Builder(context, REMINDER_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_icon)
-            .setContentTitle(title)
-            .setContentText(body)
-            .setContentIntent(pendingIntent)
-            .setPriority(PRIORITY_HIGH)
-            .setDefaults(DEFAULT_ALL)
-            .build()
-
-        notify(id, notification)
+//        val id = intent.getIntExtra(REMINDER_ID, DEFAULT_ID)
+//        val title = intent.getStringExtra(REMINDER_TITLE)
+//        val body = intent.getStringExtra(REMINDER_BODY)
+//
+//        val pendingIntent = PendingIntent.getActivity(
+//            context,
+//            0,
+//            AppActivity.createIntent(context),
+//            FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT,
+//        )
+//
+//        val notification = NotificationCompat.Builder(context, REMINDER_CHANNEL_ID)
+//            .setSmallIcon(R.drawable.ic_icon)
+//            .setContentTitle(title)
+//            .setContentText(body)
+//            .setContentIntent(pendingIntent)
+//            .setPriority(PRIORITY_HIGH)
+//            .setDefaults(DEFAULT_ALL)
+//            .build()
+//
+//        notify(id, notification)
     }
 }

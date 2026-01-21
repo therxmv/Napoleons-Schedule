@@ -27,6 +27,11 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
 
 @Composable
+fun LeonError(data: LeonState.Error) {
+    LeonError(data.message, data.onRetry)
+}
+
+@Composable
 fun LeonError(
     message: String,
     onRetry: (() -> Unit)? = null,

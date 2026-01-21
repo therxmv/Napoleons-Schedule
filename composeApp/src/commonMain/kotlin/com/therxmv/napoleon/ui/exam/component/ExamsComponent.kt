@@ -3,8 +3,8 @@ package com.therxmv.napoleon.ui.exam.component
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.base.state.BaseState
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
@@ -23,7 +23,7 @@ class ExamsComponent(
 ) : ComponentContext by componentContext {
     private val scope = coroutineScope(SupervisorJob())
 
-    private val _uiState = MutableStateFlow<BaseState<ExamsUiData>>(BaseState.Idle)
+    private val _uiState = MutableStateFlow<LeonState<ExamsUiData>>(LeonState.Idle)
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -32,7 +32,7 @@ class ExamsComponent(
 
     private fun loadData() {
         scope.launch {
-            _uiState.update { BaseState.Loading }
+            _uiState.update { LeonState.Loading }
 
             val profile = profileRepository.getNotNullProfileSync()
 
@@ -41,13 +41,13 @@ class ExamsComponent(
             _uiState.update {
                 when (result) {
                     is Result.Success<ExamsModel> -> {
-                        BaseState.Ready(
+                        LeonState.Ready(
                             data = result.data.toUiData(),
                             cacheReason = result.reason?.message,
                         )
                     }
 
-                    is Result.Failure -> BaseState.Error(Res.string.exams_no_data)
+                    is Result.Failure -> LeonState.Error(Res.string.exams_no_data)
                 }
             }
         }
