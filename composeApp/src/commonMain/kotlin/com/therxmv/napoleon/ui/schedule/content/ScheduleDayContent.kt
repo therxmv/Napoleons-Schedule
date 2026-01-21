@@ -8,7 +8,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -20,6 +19,7 @@ import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
@@ -79,11 +79,11 @@ fun RowScope.ScheduleDayContent(
         modifier = modifier.weight(1f),
         text = data.name,
         size = LeonTextSize.Title2,
-        color = MaterialTheme.colorScheme.contentColorFor(color),
+        color = LeonTheme.colors.contentColorFor(color),
         weight = LeonTextWeight.Bold,
     )
 
-    CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.contentColorFor(color)) {
+    CompositionLocalProvider(LocalCopyIconColor provides LeonTheme.colors.contentColorFor(color)) {
         CopyIconButton(textToCopy = data.toString(), onClick = onCopyEvent)
     }
 }
@@ -97,7 +97,7 @@ fun RowScope.ScheduleEmptyDayContent(
         modifier = modifier.weight(1f),
         text = data.name,
         size = LeonTextSize.Title2,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        color = LeonTheme.colors.onSurfaceVariant,
     )
 }
 

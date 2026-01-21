@@ -1,6 +1,5 @@
 package com.therxmv.leonui.text
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString.Builder
@@ -8,6 +7,7 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.withLink
+import com.therxmv.leonui.theme.LeonTheme
 
 fun LeonTextSize.toTextStyle(
     color: Color = Color.Unspecified,
@@ -24,7 +24,7 @@ fun LeonTextSize.toTextStyle(
 inline fun <R : Any> Builder.withLeonLink(
     url: String,
     size: LeonTextSize = LeonTextSize.Body1,
-    color: Color = MaterialTheme.colorScheme.onSurface,
+    color: Color = LeonTheme.colors.onSurface,
     weight: LeonTextWeight = LeonTextWeight.Normal,
     block: Builder.() -> R,
 ): R =

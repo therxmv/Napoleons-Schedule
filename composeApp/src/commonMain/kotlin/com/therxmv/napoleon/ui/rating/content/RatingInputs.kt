@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,9 +45,9 @@ fun RatingSubjectInputs(
         modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(heightFraction),
-        contentPadding = LeonTheme.paddings.defaultValues,
+        contentPadding = LeonTheme.paddings.baseValues,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
     ) {
         item {
             InfoCard(data.infoData)
@@ -85,7 +84,7 @@ fun RatingSubjectInputs(
             )
 
             if (input.error != null) {
-                Spacer(modifier = Modifier.height(LeonTheme.paddings.halfVertical))
+                Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.skinny))
                 ErrorText(
                     modifier = Modifier.animateItem(),
                     error = input.error,
@@ -105,9 +104,9 @@ private fun SubjectItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(LeonTheme.shapes.allRounded)
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(vertical = LeonTheme.paddings.halfVertical, horizontal = LeonTheme.paddings.halfHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.halfHorizontal),
+            .background(LeonTheme.colors.primary)
+            .padding(vertical = LeonTheme.paddings.vertical.skinny, horizontal = LeonTheme.paddings.horizontal.skinny),
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.skinny),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         LeonTextInput(
@@ -167,7 +166,7 @@ private fun SubjectItem(
         LeonIconButton(
             modifier = Modifier.weight(0.5f),
             icon = FeatherIcons.Trash2,
-            tint = MaterialTheme.colorScheme.onPrimary,
+            tint = LeonTheme.colors.onPrimary,
             onClick = {
                 onEvent(RatingUiEvent.DeleteSubjectInput(data.id))
             },
@@ -185,8 +184,8 @@ private fun InputLabels(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = LeonTheme.paddings.halfHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.halfHorizontal),
+            .padding(horizontal = LeonTheme.paddings.horizontal.skinny),
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.skinny),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         InputLabel(
@@ -226,7 +225,7 @@ fun ErrorText(
         modifier = modifier,
         text = error,
         size = LeonTextSize.Body2,
-        color = MaterialTheme.colorScheme.error,
+        color = LeonTheme.colors.error,
         weight = LeonTextWeight.Bold,
     )
 }
@@ -243,7 +242,7 @@ private fun InfoCard(
                 url = data.link,
                 size = LeonTextSize.Body1,
                 weight = LeonTextWeight.Bold,
-                color = MaterialTheme.colorScheme.surfaceTint,
+                color = LeonTheme.colors.surfaceTint,
             ) {
                 append(data.linkText)
             }

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -51,12 +50,12 @@ fun ProfileContent(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(LeonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.baseValues),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
             UserAvatar()
-            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
         }
 
         item {
@@ -89,7 +88,7 @@ private fun SpecialtyInfoCard(
 
     LeonHorizontalDivider(
         type = LeonDividerType.Full,
-        color = MaterialTheme.colorScheme.surface,
+        color = LeonTheme.colors.surface,
     )
 
     InfoCard(
@@ -109,20 +108,20 @@ private fun InfoCard(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(MaterialTheme.colorScheme.primary)
+            .background(LeonTheme.colors.primary)
             .padding(16.dp)
     ) {
         LeonText(
             modifier = Modifier.weight(1f),
             text = titleText,
             size = LeonTextSize.Title2,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = LeonTheme.colors.onPrimary,
         )
 
         LeonText(
             text = nameText,
             size = LeonTextSize.Title2,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = LeonTheme.colors.onPrimary,
             weight = LeonTextWeight.Bold
         )
     }
@@ -157,8 +156,8 @@ private fun CardTitle(
 @Composable
 private fun UserAvatar() {
     val colors = listOf(
-        MaterialTheme.colorScheme.tertiaryContainer,
-        MaterialTheme.colorScheme.primaryContainer,
+        LeonTheme.colors.tertiaryContainer,
+        LeonTheme.colors.primaryContainer,
     )
     val scale = remember { Animatable(0.2f) }
 
@@ -188,7 +187,7 @@ private fun UserAvatar() {
             modifier = Modifier
                 .fillMaxSize(0.5f),
             imageVector = FeatherIcons.User,
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            tint = LeonTheme.colors.onPrimaryContainer,
             contentDescription = "Avatar",
         )
     }

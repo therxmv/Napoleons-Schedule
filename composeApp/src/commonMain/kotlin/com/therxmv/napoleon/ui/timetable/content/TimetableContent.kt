@@ -23,7 +23,7 @@ fun TimetableContent(
         icon = {
             Icon(imageVector = data.icon, contentDescription = null)
         },
-        iconContentColor = LeonTheme.colors.dialogTint,
+        iconContentColor = LeonTheme.colors.surfaceTint,
         title = {
             LeonText(
                 text = data.title,

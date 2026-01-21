@@ -1,10 +1,10 @@
 package com.therxmv.leonui.card
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
 import compose.icons.feathericons.Info
@@ -28,13 +28,13 @@ sealed interface LeonCardType {
             get() = FeatherIcons.Info
 
         override val accent
-            @Composable get() = MaterialTheme.colorScheme.surfaceTint
+            @Composable get() = LeonTheme.colors.surfaceTint
 
         override val containerColor
             @Composable get() = Color.Transparent
 
         override val contentColor
-            @Composable get() = MaterialTheme.colorScheme.onSurface
+            @Composable get() = LeonTheme.colors.onSurface
     }
 
     data object Error : LeonCardType {
@@ -42,13 +42,13 @@ sealed interface LeonCardType {
             get() = FeatherIcons.AlertTriangle
 
         override val accent
-            @Composable get() = MaterialTheme.colorScheme.error
+            @Composable get() = LeonTheme.colors.error
 
         override val containerColor
-            @Composable get() = MaterialTheme.colorScheme.errorContainer
+            @Composable get() = LeonTheme.colors.errorContainer
 
         override val contentColor
-            @Composable get() = MaterialTheme.colorScheme.onErrorContainer
+            @Composable get() = LeonTheme.colors.onErrorContainer
     }
 
     fun withBorder(): Boolean =

@@ -1,6 +1,6 @@
 package com.therxmv.leonui.list
 
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -18,11 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.leonui.theme.values.LeonSizes.Corner.toCornerRadius
 
 @Composable
 fun LeonExpandableHeader(
@@ -32,26 +31,28 @@ fun LeonExpandableHeader(
     onClick: (() -> Unit)? = null,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val bottomCornerRadius = LeonTheme.shapes.noneCornerRadius.value
-        .takeIf { isExpanded } ?: LeonTheme.shapes.cornerRadius.value
-    val bottomRadius by animateFloatAsState(targetValue = bottomCornerRadius)
+    val bottomRadius by animateDpAsState(targetValue = isExpanded.toCornerRadius())
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(
                 RoundedCornerShape(
-                    topStart = LeonTheme.shapes.cornerRadius,
-                    topEnd = LeonTheme.shapes.cornerRadius,
-                    bottomEnd = bottomRadius.dp,
-                    bottomStart = bottomRadius.dp,
+                    topStart = LeonTheme.sizes.corner.defaultRadius,
+                    topEnd = LeonTheme.sizes.corner.defaultRadius,
+                    bottomEnd = bottomRadius,
+                    bottomStart = bottomRadius,
                 )
             )
             .background(color)
             .applyIf(onClick != null) {
                 clickable(onClick = { onClick?.invoke() })
             }
-            .padding(LeonTheme.paddings.startAndHalfVerticalValues),
+            .padding(
+                start = LeonTheme.paddings.horizontal.base,
+                top = LeonTheme.paddings.vertical.skinny,
+                bottom = LeonTheme.paddings.vertical.skinny,
+            ),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
@@ -68,14 +69,18 @@ fun LeonExpandableSubItem(
 
     Row(
         modifier = Modifier
-            .padding(top = LeonTheme.paddings.divider)
+            .padding(top = LeonTheme.sizes.divider.thin)
             .fillMaxWidth()
             .clip(shape)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(LeonTheme.colors.surfaceVariant)
             .applyIf(onClick != null) {
                 clickable { onClick?.invoke() }
             }
-            .padding(LeonTheme.paddings.startAndHalfVerticalValues),
+            .padding(
+                start = LeonTheme.paddings.horizontal.base,
+                top = LeonTheme.paddings.vertical.skinny,
+                bottom = LeonTheme.paddings.vertical.skinny,
+            ),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
@@ -90,8 +95,8 @@ fun LeonEmptyExpandableItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .border(LeonTheme.paddings.border, color, LeonTheme.shapes.allRounded)
-            .padding(LeonTheme.paddings.defaultValues),
+            .border(LeonTheme.sizes.border, color, LeonTheme.shapes.allRounded)
+            .padding(LeonTheme.paddings.baseValues),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
@@ -102,19 +107,19 @@ fun LeonEmptyExpandableItem(
 private fun LeonExpandableItemsPreview() {
     LeonComponentPreview {
         LeonExpandableHeader(
-            color = MaterialTheme.colorScheme.tertiary,
+            color = LeonTheme.colors.tertiary,
             isExpanded = false,
             content = { LeonText("Collapsed Header") },
         )
 
         LeonEmptyExpandableItem(
-            color = MaterialTheme.colorScheme.tertiary,
+            color = LeonTheme.colors.tertiary,
             content = { LeonText("Empty Header") },
         )
 
         Column {
             LeonExpandableHeader(
-                color = MaterialTheme.colorScheme.primary,
+                color = LeonTheme.colors.primary,
                 isExpanded = true,
                 content = { LeonText("Expanded Header") },
             )

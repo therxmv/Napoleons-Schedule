@@ -3,10 +3,10 @@ package com.therxmv.leonui.button
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
+import com.therxmv.leonui.theme.LeonTheme
 
 @Stable
 sealed interface LeonButtonStyle {
@@ -20,8 +20,8 @@ sealed interface LeonButtonStyle {
     data object Default : LeonButtonStyle {
         override val colors: ButtonColors
             @Composable get() = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.tertiary,
-                contentColor = MaterialTheme.colorScheme.onTertiary,
+                containerColor = LeonTheme.colors.tertiary,
+                contentColor = LeonTheme.colors.onTertiary,
             )
     }
 
@@ -29,7 +29,7 @@ sealed interface LeonButtonStyle {
         override val colors: ButtonColors
             @Composable get() = ButtonDefaults.outlinedButtonColors(
                 containerColor = Color.Transparent,
-                contentColor = MaterialTheme.colorScheme.onSurface,
+                contentColor = LeonTheme.colors.onSurface,
             )
     }
 
@@ -37,7 +37,7 @@ sealed interface LeonButtonStyle {
         override val colors: ButtonColors
             @Composable get() = ButtonDefaults.textButtonColors(
                 containerColor = Color.Transparent,
-                contentColor = MaterialTheme.colorScheme.surfaceTint,
+                contentColor = LeonTheme.colors.surfaceTint,
             )
 
         override val contentPadding: PaddingValues
@@ -49,6 +49,6 @@ sealed interface LeonButtonStyle {
 
     companion object {
         val borderColor: Color
-            @Composable get() = MaterialTheme.colorScheme.tertiary
+            @Composable get() = LeonTheme.colors.tertiary
     }
 }

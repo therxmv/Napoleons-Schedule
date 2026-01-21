@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -39,14 +38,14 @@ private fun RowScope.OnlineLesson(
     onCopyEvent: () -> Unit,
 ) {
     PrefixText(data.number)
-    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
 
     Name(
         modifier = Modifier.weight(1f),
         name = data.name,
     )
 
-    CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+    CompositionLocalProvider(LocalCopyIconColor provides LeonTheme.colors.onSurfaceVariant) {
         CopyIconButton(data.toString(), FeatherIcons.Link, onCopyEvent)
     }
 }
@@ -56,7 +55,7 @@ private fun RowScope.OfflineLesson(
     data: ScheduleUiData.Lesson.Offline,
 ) {
     PrefixText(data.number)
-    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
 
     Name(
         modifier = Modifier.weight(1f),
@@ -64,11 +63,11 @@ private fun RowScope.OfflineLesson(
     )
 
     if (data.classroom != null) {
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
         SuffixText(data.classroom)
     }
 
-    CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+    CompositionLocalProvider(LocalCopyIconColor provides LeonTheme.colors.onSurfaceVariant) {
         CopyIconButton(data.toString())
     }
 }
@@ -79,7 +78,7 @@ private fun RowScope.TimeLesson(
 ) {
     if (data.time != null) {
         PrefixText(data.time)
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
     }
 
     Name(
@@ -87,7 +86,7 @@ private fun RowScope.TimeLesson(
         name = data.name,
     )
 
-    CompositionLocalProvider(LocalCopyIconColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+    CompositionLocalProvider(LocalCopyIconColor provides LeonTheme.colors.onSurfaceVariant) {
         CopyIconButton(data.toString())
     }
 }
@@ -98,7 +97,7 @@ private fun RowScope.EmptyLesson(
 ) {
     if (data.number != null) {
         PrefixText(data.number)
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
     }
 
     Name(
@@ -113,7 +112,7 @@ private fun PrefixText(text: String) {
         modifier = Modifier.sizeIn(minWidth = 24.dp),
         text = text,
         weight = LeonTextWeight.Bold,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        color = LeonTheme.colors.onSurfaceVariant,
     )
 }
 
@@ -123,7 +122,7 @@ private fun SuffixText(text: String) {
         text = text,
         size = LeonTextSize.Body2,
         weight = LeonTextWeight.Bold,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        color = LeonTheme.colors.onSurfaceVariant,
     )
 }
 

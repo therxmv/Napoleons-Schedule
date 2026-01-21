@@ -27,8 +27,8 @@ fun ExamsContent(
 ) {
     LazyColumn(
         modifier = modifier
-            .padding(LeonTheme.paddings.defaultValues),
-        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
+            .padding(LeonTheme.paddings.baseValues),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
     ) {
         if (fallbackReason != null) {
             item {
@@ -58,7 +58,7 @@ private fun EmptyPlaceholderItem(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.onSurface,
+        color = LeonTheme.colors.onSurface,
     )
 }
 
@@ -81,10 +81,10 @@ private fun ExamItem(
         Text(
             text = data.date,
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.surfaceTint,
+            color = LeonTheme.colors.surfaceTint,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
 
         Column {
             Text(
@@ -95,7 +95,7 @@ private fun ExamItem(
             Text(
                 text = data.teacher,
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = LeonTheme.colors.onSurfaceVariant,
             )
         }
     }

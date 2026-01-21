@@ -9,7 +9,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -81,7 +80,7 @@ private fun ShimmerAnimationPreview() {
                 .fillMaxWidth()
                 .aspectRatio(3f)
                 .clip(LeonTheme.shapes.allRounded)
-                .shimmerAnimation(MaterialTheme.colorScheme.tertiary),
+                .shimmerAnimation(LeonTheme.colors.tertiary),
         )
     }
 }

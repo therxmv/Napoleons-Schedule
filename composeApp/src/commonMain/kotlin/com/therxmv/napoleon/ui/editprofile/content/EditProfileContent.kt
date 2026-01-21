@@ -29,7 +29,7 @@ fun EditProfileContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(LeonTheme.paddings.defaultValues)
+            .padding(LeonTheme.paddings.baseValues)
             .focusable(), // Didn't work without focusable on API 26,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -38,17 +38,17 @@ fun EditProfileContent(
                 text = fallbackReason,
                 type = LeonCardType.Error,
             )
-            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
         }
 
         LeonDropdownInput(data = data.facultyDropdown)
-        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
 
         LeonDropdownInput(data = data.yearDropdown)
-        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
 
         LeonDropdownInput(data = data.specialtyDropdown)
-        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.times(2)))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base.times(2)))
 
         LeonButton(
             label = data.saveLabel,

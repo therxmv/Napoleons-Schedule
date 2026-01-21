@@ -1,7 +1,6 @@
 package com.therxmv.leonui.input
 
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
@@ -11,6 +10,7 @@ import androidx.compose.ui.text.TextStyle
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.text.toTextStyle
+import com.therxmv.leonui.theme.LeonTheme
 
 @Stable
 sealed interface LeonTextInputStyle {
@@ -24,16 +24,16 @@ sealed interface LeonTextInputStyle {
     data object Primary : LeonTextInputStyle {
         override val colors: TextFieldColors
             @Composable get() = getTextFieldColors(
-                accent = MaterialTheme.colorScheme.primary,
-                selection = MaterialTheme.colorScheme.tertiary,
+                accent = LeonTheme.colors.primary,
+                selection = LeonTheme.colors.tertiary,
             )
     }
 
-   data  object Tertiary : LeonTextInputStyle {
+    data object Tertiary : LeonTextInputStyle {
         override val colors: TextFieldColors
             @Composable get() = getTextFieldColors(
-                accent = MaterialTheme.colorScheme.tertiary,
-                selection = MaterialTheme.colorScheme.primary,
+                accent = LeonTheme.colors.tertiary,
+                selection = LeonTheme.colors.primary,
             )
     }
 
@@ -41,11 +41,11 @@ sealed interface LeonTextInputStyle {
         @Composable
         private fun getTextFieldColors(accent: Color, selection: Color): TextFieldColors =
             OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                focusedContainerColor = MaterialTheme.colorScheme.surface,
-                disabledContainerColor = MaterialTheme.colorScheme.surface,
-                errorContainerColor = MaterialTheme.colorScheme.surface,
-                unfocusedBorderColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = LeonTheme.colors.surface,
+                focusedContainerColor = LeonTheme.colors.surface,
+                disabledContainerColor = LeonTheme.colors.surface,
+                errorContainerColor = LeonTheme.colors.surface,
+                unfocusedBorderColor = LeonTheme.colors.surface,
                 focusedBorderColor = accent,
                 selectionColors = TextSelectionColors(selection, selection),
             )

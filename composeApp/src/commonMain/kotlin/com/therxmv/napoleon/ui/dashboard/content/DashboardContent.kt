@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,9 +35,9 @@ fun DashboardContent(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(2),
-        contentPadding = LeonTheme.paddings.defaultValues,
-        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal),
-        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
+        contentPadding = LeonTheme.paddings.baseValues,
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.base),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
     ) {
         if (data.cacheReason != null) {
             item(span = { GridItemSpan(2) }) {
@@ -68,7 +67,7 @@ private fun LazyGridScope.widgets(
             DashboardUiData.Widget.SkeletonTodaySchedule -> {
                 SkeletonWidget(
                     modifier = Modifier.animateItem(),
-                    color = MaterialTheme.colorScheme.tertiary,
+                    color = LeonTheme.colors.tertiary,
                 )
             }
 
@@ -89,8 +88,8 @@ private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
         span = { _, data -> GridItemSpan(data.gridSpan) },
         key = { index, data -> "$index-$data" },
     ) { index, data ->
-        val background = MaterialTheme.colorScheme.primaryContainer
-            .takeIf { index % 2 == 0 } ?: MaterialTheme.colorScheme.tertiaryContainer
+        val background = LeonTheme.colors.primaryContainer
+            .takeIf { index % 2 == 0 } ?: LeonTheme.colors.tertiaryContainer
 
         when (data) {
             is DashboardUiData.Tile.Default -> {
@@ -110,7 +109,7 @@ private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = LeonTheme.paddings.vertical)
+                        .padding(vertical = LeonTheme.paddings.vertical.base)
                         .animateItem(),
                     contentAlignment = Alignment.Center,
                 ) {

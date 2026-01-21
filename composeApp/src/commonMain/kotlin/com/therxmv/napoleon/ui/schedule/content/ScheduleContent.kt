@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,17 +28,17 @@ fun ScheduleContent(
     val dayModifier = remember {
         { isFirst: Boolean ->
             Modifier.applyIf(isFirst.not()) {
-                padding(top = LeonTheme.paddings.vertical)
+                padding(top = LeonTheme.paddings.vertical.base)
             }
         }
     }
-    val oddColor = MaterialTheme.colorScheme.tertiary
-    val evenColor = MaterialTheme.colorScheme.primary
+    val oddColor = LeonTheme.colors.tertiary
+    val evenColor = LeonTheme.colors.primary
 
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
-        contentPadding = LeonTheme.paddings.defaultValues,
+        contentPadding = LeonTheme.paddings.baseValues,
     ) {
         if (fallbackReason != null) {
             item {
@@ -47,7 +46,7 @@ fun ScheduleContent(
                     text = fallbackReason,
                     type = LeonCardType.Error,
                 )
-                Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
+                Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
             }
         }
 

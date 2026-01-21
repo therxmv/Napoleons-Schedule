@@ -36,7 +36,7 @@ fun LeonButton(
         modifier = modifier
             .applyIf(style.withBorder()) {
                 border(
-                    LeonTheme.paddings.border,
+                    LeonTheme.sizes.border,
                     LeonButtonStyle.borderColor,
                     LeonTheme.shapes.button
                 )
@@ -58,7 +58,7 @@ fun LeonButton(
         }
 
         LeonText(
-            modifier = Modifier.padding(LeonTheme.paddings.buttonText),
+            modifier = Modifier.padding(LeonTheme.paddings.baseValues),
             text = label,
             weight = LeonTextWeight.Bold,
             color = contentColor,

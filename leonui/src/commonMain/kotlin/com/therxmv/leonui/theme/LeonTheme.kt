@@ -1,11 +1,13 @@
 package com.therxmv.leonui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import com.therxmv.leonui.theme.values.LeonColors
 import com.therxmv.leonui.theme.values.LeonPaddings
 import com.therxmv.leonui.theme.values.LeonShapes
+import com.therxmv.leonui.theme.values.LeonSizes
 
 @Composable
 fun LeonTheme(
@@ -21,9 +23,11 @@ fun LeonTheme(
 }
 
 object LeonTheme {
-    val shapes = LeonShapes()
 
-    val paddings = LeonPaddings()
+    val sizes = LeonSizes
+    val paddings = LeonPaddings
+    val shapes = LeonShapes
 
-    val colors = LeonColors
+    val colors: ColorScheme
+        @Composable get() = MaterialTheme.colorScheme
 }

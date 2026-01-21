@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.union
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -27,10 +26,10 @@ import androidx.compose.ui.backhandler.BackHandler
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.PredictiveBackParams
-import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.StackAnimation
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.navigation.bottom.BottomNavBar
 import com.therxmv.napoleon.navigation.bottom.BottomNavigationContent
 import com.therxmv.napoleon.navigation.bottom.TopLeftAppBar
@@ -92,7 +91,7 @@ private fun ScaffoldChildStack(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface),
+            .background(LeonTheme.colors.surface),
         contentWindowInsets = scaffoldInsets,
         topBar = {
             when (activeChild) {

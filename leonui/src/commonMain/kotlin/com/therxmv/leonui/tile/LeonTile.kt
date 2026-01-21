@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -86,20 +85,20 @@ private fun VerticalTile(
             .clip(LeonTheme.shapes.allRounded)
             .background(background)
             .clickable(onClick = onClick)
-            .padding(LeonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.baseValues),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
             icon = icon,
             size = size.iconSize,
-            color = MaterialTheme.colorScheme.contentColorFor(background),
+            color = LeonTheme.colors.contentColorFor(background),
         )
-        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
         Title(
             text = title,
             size = size.textSize,
-            color = MaterialTheme.colorScheme.contentColorFor(background),
+            color = LeonTheme.colors.contentColorFor(background),
         )
     }
 }
@@ -118,23 +117,23 @@ private fun HorizontalTile(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(ratio)
-            .clip(RoundedCornerShape(LeonTheme.shapes.cornerRadius.times(2)))
+            .clip(RoundedCornerShape(LeonTheme.sizes.corner.largeRadius))
             .background(background)
             .clickable(onClick = onClick)
-            .padding(LeonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.baseValues),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             icon = icon,
             size = size.iconSize,
-            color = MaterialTheme.colorScheme.contentColorFor(background),
+            color = LeonTheme.colors.contentColorFor(background),
         )
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
         Title(
             text = title,
             size = size.textSize,
-            color = MaterialTheme.colorScheme.contentColorFor(background),
+            color = LeonTheme.colors.contentColorFor(background),
         )
     }
 }
@@ -173,7 +172,7 @@ private fun LeonTilePreview(
             icon = FeatherIcons.Headphones,
             title = text,
             ratio = 1f,
-            background = MaterialTheme.colorScheme.primary,
+            background = LeonTheme.colors.primary,
             onClick = {},
         )
 
@@ -183,7 +182,7 @@ private fun LeonTilePreview(
             icon = FeatherIcons.Headphones,
             title = text,
             ratio = 2f,
-            background = MaterialTheme.colorScheme.primary,
+            background = LeonTheme.colors.primary,
             onClick = {},
         )
     }

@@ -21,7 +21,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -103,21 +102,21 @@ fun RatingResultAndProbability(
             modifier = modifier
                 .fillMaxSize()
                 .clip(LeonTheme.shapes.onlyTopRounded)
-                .background(MaterialTheme.colorScheme.tertiary)
+                .background(LeonTheme.colors.tertiary)
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(LeonTheme.paddings.defaultValues),
+                .padding(LeonTheme.paddings.baseValues),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
+            verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
         ) {
             LeonHorizontalDivider(
                 type = LeonDividerType.Small,
-                color = MaterialTheme.colorScheme.onTertiary.copy(0.5f),
+                color = LeonTheme.colors.onTertiary.copy(0.5f),
             )
 
             LeonText(
                 text = data.ratingResult,
                 size = LeonTextSize.Title1,
-                color = MaterialTheme.colorScheme.onTertiary,
+                color = LeonTheme.colors.onTertiary,
                 weight = LeonTextWeight.Bold,
                 textAlign = TextAlign.Center,
             )
@@ -125,7 +124,7 @@ fun RatingResultAndProbability(
             LeonText(
                 text = data.probabilityResult,
                 size = LeonTextSize.Title1,
-                color = MaterialTheme.colorScheme.onTertiary,
+                color = LeonTheme.colors.onTertiary,
                 textAlign = TextAlign.Center,
             )
 
@@ -135,8 +134,8 @@ fun RatingResultAndProbability(
                         alpha = dragFraction
                     },
                 columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal),
-                verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
+                horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.base),
+                verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
             ) {
                 itemsIndexed(
                     items = data.probabilityInputs,
@@ -166,11 +165,11 @@ private fun InputItem(
         LeonText(
             modifier = Modifier.fillMaxWidth(),
             text = data.title,
-            color = MaterialTheme.colorScheme.onTertiary,
+            color = LeonTheme.colors.onTertiary,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
-        Spacer(modifier = Modifier.height(LeonTheme.paddings.halfVertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.skinny))
 
         LeonTextInput(
             modifier = Modifier.fillMaxWidth(),

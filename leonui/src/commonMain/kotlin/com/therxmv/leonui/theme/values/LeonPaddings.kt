@@ -1,30 +1,35 @@
 package com.therxmv.leonui.theme.values
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-// TODO change to object
-@Immutable
-data class LeonPaddings(
-    val horizontal: Dp = 16.dp,
-    val vertical: Dp = 16.dp,
-    val halfHorizontal: Dp = horizontal / 2,
-    val halfVertical: Dp = vertical / 2,
-    val startAndHalfVerticalValues: PaddingValues = PaddingValues(
-        start = horizontal,
-        top = halfVertical,
-        bottom = halfVertical,
-    ),
-    val defaultValues: PaddingValues = PaddingValues(
-        horizontal = horizontal,
-        vertical = vertical,
-    ),
-    val divider: Dp = 3.dp,
-    val border: Dp = 3.dp,
-    val buttonText: PaddingValues = PaddingValues(
-        horizontal = 16.dp,
-        vertical = 12.dp,
-    ),
-)
+object LeonPaddings {
+
+    val horizontal = object : BasePadding {
+        override val base = 16.dp
+
+        override val baggy = 24.dp
+
+        override val skinny = 8.dp
+    }
+
+    val vertical = object : BasePadding {
+        override val base = 16.dp
+
+        override val baggy = 24.dp
+
+        override val skinny = 8.dp
+    }
+
+    val baseValues = PaddingValues(
+        horizontal = horizontal.base,
+        vertical = vertical.base,
+    )
+}
+
+interface BasePadding {
+    val base: Dp
+    val baggy: Dp
+    val skinny: Dp
+}

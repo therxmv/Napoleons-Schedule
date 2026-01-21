@@ -8,10 +8,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -38,6 +37,7 @@ import com.therxmv.leonui.list.LeonDividerType
 import com.therxmv.leonui.list.LeonHorizontalDivider
 import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.leonui.theme.values.LeonSizes.Corner.toCornerRadius
 
 @Immutable
 data class LeonDropdownInputData(
@@ -52,15 +52,14 @@ data class LeonDropdownInputData(
 fun LeonDropdownInput(
     modifier: Modifier = Modifier,
     data: LeonDropdownInputData,
+    style: LeonDropdownInputStyle = LeonDropdownInputStyle.Primary,
 ) {
     val focusManager = LocalFocusManager.current
     var isFocused by remember { mutableStateOf(false) }
     val isEnabled = remember(data) { data.items.isNotEmpty() }
     val isExpanded by derivedStateOf { isFocused && isEnabled }
 
-    val bottomCornerRadius = LeonTheme.shapes.noneCornerRadius
-        .takeIf { isExpanded } ?: LeonTheme.shapes.cornerRadius
-    val bottomRadius by animateDpAsState(targetValue = bottomCornerRadius)
+    val bottomRadius by animateDpAsState(targetValue = isExpanded.toCornerRadius())
 
     ExposedDropdownMenuBox(
         modifier = Modifier
@@ -74,7 +73,7 @@ fun LeonDropdownInput(
         TextField(
             modifier = modifier
                 .fillMaxWidth()
-                .menuAnchor(MenuAnchorType.PrimaryNotEditable),
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable),
             value = data.value.orEmpty(),
             onValueChange = {},
             readOnly = true,
@@ -84,10 +83,10 @@ fun LeonDropdownInput(
             placeholder = {
                 Text(text = data.placeholder)
             },
-            colors = LeonTheme.colors.dropDownTextField,
+            colors = style.colors,
             shape = RoundedCornerShape(
-                topStart = LeonTheme.shapes.cornerRadius,
-                topEnd = LeonTheme.shapes.cornerRadius,
+                topStart = LeonTheme.sizes.corner.defaultRadius,
+                topEnd = LeonTheme.sizes.corner.defaultRadius,
                 bottomEnd = bottomRadius,
                 bottomStart = bottomRadius,
             ),
@@ -102,7 +101,7 @@ fun LeonDropdownInput(
             shape = LeonTheme.shapes.onlyBottomRounded,
             offset = DpOffset(
                 0.dp,
-                (-8 + LeonTheme.paddings.divider.value).dp
+                (-8 + LeonTheme.sizes.divider.thin.value).dp
             ), // removes menu's extra padding
             containerColor = Color.Transparent,
             shadowElevation = 0.dp,
@@ -115,9 +114,9 @@ fun LeonDropdownInput(
                 DropdownMenuItem(
                     modifier = Modifier
                         .clip(shape)
-                        .background(MaterialTheme.colorScheme.tertiary),
+                        .background(LeonTheme.colors.tertiary),
                     text = {
-                        Text(text = item, color = MaterialTheme.colorScheme.onTertiary)
+                        Text(text = item, color = LeonTheme.colors.onTertiary)
                     },
                     onClick = {
                         focusManager.clearFocus()
@@ -128,7 +127,7 @@ fun LeonDropdownInput(
                 if (isLast.not()) {
                     LeonHorizontalDivider(
                         type = LeonDividerType.Full,
-                        color = MaterialTheme.colorScheme.surface,
+                        color = LeonTheme.colors.surface,
                     )
                 }
             }

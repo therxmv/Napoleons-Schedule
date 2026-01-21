@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -99,11 +99,19 @@ fun BottomNavBar(
 ) {
     NavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = LeonTheme.colors.surface,
     ) {
         data.tabs.forEach { data ->
             NavigationBarItem(
-                colors = LeonTheme.colors.navBarItem,
+                colors = NavigationBarItemColors(
+                    selectedIconColor = LeonTheme.colors.onPrimary,
+                    selectedTextColor = LeonTheme.colors.onSurface,
+                    selectedIndicatorColor = LeonTheme.colors.primary,
+                    unselectedIconColor = LeonTheme.colors.onSurface,
+                    unselectedTextColor = LeonTheme.colors.onSurface,
+                    disabledIconColor = LeonTheme.colors.onSurface,
+                    disabledTextColor = LeonTheme.colors.onSurface
+                ),
                 selected = data.isSelected,
                 onClick = data.onClick,
                 icon = {

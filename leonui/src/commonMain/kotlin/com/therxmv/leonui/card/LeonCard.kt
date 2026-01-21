@@ -46,9 +46,9 @@ fun LeonCard(
             .clip(LeonTheme.shapes.allRounded)
             .background(type.containerColor)
             .applyIf(type.withBorder()) {
-                border(LeonTheme.paddings.border, type.accent, LeonTheme.shapes.allRounded)
+                border(LeonTheme.sizes.border, type.accent, LeonTheme.shapes.allRounded)
             }
-            .padding(LeonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.baseValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -56,7 +56,7 @@ fun LeonCard(
             tint = type.accent,
             contentDescription = null,
         )
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
 
         LeonText(
             text = text,

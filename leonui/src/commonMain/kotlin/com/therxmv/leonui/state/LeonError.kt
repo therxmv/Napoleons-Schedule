@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,10 +45,10 @@ fun LeonError(
         Icon(
             modifier = Modifier.size(50.dp),
             imageVector = FeatherIcons.AlertTriangle,
-            tint = MaterialTheme.colorScheme.error,
+            tint = LeonTheme.colors.error,
             contentDescription = null,
         )
-        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
 
         LeonText(
             text = message,

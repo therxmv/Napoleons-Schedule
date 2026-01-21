@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,16 +21,16 @@ fun LeonPreview(content: @Composable () -> Unit) {
 @Composable
 fun LeonComponentPreview(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surface,
+    color: Color = LeonTheme.colors.surface,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     LeonTheme(isDarkTheme = false) {
         Column(
             modifier = modifier
                 .background(color)
-                .padding(LeonTheme.paddings.defaultValues),
+                .padding(LeonTheme.paddings.baseValues),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical),
+            verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
             content = content,
         )
     }

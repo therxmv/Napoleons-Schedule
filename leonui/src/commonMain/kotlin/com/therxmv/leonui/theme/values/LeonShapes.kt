@@ -1,29 +1,24 @@
 package com.therxmv.leonui.theme.values
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Immutable
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 
-// TODO change to object
-@Immutable
-data class LeonShapes(
-    val cornerRadius: Dp = 14.dp,
-    val noneCornerRadius: Dp = 4.dp,
-    val onlyTopRounded: Shape = RoundedCornerShape(
-        topEnd = cornerRadius,
-        topStart = cornerRadius,
-        bottomEnd = noneCornerRadius,
-        bottomStart = noneCornerRadius,
-    ),
-    val allRounded: Shape = RoundedCornerShape(cornerRadius),
-    val noneRounded: Shape = RoundedCornerShape(noneCornerRadius),
-    val onlyBottomRounded: Shape = RoundedCornerShape(
-        topEnd = noneCornerRadius,
-        topStart = noneCornerRadius,
-        bottomEnd = cornerRadius,
-        bottomStart = cornerRadius,
-    ),
-    val button: Shape = RoundedCornerShape(cornerRadius.times(2)),
-)
+object LeonShapes {
+
+    val allRounded = RoundedCornerShape(LeonSizes.corner.defaultRadius)
+    val noneRounded = RoundedCornerShape(LeonSizes.corner.zeroRadius)
+
+    val onlyTopRounded = RoundedCornerShape(
+        topEnd = LeonSizes.corner.defaultRadius,
+        topStart = LeonSizes.corner.defaultRadius,
+        bottomEnd = LeonSizes.corner.zeroRadius,
+        bottomStart = LeonSizes.corner.zeroRadius,
+    )
+    val onlyBottomRounded = RoundedCornerShape(
+        topEnd = LeonSizes.corner.zeroRadius,
+        topStart = LeonSizes.corner.zeroRadius,
+        bottomEnd = LeonSizes.corner.defaultRadius,
+        bottomStart = LeonSizes.corner.defaultRadius,
+    )
+
+    val button = RoundedCornerShape(LeonSizes.corner.largeRadius)
+}
