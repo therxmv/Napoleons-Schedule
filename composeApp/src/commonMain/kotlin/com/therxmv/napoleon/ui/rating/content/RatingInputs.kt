@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -100,12 +101,13 @@ private fun SubjectItem(
     data: RatingUiData.SubjectInput,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
+    val padding = LeonTheme.paddings.vertical.skinny
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(LeonTheme.shapes.allRounded)
+            .clip(RoundedCornerShape(size = LeonTheme.sizes.corner.defaultRadius + padding)) // To make outer radius look like inner
             .background(LeonTheme.colors.primary)
-            .padding(vertical = LeonTheme.paddings.vertical.skinny, horizontal = LeonTheme.paddings.horizontal.skinny),
+            .padding(padding),
         horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.skinny),
         verticalAlignment = Alignment.CenterVertically,
     ) {

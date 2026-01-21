@@ -4,7 +4,6 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +37,7 @@ import com.therxmv.leonui.list.LeonHorizontalDivider
 import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.leonui.theme.values.LeonSizes.Corner.toCornerRadius
+import com.therxmv.leonui.theme.values.RoundedCornerShape
 
 @Immutable
 data class LeonDropdownInputData(
@@ -85,10 +85,8 @@ fun LeonDropdownInput(
             },
             colors = style.colors,
             shape = RoundedCornerShape(
-                topStart = LeonTheme.sizes.corner.defaultRadius,
-                topEnd = LeonTheme.sizes.corner.defaultRadius,
-                bottomEnd = bottomRadius,
-                bottomStart = bottomRadius,
+                top = LeonTheme.sizes.corner.defaultRadius,
+                bottom = bottomRadius,
             ),
             enabled = data.items.isNotEmpty(),
             textStyle = TextStyle(fontWeight = FontWeight.Bold),
@@ -98,7 +96,7 @@ fun LeonDropdownInput(
             modifier = Modifier.exposedDropdownSize(),
             expanded = isExpanded && data.items.isNotEmpty(),
             onDismissRequest = { focusManager.clearFocus() },
-            shape = LeonTheme.shapes.onlyBottomRounded,
+            shape = LeonTheme.shapes.onlyBottomRounded(),
             offset = DpOffset(
                 0.dp,
                 (-8 + LeonTheme.sizes.divider.thin.value).dp
@@ -108,7 +106,7 @@ fun LeonDropdownInput(
         ) {
             data.items.forEachIndexed { index, item ->
                 val isLast = index == data.items.lastIndex
-                val shape = LeonTheme.shapes.onlyBottomRounded
+                val shape = LeonTheme.shapes.onlyBottomRounded()
                     .takeIf { isLast } ?: LeonTheme.shapes.noneRounded
 
                 DropdownMenuItem(

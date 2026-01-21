@@ -83,7 +83,7 @@ private fun SpecialtyInfoCard(
     InfoCard(
         titleText = data.facultyLabel,
         nameText = data.faculty,
-        shape = LeonTheme.shapes.onlyTopRounded,
+        shape = LeonTheme.shapes.onlyTopRounded(),
     )
 
     LeonHorizontalDivider(
@@ -94,7 +94,7 @@ private fun SpecialtyInfoCard(
     InfoCard(
         titleText = data.specialtyLabel,
         nameText = data.specialty,
-        shape = LeonTheme.shapes.onlyBottomRounded,
+        shape = LeonTheme.shapes.onlyBottomRounded(),
     )
 }
 

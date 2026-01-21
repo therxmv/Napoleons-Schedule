@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +21,7 @@ import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.leonui.theme.values.LeonSizes.Corner.toCornerRadius
+import com.therxmv.leonui.theme.values.RoundedCornerShape
 
 @Composable
 fun LeonExpandableHeader(
@@ -38,10 +38,8 @@ fun LeonExpandableHeader(
             .fillMaxWidth()
             .clip(
                 RoundedCornerShape(
-                    topStart = LeonTheme.sizes.corner.defaultRadius,
-                    topEnd = LeonTheme.sizes.corner.defaultRadius,
-                    bottomEnd = bottomRadius,
-                    bottomStart = bottomRadius,
+                    top = LeonTheme.sizes.corner.defaultRadius,
+                    bottom = bottomRadius,
                 )
             )
             .background(color)
@@ -64,7 +62,7 @@ fun LeonExpandableSubItem(
     onClick: (() -> Unit)?,
     content: @Composable (RowScope.() -> Unit),
 ) {
-    val shape = LeonTheme.shapes.onlyBottomRounded.takeIf { isLast }
+    val shape = LeonTheme.shapes.onlyBottomRounded().takeIf { isLast }
         ?: LeonTheme.shapes.noneRounded
 
     Row(

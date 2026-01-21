@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.therxmv.leonui.input.LeonTextInput
 import com.therxmv.leonui.input.LeonTextInputStyle
 import com.therxmv.leonui.list.LeonDividerType
@@ -45,6 +46,7 @@ import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.leonui.theme.values.RoundedCornerShape
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 
@@ -101,7 +103,7 @@ fun RatingResultAndProbability(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .clip(LeonTheme.shapes.onlyTopRounded)
+                .clip(RoundedCornerShape(top = LeonTheme.sizes.corner.largeRadius, bottom = 0.dp))
                 .background(LeonTheme.colors.tertiary)
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(LeonTheme.paddings.baseValues),

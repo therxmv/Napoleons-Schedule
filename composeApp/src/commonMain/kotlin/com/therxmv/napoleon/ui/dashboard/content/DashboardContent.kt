@@ -109,12 +109,12 @@ private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = LeonTheme.paddings.vertical.base)
+                        .padding(vertical = LeonTheme.paddings.vertical.skinny)
                         .animateItem(),
                     contentAlignment = Alignment.Center,
                 ) {
                     LeonHorizontalDivider(
-                        modifier = Modifier.fillMaxWidth(0.5f),
+                        modifier = Modifier.fillMaxWidth(0.4f),
                         type = LeonDividerType.Full,
                     )
                 }

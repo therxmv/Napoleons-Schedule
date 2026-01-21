@@ -48,7 +48,7 @@ fun EditProfileContent(
         Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
 
         LeonDropdownInput(data = data.specialtyDropdown)
-        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base.times(2)))
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.baggy))
 
         LeonButton(
             label = data.saveLabel,

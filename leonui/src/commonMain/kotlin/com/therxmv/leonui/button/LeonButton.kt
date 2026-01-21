@@ -58,7 +58,10 @@ fun LeonButton(
         }
 
         LeonText(
-            modifier = Modifier.padding(LeonTheme.paddings.baseValues),
+            modifier = Modifier.padding(
+                horizontal = LeonTheme.paddings.horizontal.skinny,
+                vertical = LeonTheme.paddings.vertical.base,
+            ),
             text = label,
             weight = LeonTextWeight.Bold,
             color = contentColor,

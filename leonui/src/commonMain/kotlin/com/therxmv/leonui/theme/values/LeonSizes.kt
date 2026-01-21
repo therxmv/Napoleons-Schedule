@@ -7,11 +7,11 @@ object LeonSizes {
 
     val corner = Corner
     object Corner {
-        val defaultRadius = 14.dp
-
-        val largeRadius = 28.dp
-
         val zeroRadius = 4.dp
+
+        val defaultRadius = 16.dp
+
+        val largeRadius = 32.dp
 
         fun Boolean.toCornerRadius(): Dp =
             if (this) zeroRadius else defaultRadius
