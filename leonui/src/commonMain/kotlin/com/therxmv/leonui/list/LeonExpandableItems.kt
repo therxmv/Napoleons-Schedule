@@ -59,7 +59,7 @@ fun LeonExpandableHeader(
 @Composable
 fun LeonExpandableSubItem(
     isLast: Boolean,
-    onClick: (() -> Unit)?,
+    onClick: (() -> Unit)? = null,
     content: @Composable (RowScope.() -> Unit),
 ) {
     val shape = LeonTheme.shapes.onlyBottomRounded().takeIf { isLast }

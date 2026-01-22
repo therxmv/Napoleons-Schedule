@@ -85,9 +85,10 @@ class DashboardComponent(
                 excelTile(links.excelSchedule).also(::add)
             }
 
-            ratingTile().also(::add)
-            // TODO implement manual input & save examsTile().also(::add)
+            examsTile().also(::add)
             timetableTile().also(::add)
+
+            ratingTile().also(::add)
 
             add(DashboardUiData.Tile.EmptyDivider)
             siteTile(links.mainSite).also(::add)
@@ -100,14 +101,14 @@ class DashboardComponent(
     }
 
     private fun excelTile(url: String): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultWideRectangle(
+        DashboardUiData.Tile.wideRectangle(
             icon = FeatherIcons.Layout,
             title = Res.string.dashboard_excel_tile,
             onClick = { openUrl(url) },
         )
 
     private fun examsTile(): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultSmallSquare(
+        DashboardUiData.Tile.smallSquare(
             icon = FeatherIcons.Calendar,
             title = Res.string.dashboard_exams_tile,
             onClick = {
@@ -116,7 +117,7 @@ class DashboardComponent(
         )
 
     private fun ratingTile(): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultSmallSquare(
+        DashboardUiData.Tile.wideRectangle(
             icon = FeatherIcons.DivideCircle,
             title = Res.string.dashboard_rating_tile,
             onClick = {
@@ -125,7 +126,7 @@ class DashboardComponent(
         )
 
     private fun timetableTile(): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultSmallSquare(
+        DashboardUiData.Tile.smallSquare(
             icon = FeatherIcons.Clock,
             title = Res.string.dashboard_timetable_tile,
             onClick = {
@@ -134,28 +135,28 @@ class DashboardComponent(
         )
 
     private fun tgChannelTile(url: String): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultSmallRectangle(
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Send,
             title = Res.string.dashboard_tg_channel_tile,
             onClick = { openUrl(url) },
         )
 
     private fun tgBotTile(url: String): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultSmallRectangle(
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.MessageCircle,
             title = Res.string.dashboard_tg_bot_tile,
             onClick = { openUrl(url) },
         )
 
     private fun siteTile(url: String): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultSmallRectangle(
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Globe,
             title = Res.string.dashboard_site_tile,
             onClick = { openUrl(url) },
         )
 
     private fun processTile(url: String): DashboardUiData.Tile =
-        DashboardUiData.Tile.defaultSmallRectangle(
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Folder,
             title = Res.string.dashboard_process_tile,
             onClick = { openUrl(url) },

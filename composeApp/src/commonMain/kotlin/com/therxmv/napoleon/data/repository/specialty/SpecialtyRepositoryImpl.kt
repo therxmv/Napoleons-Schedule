@@ -6,6 +6,7 @@ import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
 import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
+import com.therxmv.napoleon.data.source.remote.mock.MockData
 import com.therxmv.napoleon.data.source.remote.napoleon.NapoleonApi
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.toModel
@@ -59,14 +60,15 @@ class SpecialtyRepositoryImpl(
 
         return cachedResult ?: Result.of(
             block = {
-                napoleonApi
-                    .getExamsBySpecialty(
-                        faculty = profile.facultyPath,
-                        year = profile.year,
-                        specialty = profile.specialtyName,
-                    )
-                    .also { dataStoreSource.setExamsBySpecialty(profile.specialtyName, it) }
-                    .toModel()
+                MockData.examsDto.toModel()
+//                napoleonApi
+//                    .getExamsBySpecialty(
+//                        faculty = profile.facultyPath,
+//                        year = profile.year,
+//                        specialty = profile.specialtyName,
+//                    )
+//                    .also { dataStoreSource.setExamsBySpecialty(profile.specialtyName, it) }
+//                    .toModel()
             },
             fallbackBlock = {
                 requireNotNull(dataStoreSource.getExamsBySpecialty(profile.specialtyName)?.toModel())

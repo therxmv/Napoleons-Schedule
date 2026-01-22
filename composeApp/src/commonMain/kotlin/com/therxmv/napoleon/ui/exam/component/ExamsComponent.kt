@@ -54,29 +54,29 @@ class ExamsComponent(
     }
 
     private fun ExamsModel.toUiData(): ExamsUiData {
-        val emptyPlaceholder = ExamsUiData.Item.EmptyPlaceholder(Res.string.exams_no_data)
-        val exams = exams.map {
-            ExamsUiData.Item.Exam(
-                teacher = it.teacher,
-                lesson = it.lesson,
-                date = it.date,
-            )
-        }.ifEmpty { listOf(emptyPlaceholder) }
+        val emptyPlaceholder = listOf(ExamsUiData.Item.EmptyPlaceholder(Res.string.exams_no_data))
+        val examData = ExamsUiData.ItemsData(
+            title = Res.string.exams_list_title,
+            items = exams.map {
+                ExamsUiData.Item.Exam(
+                    teacher = it.teacher,
+                    name = it.lesson,
+                    date = it.date,
+                )
+            }.ifEmpty { emptyPlaceholder },
+        )
 
-        val zalik = zalik.map {
-            ExamsUiData.Item.Zalik(
-                lesson = it.lesson,
-            )
-        }.ifEmpty { listOf(emptyPlaceholder) }
+        val zalikData = ExamsUiData.ItemsData(
+            title = Res.string.zalik_list_title,
+            items = zalik.map {
+                ExamsUiData.Item.Zalik(
+                    name = it.lesson,
+                )
+            }.ifEmpty { emptyPlaceholder },
+        )
 
         return ExamsUiData(
-            items = buildList {
-                ExamsUiData.Item.Title(Res.string.exams_list_title).also { add(it) }
-                addAll(exams)
-
-                ExamsUiData.Item.Title(Res.string.zalik_list_title).also { add(it) }
-                addAll(zalik)
-            }
+            items = listOf(examData, zalikData),
         )
     }
 }

@@ -4,6 +4,7 @@ import com.therxmv.leonui.input.LeonDropdownInputData
 import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
+import com.therxmv.napoleon.ui.exam.component.ExamsUiData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiData.ProbabilityInput
@@ -23,28 +24,28 @@ object PreviewMockData {
     val dashboardUiData = DashboardUiData(
         widgets = listOf(DashboardUiData.Widget.SkeletonTodaySchedule),
         tiles = listOf(
-            DashboardUiData.Tile.defaultWideRectangle(
+            DashboardUiData.Tile.wideRectangle(
                 icon = FeatherIcons.Layout,
                 title = Res.string.dashboard_excel_tile,
                 onClick = {},
             ),
-            DashboardUiData.Tile.defaultSmallSquare(
+            DashboardUiData.Tile.smallSquare(
                 icon = FeatherIcons.DivideCircle,
                 title = Res.string.dashboard_rating_tile,
                 onClick = {},
             ),
-            DashboardUiData.Tile.defaultSmallSquare(
+            DashboardUiData.Tile.smallSquare(
                 icon = FeatherIcons.Clock,
                 title = Res.string.dashboard_timetable_tile,
                 onClick = {},
             ),
             DashboardUiData.Tile.EmptyDivider,
-            DashboardUiData.Tile.defaultSmallRectangle(
+            DashboardUiData.Tile.smallRectangle(
                 icon = FeatherIcons.Globe,
                 title = Res.string.dashboard_site_tile,
                 onClick = {},
             ),
-            DashboardUiData.Tile.defaultSmallRectangle(
+            DashboardUiData.Tile.smallRectangle(
                 icon = FeatherIcons.Folder,
                 title = Res.string.dashboard_process_tile,
                 onClick = {},
@@ -157,5 +158,40 @@ object PreviewMockData {
         },
         copyLabel = Res.string.timetable_copy,
         closeLabel = Res.string.timetable_close,
+    )
+
+    val examsUiData = ExamsUiData(
+        items = listOf(
+            ExamsUiData.ItemsData(
+                title = Res.string.exams_list_title,
+                items = listOf(
+                    ExamsUiData.Item.Exam(
+                        teacher = "Teacher's full name",
+                        name = "This is Lesson1",
+                        date = "19.11",
+                    ),
+                    ExamsUiData.Item.Exam(
+                        teacher = "Teacher's full name",
+                        name = "This is\nLesson2",
+                        date = "25.11",
+                    ),
+                ),
+            ),
+            ExamsUiData.ItemsData(
+                title = Res.string.zalik_list_title,
+                items = listOf(
+                    ExamsUiData.Item.EmptyPlaceholder("Empty Placeholder Example"),
+                    ExamsUiData.Item.Zalik(
+                        name = "This is Lesson3",
+                    ),
+                    ExamsUiData.Item.Zalik(
+                        name = "This is\nLesson4",
+                    ),
+                    ExamsUiData.Item.Zalik(
+                        name = "This is Lesson5",
+                    ),
+                ),
+            )
+        )
     )
 }

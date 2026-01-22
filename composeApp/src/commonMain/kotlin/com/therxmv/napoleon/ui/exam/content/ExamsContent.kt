@@ -2,21 +2,28 @@ package com.therxmv.napoleon.ui.exam.content
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
+import com.therxmv.leonui.list.LeonExpandableHeader
+import com.therxmv.leonui.list.LeonExpandableSubItem
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.base.ui.CopyIconButton
+import com.therxmv.napoleon.base.ui.LocalCopyIconColor
+import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
 
 @Composable
@@ -25,86 +32,105 @@ fun ExamsContent(
     data: ExamsUiData,
     fallbackReason: String?,
 ) {
-    LazyColumn(
-        modifier = modifier
-            .padding(LeonTheme.paddings.baseValues),
-        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
+    Column(
+        modifier = modifier.padding(LeonTheme.paddings.baseValues),
     ) {
         if (fallbackReason != null) {
-            item {
-                LeonCard(
-                    text = fallbackReason,
-                    type = LeonCardType.Error,
+            LeonCard(
+                text = fallbackReason,
+                type = LeonCardType.Error,
+            )
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
+        }
+
+        data.items.forEachIndexed { index, data ->
+            val color = if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
+            ItemContent(
+                data = data,
+                color = color,
+            )
+
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
+        }
+    }
+}
+
+@Composable
+private fun ItemContent(
+    data: ExamsUiData.ItemsData,
+    color: Color,
+) {
+    LeonExpandableHeader(
+        color = color,
+        isExpanded = true,
+    ) {
+        LeonText(
+            modifier = Modifier.weight(1f),
+            text = data.title,
+            size = LeonTextSize.Title2,
+            color = LeonTheme.colors.contentColorFor(color),
+            weight = LeonTextWeight.Bold,
+        )
+
+        CompositionLocalProvider(LocalCopyIconColor provides LeonTheme.colors.contentColorFor(color)) {
+            CopyIconButton(textToCopy = data.toString())
+        }
+    }
+
+    data.items.forEachIndexed { index, item ->
+        LeonExpandableSubItem(isLast = index == data.items.lastIndex) {
+            when (item) {
+                is ExamsUiData.Item.Exam -> ExamContent(item)
+
+                is ExamsUiData.Item.Zalik -> LeonText(
+                    text = item.name,
+                )
+
+                is ExamsUiData.Item.EmptyPlaceholder -> LeonText(
+                    modifier = Modifier.weight(1f),
+                    text = item.text,
+                    weight = LeonTextWeight.Bold,
+                    textAlign = TextAlign.Center,
                 )
             }
         }
-
-        items(data.items) {
-            when (it) {
-                is ExamsUiData.Item.Title -> TitleItem(it.title)
-
-                is ExamsUiData.Item.Exam -> ExamItem(it)
-
-                is ExamsUiData.Item.Zalik -> ZalikItem(it)
-
-                is ExamsUiData.Item.EmptyPlaceholder -> EmptyPlaceholderItem(it.text)
-            }
-        }
     }
 }
 
 @Composable
-private fun EmptyPlaceholderItem(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = LeonTheme.colors.onSurface,
-    )
-}
-
-@Composable
-private fun TitleItem(title: String) {
-    Text(
-        text = title,
-        style = MaterialTheme.typography.titleLarge,
-        fontWeight = FontWeight.Bold,
-    )
-}
-
-@Composable
-private fun ExamItem(
+private fun ExamContent(
     data: ExamsUiData.Item.Exam,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    LeonText(
+        text = data.date,
+        weight = LeonTextWeight.Bold,
+        color = LeonTheme.colors.surfaceTint,
+    )
+    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.skinny),
     ) {
-        Text(
-            text = data.date,
-            style = MaterialTheme.typography.headlineSmall,
-            color = LeonTheme.colors.surfaceTint,
-            fontWeight = FontWeight.Bold,
+        LeonText(
+            text = data.name,
+            weight = LeonTextWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
 
-        Column {
-            Text(
-                text = data.lesson,
-                style = MaterialTheme.typography.titleMedium,
-            )
-
-            Text(
-                text = data.teacher,
-                style = MaterialTheme.typography.titleSmall,
-                color = LeonTheme.colors.onSurfaceVariant,
-            )
-        }
+        LeonText(
+            text = data.teacher,
+            size = LeonTextSize.Body2,
+            color = LeonTheme.colors.onSurfaceVariant,
+        )
     }
 }
 
+@LeonPreview
 @Composable
-private fun ZalikItem(data: ExamsUiData.Item.Zalik) {
-    Text(
-        text = data.lesson,
-        style = MaterialTheme.typography.titleMedium,
-    )
+private fun DashboardContentPreview() {
+    LeonPreview {
+        ExamsContent(
+            data = PreviewMockData.examsUiData,
+            fallbackReason = "Fallback reason"
+        )
+    }
 }

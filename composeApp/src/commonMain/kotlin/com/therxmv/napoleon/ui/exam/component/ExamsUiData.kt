@@ -1,25 +1,42 @@
 package com.therxmv.napoleon.ui.exam.component
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
 @Immutable
 data class ExamsUiData(
-    val items: List<Item>,
+    val items: List<ItemsData>,
 ) {
 
-    sealed interface Item {
-        data class Title(val title: String) : Item
+    @Immutable
+    data class ItemsData(
+        val title: String,
+        val items: List<Item>,
+    ) {
+        override fun toString(): String =
+            "$title:\n${items.joinToString("\n") { it.toString() }}"
+    }
 
-        data class EmptyPlaceholder(val text: String) : Item
+    @Stable
+    sealed interface Item {
+
+        data class EmptyPlaceholder(val text: String) : Item {
+            override fun toString(): String = text
+        }
 
         data class Exam(
             val teacher: String,
-            val lesson: String,
+            val name: String,
             val date: String,
-        ) : Item
+        ) : Item {
+            override fun toString(): String =
+                "$date - $name, $teacher"
+        }
 
         data class Zalik(
-            val lesson: String,
-        ) : Item
+            val name: String,
+        ) : Item {
+            override fun toString(): String = name
+        }
     }
 }

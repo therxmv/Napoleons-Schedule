@@ -51,7 +51,7 @@ data class DashboardUiData(
             private const val ONE_COLUMN = 1
             private const val TWO_COLUMN = 2
 
-            fun defaultSmallSquare(
+            fun smallSquare(
                 icon: ImageVector,
                 title: String,
                 onClick: () -> Unit,
@@ -63,7 +63,7 @@ data class DashboardUiData(
                 ratio = SQUARE_RATIO,
             )
 
-            fun defaultWideRectangle(
+            fun wideRectangle(
                 icon: ImageVector,
                 title: String,
                 onClick: () -> Unit,
@@ -75,7 +75,7 @@ data class DashboardUiData(
                 ratio = QUARTER_RATIO,
             )
 
-            fun defaultSmallRectangle(
+            fun smallRectangle(
                 icon: ImageVector,
                 title: String,
                 onClick: () -> Unit,
