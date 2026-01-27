@@ -3,6 +3,7 @@ package com.therxmv.napoleon.ui.exam
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.therxmv.leonui.state.ClearFocusWhenKeyboardIsHidden
 import com.therxmv.leonui.state.LeonError
 import com.therxmv.leonui.state.LeonLoader
 import com.therxmv.leonui.state.LeonState
@@ -23,6 +24,7 @@ fun ExamsScreen(
                 modifier = modifier,
                 data = uiState.data,
                 fallbackReason = uiState.cacheReason,
+                onEvent = component::onEvent,
             )
         }
 
@@ -32,4 +34,6 @@ fun ExamsScreen(
 
         LeonState.Idle -> Unit
     }
+
+    ClearFocusWhenKeyboardIsHidden()
 }

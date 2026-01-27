@@ -51,7 +51,7 @@ fun CopyTextButton(
     val coroutineScope = rememberCoroutineScope()
 
     LeonButton(
-        style = LeonButtonStyle.Text,
+        style = LeonButtonStyle.Text(),
         label = label,
         onClick = {
             coroutineScope.launch {

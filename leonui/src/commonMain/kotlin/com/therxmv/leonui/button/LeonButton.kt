@@ -115,6 +115,6 @@ private class LeonButtonStyleProvider : PreviewParameterProvider<LeonButtonStyle
     override val values = sequenceOf(
         LeonButtonStyle.Default,
         LeonButtonStyle.Outlined,
-        LeonButtonStyle.Text,
+        LeonButtonStyle.Text(),
     )
 }

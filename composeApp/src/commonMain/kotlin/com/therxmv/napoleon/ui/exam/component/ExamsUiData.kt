@@ -5,28 +5,39 @@ import androidx.compose.runtime.Stable
 
 @Immutable
 data class ExamsUiData(
-    val items: List<ItemsData>,
+    val sections: List<Section>,
 ) {
 
     @Immutable
-    data class ItemsData(
+    data class Section(
+        val id: String,
         val title: String,
         val items: List<Item>,
+        val isEditing: Boolean = false,
     ) {
         override fun toString(): String =
             "$title:\n${items.joinToString("\n") { it.toString() }}"
+
+        companion object {
+            const val EXAM_ID = "exam"
+            const val ZALIK_ID = "zalik"
+        }
     }
 
     @Stable
     sealed interface Item {
 
-        data class EmptyPlaceholder(val text: String) : Item {
-            override fun toString(): String = text
+        val id: String
+        val name: String
+
+        data class EmptyPlaceholder(override val id: String = "", override val name: String) : Item {
+            override fun toString(): String = name
         }
 
         data class Exam(
+            override val id: String,
+            override val name: String,
             val teacher: String,
-            val name: String,
             val date: String,
         ) : Item {
             override fun toString(): String =
@@ -34,7 +45,8 @@ data class ExamsUiData(
         }
 
         data class Zalik(
-            val name: String,
+            override val id: String,
+            override val name: String,
         ) : Item {
             override fun toString(): String = name
         }

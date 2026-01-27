@@ -161,33 +161,40 @@ object PreviewMockData {
     )
 
     val examsUiData = ExamsUiData(
-        items = listOf(
-            ExamsUiData.ItemsData(
+        sections = listOf(
+            ExamsUiData.Section(
+                id = ExamsUiData.Section.EXAM_ID,
                 title = Res.string.exams_list_title,
                 items = listOf(
                     ExamsUiData.Item.Exam(
+                        id = "exam_0_lesson1",
                         teacher = "Teacher's full name",
                         name = "This is Lesson1",
                         date = "19.11",
                     ),
                     ExamsUiData.Item.Exam(
+                        id = "exam_1_lesson2",
                         teacher = "Teacher's full name",
                         name = "This is\nLesson2",
                         date = "25.11",
                     ),
                 ),
             ),
-            ExamsUiData.ItemsData(
+            ExamsUiData.Section(
+                id = ExamsUiData.Section.ZALIK_ID,
                 title = Res.string.zalik_list_title,
                 items = listOf(
-                    ExamsUiData.Item.EmptyPlaceholder("Empty Placeholder Example"),
+                    ExamsUiData.Item.EmptyPlaceholder(name = "Empty Placeholder Example"),
                     ExamsUiData.Item.Zalik(
+                        id = "zalik_0_lesson3",
                         name = "This is Lesson3",
                     ),
                     ExamsUiData.Item.Zalik(
+                        id = "zalik_1_lesson4",
                         name = "This is\nLesson4",
                     ),
                     ExamsUiData.Item.Zalik(
+                        id = "zalik_2_lesson5",
                         name = "This is Lesson5",
                     ),
                 ),

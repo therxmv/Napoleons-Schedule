@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,7 +59,13 @@ fun LeonExpandableHeader(
 
 @Composable
 fun LeonExpandableSubItem(
+    modifier: Modifier = Modifier,
     isLast: Boolean,
+    paddingValues: PaddingValues = PaddingValues(
+        start = LeonTheme.paddings.horizontal.base,
+        top = LeonTheme.paddings.vertical.skinny,
+        bottom = LeonTheme.paddings.vertical.skinny,
+    ),
     onClick: (() -> Unit)? = null,
     content: @Composable (RowScope.() -> Unit),
 ) {
@@ -66,7 +73,7 @@ fun LeonExpandableSubItem(
         ?: LeonTheme.shapes.noneRounded
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = LeonTheme.sizes.divider.thin)
             .fillMaxWidth()
             .clip(shape)
@@ -74,11 +81,7 @@ fun LeonExpandableSubItem(
             .applyIf(onClick != null) {
                 clickable { onClick?.invoke() }
             }
-            .padding(
-                start = LeonTheme.paddings.horizontal.base,
-                top = LeonTheme.paddings.vertical.skinny,
-                bottom = LeonTheme.paddings.vertical.skinny,
-            ),
+            .padding(paddingValues),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )

@@ -33,11 +33,11 @@ sealed interface LeonButtonStyle {
             )
     }
 
-    data object Text : LeonButtonStyle {
+    data class Text(val contentColor: Color? = null) : LeonButtonStyle {
         override val colors: ButtonColors
             @Composable get() = ButtonDefaults.textButtonColors(
                 containerColor = Color.Transparent,
-                contentColor = LeonTheme.colors.surfaceTint,
+                contentColor = contentColor ?: LeonTheme.colors.surfaceTint,
             )
 
         override val contentPadding: PaddingValues

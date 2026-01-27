@@ -48,7 +48,7 @@ fun TimetableContent(
         },
         dismissButton = {
             LeonButton(
-                style = LeonButtonStyle.Text,
+                style = LeonButtonStyle.Text(),
                 label = data.closeLabel,
                 onClick = { onEvent(TimetableUiEvent.Dismiss) },
             )

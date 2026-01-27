@@ -145,7 +145,7 @@ private fun CardTitle(
         Spacer(modifier = Modifier.weight(1f))
 
         LeonButton(
-            style = LeonButtonStyle.Text,
+            style = LeonButtonStyle.Text(),
             label = editLabel,
             onClick = onEditClick,
             suffixIcon = FeatherIcons.Edit2,

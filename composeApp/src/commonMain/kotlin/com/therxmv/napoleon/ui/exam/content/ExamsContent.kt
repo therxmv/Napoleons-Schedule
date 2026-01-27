@@ -1,20 +1,26 @@
 package com.therxmv.napoleon.ui.exam.content
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import com.therxmv.leonui.button.LeonButton
+import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
+import com.therxmv.leonui.input.LeonTextInput
 import com.therxmv.leonui.list.LeonExpandableHeader
 import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.text.LeonText
@@ -26,7 +32,10 @@ import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
+import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent
+import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent.UpdateItem
 import compose.icons.FeatherIcons
+import compose.icons.feathericons.Check
 import compose.icons.feathericons.Edit2
 
 @Composable
@@ -34,71 +43,111 @@ fun ExamsContent(
     modifier: Modifier = Modifier,
     data: ExamsUiData,
     fallbackReason: String?,
+    onEvent: (ExamsUiEvent) -> Unit,
 ) {
-    Column(
-        modifier = modifier.padding(LeonTheme.paddings.baseValues),
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = LeonTheme.paddings.baseValues,
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
     ) {
         if (fallbackReason != null) {
-            LeonCard(
-                text = fallbackReason,
-                type = LeonCardType.Error,
-            )
-            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
+            item {
+                LeonCard(
+                    text = fallbackReason,
+                    type = LeonCardType.Error,
+                )
+            }
         }
 
-        data.items.forEachIndexed { index, data ->
+        itemsIndexed(
+            items = data.sections,
+            key = { _, item -> item.id },
+        ) { index, section ->
             val color = if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
-            ItemContent(
-                data = data,
+            SectionContent(
+                section = section,
                 color = color,
+                onEvent = onEvent,
             )
-
-            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
         }
     }
 }
 
 @Composable
-private fun ItemContent(
-    data: ExamsUiData.ItemsData,
+private fun SectionContent(
+    section: ExamsUiData.Section,
     color: Color,
+    onEvent: (ExamsUiEvent) -> Unit,
 ) {
     val contentColor = LeonTheme.colors.contentColorFor(color)
+
     LeonExpandableHeader(
         color = color,
         isExpanded = true,
     ) {
         LeonText(
             modifier = Modifier.weight(1f),
-            text = data.title,
+            text = section.title,
             size = LeonTextSize.Title2,
             color = contentColor,
             weight = LeonTextWeight.Bold,
         )
 
-        LeonIconButton(
-            icon = FeatherIcons.Edit2,
-            tint = contentColor,
-            onClick = {},
-        )
+        if (section.isEditing) {
+            LeonButton(
+                label = "Save", // TODO add string res
+                style = LeonButtonStyle.Text(contentColor),
+                prefixIcon = FeatherIcons.Check,
+                onClick = { onEvent(ExamsUiEvent.SaveSection(section.id)) },
+            )
+        } else {
+            LeonIconButton(
+                icon = FeatherIcons.Edit2,
+                tint = contentColor,
+                onClick = { onEvent(ExamsUiEvent.EditSection(section.id)) },
+            )
 
-        CompositionLocalProvider(LocalCopyIconColor provides contentColor) {
-            CopyIconButton(textToCopy = data.toString())
+            CompositionLocalProvider(LocalCopyIconColor provides contentColor) {
+                CopyIconButton(textToCopy = section.toString())
+            }
         }
     }
 
-    data.items.forEachIndexed { index, item ->
-        LeonExpandableSubItem(isLast = index == data.items.lastIndex) {
+    section.items.forEach { item ->
+        LeonExpandableSubItem(
+            modifier = Modifier.animateContentSize(),
+            isLast = item == section.items.last(),
+            paddingValues = PaddingValues(
+                horizontal = LeonTheme.paddings.horizontal.base,
+                vertical = LeonTheme.paddings.vertical.skinny,
+            ),
+        ) {
+            // TODO item "add new item", add delete item button
             when (item) {
-                is ExamsUiData.Item.Exam -> ExamContent(item)
+                is ExamsUiData.Item.Exam -> ExamContent(
+                    modifier = Modifier.weight(1f),
+                    item = item,
+                    isEditing = section.isEditing,
+                    onNameChanged = { value ->
+                        onEvent(UpdateItem(sectionId = section.id, itemId = item.id, newName = value))
+                    },
+                    onTeacherChanged = { value ->
+                        onEvent(UpdateItem(sectionId = section.id, itemId = item.id, newTeacher = value))
+                    },
+                )
 
-                is ExamsUiData.Item.Zalik -> LeonText(
-                    text = item.name,
+                is ExamsUiData.Item.Zalik -> ZalikContent(
+                    modifier = Modifier.weight(1f),
+                    item = item,
+                    isEditing = section.isEditing,
+                    onNameChanged = { value ->
+                        onEvent(UpdateItem(sectionId = section.id, itemId = item.id, newName = value))
+                    },
                 )
 
                 is ExamsUiData.Item.EmptyPlaceholder -> LeonText(
                     modifier = Modifier.weight(1f),
-                    text = item.text,
+                    text = item.name,
                     weight = LeonTextWeight.Bold,
                     textAlign = TextAlign.Center,
                 )
@@ -109,27 +158,71 @@ private fun ItemContent(
 
 @Composable
 private fun ExamContent(
-    data: ExamsUiData.Item.Exam,
+    modifier: Modifier = Modifier,
+    item: ExamsUiData.Item.Exam,
+    isEditing: Boolean,
+    onNameChanged: (String) -> Unit,
+    onTeacherChanged: (String) -> Unit,
 ) {
-    LeonText(
-        text = data.date,
+    LeonText( // TODO edit date
+        text = item.date,
         weight = LeonTextWeight.Bold,
         color = LeonTheme.colors.surfaceTint,
     )
     Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
 
     Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.skinny),
     ) {
-        LeonText(
-            text = data.name,
-            weight = LeonTextWeight.Bold,
+        EditableText(
+            modifier = Modifier.fillMaxWidth(),
+            value = item.name,
+            onValueChange = onNameChanged,
+            isEditing = isEditing,
         )
 
+        EditableText(
+            modifier = Modifier.fillMaxWidth(),
+            value = item.teacher,
+            onValueChange = onTeacherChanged,
+            isEditing = isEditing,
+        )
+    }
+}
+
+@Composable
+private fun ZalikContent(
+    modifier: Modifier = Modifier,
+    item: ExamsUiData.Item.Zalik,
+    isEditing: Boolean,
+    onNameChanged: (String) -> Unit,
+) {
+    EditableText(
+        modifier = modifier,
+        value = item.name,
+        onValueChange = onNameChanged,
+        isEditing = isEditing,
+    )
+}
+
+@Composable
+private fun EditableText(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    isEditing: Boolean,
+) {
+    if (isEditing) {
+        LeonTextInput( // TODO long text is cut out
+            modifier = modifier,
+            value = value,
+            onValueChange = onValueChange,
+        )
+    } else {
         LeonText(
-            text = data.teacher,
-            size = LeonTextSize.Body2,
-            color = LeonTheme.colors.onSurfaceVariant,
+            modifier = modifier,
+            text = value,
         )
     }
 }
@@ -140,7 +233,8 @@ private fun DashboardContentPreview() {
     LeonPreview {
         ExamsContent(
             data = PreviewMockData.examsUiData,
-            fallbackReason = "Fallback reason"
+            fallbackReason = "Fallback reason",
+            onEvent = {},
         )
     }
 }
