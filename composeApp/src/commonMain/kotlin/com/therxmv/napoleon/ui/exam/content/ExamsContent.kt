@@ -12,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.list.LeonExpandableHeader
@@ -25,6 +26,8 @@ import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Edit2
 
 @Composable
 fun ExamsContent(
@@ -60,6 +63,7 @@ private fun ItemContent(
     data: ExamsUiData.ItemsData,
     color: Color,
 ) {
+    val contentColor = LeonTheme.colors.contentColorFor(color)
     LeonExpandableHeader(
         color = color,
         isExpanded = true,
@@ -68,11 +72,17 @@ private fun ItemContent(
             modifier = Modifier.weight(1f),
             text = data.title,
             size = LeonTextSize.Title2,
-            color = LeonTheme.colors.contentColorFor(color),
+            color = contentColor,
             weight = LeonTextWeight.Bold,
         )
 
-        CompositionLocalProvider(LocalCopyIconColor provides LeonTheme.colors.contentColorFor(color)) {
+        LeonIconButton(
+            icon = FeatherIcons.Edit2,
+            tint = contentColor,
+            onClick = {},
+        )
+
+        CompositionLocalProvider(LocalCopyIconColor provides contentColor) {
             CopyIconButton(textToCopy = data.toString())
         }
     }
