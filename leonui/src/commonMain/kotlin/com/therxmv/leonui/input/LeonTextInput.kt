@@ -16,6 +16,7 @@ fun LeonTextInput(
     error: String? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     style: LeonTextInputStyle = LeonTextInputStyle.Primary,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -25,7 +26,7 @@ fun LeonTextInput(
         shape = LeonTheme.shapes.allRounded,
         textStyle = style.textStyle,
         keyboardOptions = keyboardOptions,
-        maxLines = 1,
+        maxLines = maxLines,
         colors = style.colors,
     )
 }

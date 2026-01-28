@@ -77,8 +77,7 @@ fun ExamsContent(
 
         data.sections.forEachIndexed { index, section ->
             item(key = section.id) {
-                val color =
-                    if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
+                val color = if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
 
                 if (index != 0) {
                     Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
@@ -95,6 +94,7 @@ fun ExamsContent(
             itemsIndexed(
                 items = section.items,
                 key = { _, item -> item.id },
+                contentType = { _, item -> item },
             ) { index, item ->
                 SectionSubItem(
                     modifier = Modifier.leonLazyListAnimation(),
@@ -160,9 +160,8 @@ private fun SectionSubItem(
     LeonExpandableSubItem(
         modifier = modifier,
         isLast = item == section.items.last(),
-        onClick = {
-            onEvent(ExamsUiEvent.AddNewItem(sectionId = section.id))
-        }.takeIf { item is ExamsUiData.Item.AddNew },
+        onClick = { onEvent(ExamsUiEvent.AddNewItem(sectionId = section.id)) }
+            .takeIf { item is ExamsUiData.Item.AddNew },
     ) {
         when (item) {
             is ExamsUiData.Item.Exam -> ExamContent(
@@ -170,25 +169,13 @@ private fun SectionSubItem(
                 item = item,
                 isEditing = section.isEditing,
                 onNameChanged = { value ->
-                    onEvent(
-                        UpdateItem(
-                            sectionId = section.id,
-                            itemId = item.id,
-                            newName = value
-                        )
-                    )
+                    onEvent(UpdateItem(section.id, item.id, value))
                 },
                 onTeacherChanged = { value ->
-                    onEvent(
-                        UpdateItem(
-                            sectionId = section.id,
-                            itemId = item.id,
-                            newTeacher = value
-                        )
-                    )
+                    onEvent(UpdateItem(section.id, item.id, value))
                 },
                 onDelete = {
-                    onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
+                    onEvent(ExamsUiEvent.DeleteItem(section.id, item.id))
                 },
             )
 
@@ -197,16 +184,10 @@ private fun SectionSubItem(
                 item = item,
                 isEditing = section.isEditing,
                 onNameChanged = { value ->
-                    onEvent(
-                        UpdateItem(
-                            sectionId = section.id,
-                            itemId = item.id,
-                            newName = value
-                        )
-                    )
+                    onEvent(UpdateItem(section.id, item.id, value))
                 },
                 onDelete = {
-                    onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
+                    onEvent(ExamsUiEvent.DeleteItem(section.id, item.id))
                 },
             )
 
@@ -328,10 +309,10 @@ private fun EditableText(
 ) {
     if (isEditing) {
         LeonTextInput(
-            // TODO long text is cut out
             modifier = modifier,
             value = value,
             onValueChange = onValueChange,
+            maxLines = 3,
         )
     } else {
         LeonText(

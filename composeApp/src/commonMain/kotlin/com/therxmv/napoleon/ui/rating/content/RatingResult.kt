@@ -183,6 +183,7 @@ private fun InputItem(
             ),
             onValueChange = onValueChange,
             style = LeonTextInputStyle.Tertiary,
+            maxLines = 1,
         )
 
         if (data.error != null) {

@@ -130,7 +130,8 @@ private fun SubjectItem(
                         name = it,
                     )
                 )
-            }
+            },
+            maxLines = 3,
         )
 
         LeonTextInput(
@@ -148,7 +149,8 @@ private fun SubjectItem(
                         credits = it,
                     )
                 )
-            }
+            },
+            maxLines = 1,
         )
 
         LeonTextInput(
@@ -166,7 +168,8 @@ private fun SubjectItem(
                         score = it,
                     )
                 )
-            }
+            },
+            maxLines = 1,
         )
 
         LeonIconButton(
