@@ -60,6 +60,7 @@ class SpecialtyRepositoryImpl(
 
         return cachedResult ?: Result.of(
             block = {
+                // TODO uncomment
                 MockData.examsDto.toModel()
 //                napoleonApi
 //                    .getExamsBySpecialty(

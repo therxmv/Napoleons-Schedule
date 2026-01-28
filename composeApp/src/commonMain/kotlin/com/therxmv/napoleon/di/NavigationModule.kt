@@ -111,6 +111,7 @@ val navigationModule = module {
                             componentContext = context,
                             specialtyRepository = get(),
                             profileRepository = get(),
+                            infoRepository = get(),
                         )
                     )
                 )

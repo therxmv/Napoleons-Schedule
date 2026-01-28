@@ -7,8 +7,15 @@ import kotlin.uuid.Uuid
 
 @Immutable
 data class ExamsUiData(
+    val infoData: Info,
     val sections: List<Section>,
 ) {
+
+    data class Info(
+        val text: String,
+        val link: String,
+        val linkText: String,
+    )
 
     @Immutable
     data class Section(

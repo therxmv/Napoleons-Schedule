@@ -161,6 +161,11 @@ object PreviewMockData {
     )
 
     val examsUiData = ExamsUiData(
+        infoData = ExamsUiData.Info(
+            text = Res.string.exams_edit_info,
+            link = "link",
+            linkText = Res.string.exams_edit_info_link_text,
+        ),
         sections = listOf(
             ExamsUiData.Section(
                 id = ExamsUiData.Section.EXAM_ID,

@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.therxmv.leonui.animation.leonLazyListAnimation
@@ -28,7 +27,6 @@ import com.therxmv.leonui.input.LeonTextInput
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
-import com.therxmv.leonui.text.withLeonLink
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
@@ -52,7 +50,12 @@ fun RatingSubjectInputs(
         verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
     ) {
         item {
-            InfoCard(data.infoData)
+            LeonCard(
+                text = data.infoData.text,
+                hyperlinkText = data.infoData.linkText,
+                hyperlink = data.infoData.link,
+                type = LeonCardType.Info,
+            )
         }
 
         item {
@@ -230,26 +233,5 @@ fun ErrorText(
         size = LeonTextSize.Body2,
         color = LeonTheme.colors.error,
         weight = LeonTextWeight.Bold,
-    )
-}
-
-@Composable
-private fun InfoCard(
-    data: RatingUiData.Info,
-) {
-    LeonCard(
-        text = buildAnnotatedString {
-            append(data.text)
-
-            withLeonLink(
-                url = data.link,
-                size = LeonTextSize.Body1,
-                weight = LeonTextWeight.Bold,
-                color = LeonTheme.colors.surfaceTint,
-            ) {
-                append(data.linkText)
-            }
-        },
-        type = LeonCardType.Info,
     )
 }

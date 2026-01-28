@@ -6,6 +6,7 @@ import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.leonui.state.LeonState
 import com.therxmv.leonui.state.mapReady
 import com.therxmv.napoleon.Res
+import com.therxmv.napoleon.data.repository.info.InfoRepository
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
@@ -23,6 +24,7 @@ class ExamsComponent(
     componentContext: ComponentContext,
     private val specialtyRepository: SpecialtyRepository,
     private val profileRepository: ProfileRepository,
+    private val infoRepository: InfoRepository,
 ) : ComponentContext by componentContext {
     private val scope = coroutineScope(SupervisorJob())
 
@@ -142,17 +144,16 @@ class ExamsComponent(
         }
     }
 
-    // TODO change default values
     private fun createNewItem(sectionId: String): ExamsUiData.Item =
         when (sectionId) {
             EXAM_ID -> ExamsUiData.Item.Exam(
-                name = "New Exam",
-                teacher = "New Teacher",
-                date = "TBD",
+                name = Res.string.exams_default_exam_name,
+                teacher = Res.string.exams_default_exam_teacher,
+                date = "TBD", // TODO calculate today when implement date picker
             )
 
             ZALIK_ID -> ExamsUiData.Item.Zalik(
-                name = "New Zalik",
+                name = Res.string.exams_default_zalik_name,
             )
 
             else -> error("Unknown section id")
@@ -169,14 +170,13 @@ class ExamsComponent(
             _uiState.update {
                 when (result) {
                     is Result.Success<ExamsModel> -> {
-                        LeonState.Ready(
-                            data = result.data.toUiData(),
-                            cacheReason = result.reason?.message,
-                        )
+                        LeonState.Ready(data = result.data.toUiData())
                     }
 
-                    // TODO show error as card and empty sections
-                    is Result.Failure -> LeonState.Error(Res.string.exams_no_data)
+                    is Result.Failure -> LeonState.Ready(
+                        data = ExamsModel(exams = emptyList(), zalik = emptyList()).toUiData(),
+                        cacheReason = Res.string.exams_no_data,
+                    )
                 }
             }
         }
@@ -206,7 +206,18 @@ class ExamsComponent(
         )
 
         return ExamsUiData(
+            infoData = createInfoData(),
             sections = listOf(examData, zalikData),
+        )
+    }
+
+    private fun createInfoData(): ExamsUiData.Info {
+        val link = infoRepository.getLinks().examCalendar
+
+        return ExamsUiData.Info(
+            text = Res.string.exams_edit_info,
+            link = link,
+            linkText = Res.string.exams_edit_info_link_text,
         )
     }
 
@@ -214,11 +225,11 @@ class ExamsComponent(
         filterNot { it is ExamsUiData.Item.AddNew }.ifEmpty {
             listOf(
                 ExamsUiData.Item.EmptyPlaceholder(
-                    name = Res.string.exams_no_data
+                    name = Res.string.exams_empty_placeholder
                 )
             )
         }
 
     private fun List<ExamsUiData.Item>.andAddNew(): List<ExamsUiData.Item> =
-        filterNot { it is ExamsUiData.Item.EmptyPlaceholder } + ExamsUiData.Item.AddNew(name = "Add new") // TODO add string res
+        filterNot { it is ExamsUiData.Item.EmptyPlaceholder } + ExamsUiData.Item.AddNew(name = Res.string.exams_add_new)
 }

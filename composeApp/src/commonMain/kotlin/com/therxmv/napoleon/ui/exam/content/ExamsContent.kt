@@ -31,6 +31,7 @@ import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.PreviewMockData
@@ -62,6 +63,16 @@ fun ExamsContent(
                 )
                 Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
             }
+        }
+
+        item {
+            LeonCard(
+                text = data.infoData.text,
+                hyperlinkText = data.infoData.linkText,
+                hyperlink = data.infoData.link,
+                type = LeonCardType.Info,
+            )
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
         }
 
         data.sections.forEachIndexed { index, section ->
@@ -120,7 +131,7 @@ private fun SectionHeader(
 
         if (section.isEditing) {
             LeonButton(
-                label = "Save", // TODO add string res
+                label = Res.string.exams_edit_save,
                 style = LeonButtonStyle.Text(contentColor),
                 prefixIcon = FeatherIcons.Check,
                 onClick = { onEvent(ExamsUiEvent.SaveSection(section.id)) },

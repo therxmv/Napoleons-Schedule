@@ -7,4 +7,5 @@ data class InfoLinksModel(
     val mainSite: String,
     val studyProcess: String,
     val educationalPrograms: String,
+    val examCalendar: String,
 )
