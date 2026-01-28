@@ -1,10 +1,10 @@
 package com.therxmv.napoleon.ui.exam.content
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -48,7 +48,6 @@ fun ExamsContent(
     LazyColumn(
         modifier = modifier,
         contentPadding = LeonTheme.paddings.baseValues,
-        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
     ) {
         if (fallbackReason != null) {
             item {
@@ -56,25 +55,44 @@ fun ExamsContent(
                     text = fallbackReason,
                     type = LeonCardType.Error,
                 )
+                Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
             }
         }
 
-        itemsIndexed(
-            items = data.sections,
-            key = { _, item -> item.id },
-        ) { index, section ->
-            val color = if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
-            SectionContent(
-                section = section,
-                color = color,
-                onEvent = onEvent,
-            )
+        data.sections.forEachIndexed { index, section ->
+            item(key = section.id) {
+                val color = if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
+
+                if (index != 0) {
+                    Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
+                }
+
+                SectionHeader(
+                    modifier = Modifier.animateItem(),
+                    section = section,
+                    color = color,
+                    onEvent = onEvent,
+                )
+            }
+
+            itemsIndexed(
+                items = section.items,
+                key = { _, item -> item.id },
+            ) { index, item ->
+                SectionSubItem(
+                    modifier = Modifier.animateItem(),
+                    item = item,
+                    section = section,
+                    onEvent = onEvent,
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun SectionContent(
+private fun SectionHeader(
+    modifier: Modifier = Modifier,
     section: ExamsUiData.Section,
     color: Color,
     onEvent: (ExamsUiEvent) -> Unit,
@@ -82,6 +100,7 @@ private fun SectionContent(
     val contentColor = LeonTheme.colors.contentColorFor(color)
 
     LeonExpandableHeader(
+        modifier = modifier,
         color = color,
         isExpanded = true,
     ) {
@@ -112,66 +131,72 @@ private fun SectionContent(
             }
         }
     }
+}
 
-    section.items.forEach { item ->
-        LeonExpandableSubItem(
-            modifier = Modifier.animateContentSize(),
-            isLast = item == section.items.last(),
-        ) {
-            // TODO item "add new item"
-            when (item) {
-                is ExamsUiData.Item.Exam -> ExamContent(
-                    modifier = Modifier.weight(1f),
-                    item = item,
-                    isEditing = section.isEditing,
-                    onNameChanged = { value ->
-                        onEvent(
-                            UpdateItem(
-                                sectionId = section.id,
-                                itemId = item.id,
-                                newName = value
-                            )
+@Composable
+private fun SectionSubItem(
+    modifier: Modifier = Modifier,
+    item: ExamsUiData.Item,
+    section: ExamsUiData.Section,
+    onEvent: (ExamsUiEvent) -> Unit,
+) {
+    LeonExpandableSubItem(
+        modifier = modifier,
+        isLast = item == section.items.last(),
+    ) {
+        // TODO item "add new item"
+        when (item) {
+            is ExamsUiData.Item.Exam -> ExamContent(
+                modifier = Modifier.weight(1f),
+                item = item,
+                isEditing = section.isEditing,
+                onNameChanged = { value ->
+                    onEvent(
+                        UpdateItem(
+                            sectionId = section.id,
+                            itemId = item.id,
+                            newName = value
                         )
-                    },
-                    onTeacherChanged = { value ->
-                        onEvent(
-                            UpdateItem(
-                                sectionId = section.id,
-                                itemId = item.id,
-                                newTeacher = value
-                            )
+                    )
+                },
+                onTeacherChanged = { value ->
+                    onEvent(
+                        UpdateItem(
+                            sectionId = section.id,
+                            itemId = item.id,
+                            newTeacher = value
                         )
-                    },
-                    onDelete = {
-                        onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
-                    },
-                )
+                    )
+                },
+                onDelete = {
+                    onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
+                },
+            )
 
-                is ExamsUiData.Item.Zalik -> ZalikContent(
-                    modifier = Modifier.weight(1f),
-                    item = item,
-                    isEditing = section.isEditing,
-                    onNameChanged = { value ->
-                        onEvent(
-                            UpdateItem(
-                                sectionId = section.id,
-                                itemId = item.id,
-                                newName = value
-                            )
+            is ExamsUiData.Item.Zalik -> ZalikContent(
+                modifier = Modifier.weight(1f),
+                item = item,
+                isEditing = section.isEditing,
+                onNameChanged = { value ->
+                    onEvent(
+                        UpdateItem(
+                            sectionId = section.id,
+                            itemId = item.id,
+                            newName = value
                         )
-                    },
-                    onDelete = {
-                        onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
-                    },
-                )
+                    )
+                },
+                onDelete = {
+                    onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
+                },
+            )
 
-                is ExamsUiData.Item.EmptyPlaceholder -> LeonText(
-                    modifier = Modifier.weight(1f),
-                    text = item.name,
-                    weight = LeonTextWeight.Bold,
-                    textAlign = TextAlign.Center,
-                )
-            }
+            is ExamsUiData.Item.EmptyPlaceholder -> LeonText(
+                modifier = Modifier.weight(1f),
+                text = item.name,
+                weight = LeonTextWeight.Bold,
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }
