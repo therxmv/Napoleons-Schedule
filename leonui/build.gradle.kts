@@ -6,6 +6,10 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
+
     androidLibrary {
         namespace = "com.therxmv.leonui"
         compileSdk = libs.versions.project.compileSdk.get().toInt()

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.therxmv.leonui.animation.shimmerAnimation
+import com.therxmv.leonui.animation.leonShimmerAnimation
 import com.therxmv.leonui.theme.LeonTheme
 
 @Composable
@@ -20,6 +20,6 @@ fun SkeletonWidget(
             .fillMaxWidth()
             .aspectRatio(3f)
             .clip(LeonTheme.shapes.allRounded)
-            .shimmerAnimation(color),
+            .leonShimmerAnimation(color),
     )
 }

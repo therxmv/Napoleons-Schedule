@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import com.therxmv.leonui.animation.leonLazyListAnimation
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.card.LeonCard
@@ -56,7 +57,7 @@ fun RatingSubjectInputs(
 
         item {
             LeonButton(
-                modifier = Modifier.animateItem(),
+                modifier = Modifier.leonLazyListAnimation(),
                 label = data.addInputLabel,
                 onClick = { onEvent(RatingUiEvent.AddSubjectInput) },
                 prefixIcon = FeatherIcons.Plus,
@@ -66,7 +67,7 @@ fun RatingSubjectInputs(
         if (data.subjectInputs.isNotEmpty()) {
             item {
                 InputLabels(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyListAnimation(),
                     name = data.nameLabel,
                     credits = data.creditsLabel,
                     score = data.scoreLabel,
@@ -79,7 +80,7 @@ fun RatingSubjectInputs(
             key = { it.id },
         ) { input ->
             SubjectItem(
-                modifier = Modifier.animateItem(),
+                modifier = Modifier.leonLazyListAnimation(),
                 data = input,
                 onEvent = onEvent,
             )
@@ -87,7 +88,7 @@ fun RatingSubjectInputs(
             if (input.error != null) {
                 Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.skinny))
                 ErrorText(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyListAnimation(),
                     error = input.error,
                 )
             }

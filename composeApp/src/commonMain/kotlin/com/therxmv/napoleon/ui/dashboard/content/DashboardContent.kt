@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.therxmv.leonui.animation.leonLazyGridAnimation
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.list.LeonDividerType
@@ -66,14 +67,14 @@ private fun LazyGridScope.widgets(
         when (data) {
             DashboardUiData.Widget.SkeletonTodaySchedule -> {
                 SkeletonWidget(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyGridAnimation(),
                     color = LeonTheme.colors.tertiary,
                 )
             }
 
             is DashboardUiData.Widget.TodaySchedule -> {
                 ScheduleWidget(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyGridAnimation(),
                     day = data.day,
                     onEvent = onEvent,
                 )
@@ -94,7 +95,7 @@ private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
         when (data) {
             is DashboardUiData.Tile.Default -> {
                 LeonTile(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyGridAnimation(),
                     size = data.size,
                     type = data.type,
                     icon = data.icon,
@@ -110,7 +111,7 @@ private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = LeonTheme.paddings.vertical.skinny)
-                        .animateItem(),
+                        .leonLazyGridAnimation(),
                     contentAlignment = Alignment.Center,
                 ) {
                     LeonHorizontalDivider(

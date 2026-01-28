@@ -26,7 +26,7 @@ import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
 
 @Composable
-fun Modifier.shimmerAnimation(
+fun Modifier.leonShimmerAnimation(
     color: Color,
 ): Modifier {
     var size by remember { mutableStateOf(IntSize.Zero) }
@@ -73,14 +73,14 @@ private const val END_MULTIPLIER = 1.1f
 
 @LeonPreview
 @Composable
-private fun ShimmerAnimationPreview() {
+private fun LeonShimmerAnimationPreview() {
     LeonPreview {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(3f)
                 .clip(LeonTheme.shapes.allRounded)
-                .shimmerAnimation(LeonTheme.colors.tertiary),
+                .leonShimmerAnimation(LeonTheme.colors.tertiary),
         )
     }
 }

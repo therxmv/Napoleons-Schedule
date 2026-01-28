@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import com.therxmv.leonui.animation.leonLazyListAnimation
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.button.LeonIconButton
@@ -65,14 +66,15 @@ fun ExamsContent(
 
         data.sections.forEachIndexed { index, section ->
             item(key = section.id) {
-                val color = if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
+                val color =
+                    if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
 
                 if (index != 0) {
                     Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
                 }
 
                 SectionHeader(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyListAnimation(),
                     section = section,
                     color = color,
                     onEvent = onEvent,
@@ -84,7 +86,7 @@ fun ExamsContent(
                 key = { _, item -> item.id },
             ) { index, item ->
                 SectionSubItem(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyListAnimation(),
                     item = item,
                     section = section,
                     onEvent = onEvent,
