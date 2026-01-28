@@ -15,4 +15,9 @@ sealed interface ExamsUiEvent {
         val newName: String? = null,
         val newTeacher: String? = null,
     ) : ExamsUiEvent
+
+    data class DeleteItem(
+        val sectionId: String,
+        val itemId: String,
+    ) : ExamsUiEvent
 }

@@ -38,6 +38,7 @@ class ExamsComponent(
             is ExamsUiEvent.EditSection -> toggleSectionEditing(id = event.sectionId, isEditing = true)
             is ExamsUiEvent.SaveSection -> toggleSectionEditing(id = event.sectionId, isEditing = false)
             is ExamsUiEvent.UpdateItem -> updateItem(event)
+            is ExamsUiEvent.DeleteItem -> deleteItem(event)
         }
     }
 
@@ -84,6 +85,23 @@ class ExamsComponent(
         }
     }
 
+    // TODO save new data locally
+    private fun deleteItem(event: ExamsUiEvent.DeleteItem) {
+        _uiState.update { state ->
+            state.mapReady { data ->
+                data.copy(
+                    sections = data.sections.map { section ->
+                        if (section.id != event.sectionId) return@map section
+
+                        val filteredItems = section.items.filter { it.id != event.itemId }
+
+                        section.copy(items = filteredItems.orEmptyPlaceholder())
+                    }
+                )
+            }
+        }
+    }
+
     private fun loadData() {
         scope.launch {
             _uiState.update { LeonState.Loading }
@@ -109,8 +127,6 @@ class ExamsComponent(
     }
 
     private fun ExamsModel.toUiData(): ExamsUiData {
-        val emptyPlaceholder = listOf(ExamsUiData.Item.EmptyPlaceholder(name = Res.string.exams_no_data))
-
         val examData = ExamsUiData.Section(
             id = EXAM_ID,
             title = Res.string.exams_list_title,
@@ -121,7 +137,7 @@ class ExamsComponent(
                     name = exam.lesson,
                     date = exam.date,
                 )
-            }.ifEmpty { emptyPlaceholder },
+            }.orEmptyPlaceholder(),
         )
 
         val zalikData = ExamsUiData.Section(
@@ -132,11 +148,14 @@ class ExamsComponent(
                     id = "${ZALIK_ID}_${index}_${zalik.lesson}",
                     name = zalik.lesson,
                 )
-            }.ifEmpty { emptyPlaceholder },
+            }.orEmptyPlaceholder(),
         )
 
         return ExamsUiData(
             sections = listOf(examData, zalikData),
         )
     }
+
+    private fun List<ExamsUiData.Item>.orEmptyPlaceholder(): List<ExamsUiData.Item> =
+        ifEmpty { listOf(ExamsUiData.Item.EmptyPlaceholder(name = Res.string.exams_no_data)) }
 }

@@ -3,7 +3,6 @@ package com.therxmv.napoleon.ui.exam.content
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
@@ -37,6 +36,7 @@ import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent.UpdateItem
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Check
 import compose.icons.feathericons.Edit2
+import compose.icons.feathericons.Trash2
 
 @Composable
 fun ExamsContent(
@@ -117,22 +117,33 @@ private fun SectionContent(
         LeonExpandableSubItem(
             modifier = Modifier.animateContentSize(),
             isLast = item == section.items.last(),
-            paddingValues = PaddingValues(
-                horizontal = LeonTheme.paddings.horizontal.base,
-                vertical = LeonTheme.paddings.vertical.skinny,
-            ),
         ) {
-            // TODO item "add new item", add delete item button
+            // TODO item "add new item"
             when (item) {
                 is ExamsUiData.Item.Exam -> ExamContent(
                     modifier = Modifier.weight(1f),
                     item = item,
                     isEditing = section.isEditing,
                     onNameChanged = { value ->
-                        onEvent(UpdateItem(sectionId = section.id, itemId = item.id, newName = value))
+                        onEvent(
+                            UpdateItem(
+                                sectionId = section.id,
+                                itemId = item.id,
+                                newName = value
+                            )
+                        )
                     },
                     onTeacherChanged = { value ->
-                        onEvent(UpdateItem(sectionId = section.id, itemId = item.id, newTeacher = value))
+                        onEvent(
+                            UpdateItem(
+                                sectionId = section.id,
+                                itemId = item.id,
+                                newTeacher = value
+                            )
+                        )
+                    },
+                    onDelete = {
+                        onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
                     },
                 )
 
@@ -141,7 +152,16 @@ private fun SectionContent(
                     item = item,
                     isEditing = section.isEditing,
                     onNameChanged = { value ->
-                        onEvent(UpdateItem(sectionId = section.id, itemId = item.id, newName = value))
+                        onEvent(
+                            UpdateItem(
+                                sectionId = section.id,
+                                itemId = item.id,
+                                newName = value
+                            )
+                        )
+                    },
+                    onDelete = {
+                        onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
                     },
                 )
 
@@ -163,13 +183,15 @@ private fun ExamContent(
     isEditing: Boolean,
     onNameChanged: (String) -> Unit,
     onTeacherChanged: (String) -> Unit,
+    onDelete: () -> Unit,
 ) {
-    LeonText( // TODO edit date
+    LeonText(
+        // TODO edit date
         text = item.date,
         weight = LeonTextWeight.Bold,
         color = LeonTheme.colors.surfaceTint,
     )
-    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
+    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
 
     Column(
         modifier = modifier,
@@ -189,6 +211,14 @@ private fun ExamContent(
             isEditing = isEditing,
         )
     }
+
+    if (isEditing) {
+        LeonIconButton(
+            icon = FeatherIcons.Trash2,
+            tint = LeonTheme.colors.error,
+            onClick = onDelete,
+        )
+    }
 }
 
 @Composable
@@ -197,6 +227,7 @@ private fun ZalikContent(
     item: ExamsUiData.Item.Zalik,
     isEditing: Boolean,
     onNameChanged: (String) -> Unit,
+    onDelete: () -> Unit,
 ) {
     EditableText(
         modifier = modifier,
@@ -204,6 +235,14 @@ private fun ZalikContent(
         onValueChange = onNameChanged,
         isEditing = isEditing,
     )
+
+    if (isEditing) {
+        LeonIconButton(
+            icon = FeatherIcons.Trash2,
+            tint = LeonTheme.colors.error,
+            onClick = onDelete,
+        )
+    }
 }
 
 @Composable
@@ -214,7 +253,8 @@ private fun EditableText(
     isEditing: Boolean,
 ) {
     if (isEditing) {
-        LeonTextInput( // TODO long text is cut out
+        LeonTextInput(
+            // TODO long text is cut out
             modifier = modifier,
             value = value,
             onValueChange = onValueChange,
