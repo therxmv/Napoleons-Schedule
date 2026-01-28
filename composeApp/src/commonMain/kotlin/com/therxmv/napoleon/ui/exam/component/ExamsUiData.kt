@@ -2,6 +2,8 @@ package com.therxmv.napoleon.ui.exam.component
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 @Immutable
 data class ExamsUiData(
@@ -24,18 +26,22 @@ data class ExamsUiData(
         }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     @Stable
     sealed interface Item {
 
         val id: String
         val name: String
 
-        data class EmptyPlaceholder(override val id: String = "", override val name: String) : Item {
+        data class EmptyPlaceholder(
+            override val id: String = Uuid.random().toHexDashString(),
+            override val name: String,
+        ) : Item {
             override fun toString(): String = name
         }
 
         data class Exam(
-            override val id: String,
+            override val id: String = Uuid.random().toHexDashString(),
             override val name: String,
             val teacher: String,
             val date: String,
@@ -45,10 +51,17 @@ data class ExamsUiData(
         }
 
         data class Zalik(
-            override val id: String,
+            override val id: String = Uuid.random().toHexDashString(),
             override val name: String,
         ) : Item {
             override fun toString(): String = name
+        }
+
+        data class AddNew(
+            override val id: String = Uuid.random().toHexDashString(),
+            override val name: String,
+        ) : Item {
+            override fun toString(): String = ""
         }
     }
 }

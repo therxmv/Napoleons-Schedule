@@ -35,10 +35,19 @@ class ExamsComponent(
 
     fun onEvent(event: ExamsUiEvent) {
         when (event) {
-            is ExamsUiEvent.EditSection -> toggleSectionEditing(id = event.sectionId, isEditing = true)
-            is ExamsUiEvent.SaveSection -> toggleSectionEditing(id = event.sectionId, isEditing = false)
+            is ExamsUiEvent.EditSection -> toggleSectionEditing(
+                id = event.sectionId,
+                isEditing = true,
+            )
+
+            is ExamsUiEvent.SaveSection -> toggleSectionEditing(
+                id = event.sectionId,
+                isEditing = false,
+            )
+
             is ExamsUiEvent.UpdateItem -> updateItem(event)
             is ExamsUiEvent.DeleteItem -> deleteItem(event)
+            is ExamsUiEvent.AddNewItem -> addNewItem(event)
         }
     }
 
@@ -47,7 +56,16 @@ class ExamsComponent(
             state.mapReady { data ->
                 data.copy(
                     sections = data.sections.map { section ->
-                        if (section.id == id) section.copy(isEditing = isEditing) else section
+                        if (section.id == id) {
+                            val newItems = if (isEditing) {
+                                section.items.andAddNew()
+                            } else {
+                                section.items.orEmptyPlaceholder()
+                            }
+                            section.copy(isEditing = isEditing, items = newItems)
+                        } else {
+                            section
+                        }
                     }
                 )
             }
@@ -70,7 +88,7 @@ class ExamsComponent(
                                 when {
                                     isSameId && item is ExamsUiData.Item.Exam -> item.copy(
                                         name = name,
-                                        teacher = event.newTeacher ?: item.teacher
+                                        teacher = event.newTeacher ?: item.teacher,
                                     )
 
                                     isSameId && item is ExamsUiData.Item.Zalik -> item.copy(name = name)
@@ -95,12 +113,50 @@ class ExamsComponent(
 
                         val filteredItems = section.items.filter { it.id != event.itemId }
 
-                        section.copy(items = filteredItems.orEmptyPlaceholder())
+                        section.copy(items = filteredItems)
                     }
                 )
             }
         }
     }
+
+    // TODO save new data locally
+    private fun addNewItem(event: ExamsUiEvent.AddNewItem) {
+        _uiState.update { state ->
+            state.mapReady { data ->
+                data.copy(
+                    sections = data.sections.map { section ->
+                        if (section.id != event.sectionId) return@map section
+
+                        val currentItems = section.items.filter {
+                            it is ExamsUiData.Item.Exam || it is ExamsUiData.Item.Zalik
+                        }
+                        val addNewItem = section.items.first { it is ExamsUiData.Item.AddNew }
+
+                        val newItem = createNewItem(sectionId = section.id)
+
+                        section.copy(items = currentItems + newItem + addNewItem)
+                    }
+                )
+            }
+        }
+    }
+
+    // TODO change default values
+    private fun createNewItem(sectionId: String): ExamsUiData.Item =
+        when (sectionId) {
+            EXAM_ID -> ExamsUiData.Item.Exam(
+                name = "New Exam",
+                teacher = "New Teacher",
+                date = "TBD",
+            )
+
+            ZALIK_ID -> ExamsUiData.Item.Zalik(
+                name = "New Zalik",
+            )
+
+            else -> error("Unknown section id")
+        }
 
     private fun loadData() {
         scope.launch {
@@ -132,7 +188,6 @@ class ExamsComponent(
             title = Res.string.exams_list_title,
             items = exams.mapIndexed { index, exam ->
                 ExamsUiData.Item.Exam(
-                    id = "${EXAM_ID}_${index}_${exam.lesson}",
                     teacher = exam.teacher,
                     name = exam.lesson,
                     date = exam.date,
@@ -145,7 +200,6 @@ class ExamsComponent(
             title = Res.string.zalik_list_title,
             items = zalik.mapIndexed { index, zalik ->
                 ExamsUiData.Item.Zalik(
-                    id = "${ZALIK_ID}_${index}_${zalik.lesson}",
                     name = zalik.lesson,
                 )
             }.orEmptyPlaceholder(),
@@ -157,5 +211,14 @@ class ExamsComponent(
     }
 
     private fun List<ExamsUiData.Item>.orEmptyPlaceholder(): List<ExamsUiData.Item> =
-        ifEmpty { listOf(ExamsUiData.Item.EmptyPlaceholder(name = Res.string.exams_no_data)) }
+        filterNot { it is ExamsUiData.Item.AddNew }.ifEmpty {
+            listOf(
+                ExamsUiData.Item.EmptyPlaceholder(
+                    name = Res.string.exams_no_data
+                )
+            )
+        }
+
+    private fun List<ExamsUiData.Item>.andAddNew(): List<ExamsUiData.Item> =
+        filterNot { it is ExamsUiData.Item.EmptyPlaceholder } + ExamsUiData.Item.AddNew(name = "Add new") // TODO add string res
 }

@@ -2,15 +2,18 @@ package com.therxmv.napoleon.ui.exam.content
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Icon
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +39,7 @@ import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent.UpdateItem
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Check
 import compose.icons.feathericons.Edit2
+import compose.icons.feathericons.Plus
 import compose.icons.feathericons.Trash2
 
 @Composable
@@ -143,8 +147,10 @@ private fun SectionSubItem(
     LeonExpandableSubItem(
         modifier = modifier,
         isLast = item == section.items.last(),
+        onClick = {
+            onEvent(ExamsUiEvent.AddNewItem(sectionId = section.id))
+        }.takeIf { item is ExamsUiData.Item.AddNew },
     ) {
-        // TODO item "add new item"
         when (item) {
             is ExamsUiData.Item.Exam -> ExamContent(
                 modifier = Modifier.weight(1f),
@@ -189,6 +195,11 @@ private fun SectionSubItem(
                 onDelete = {
                     onEvent(ExamsUiEvent.DeleteItem(sectionId = section.id, itemId = item.id))
                 },
+            )
+
+            is ExamsUiData.Item.AddNew -> AddNewContent(
+                modifier = Modifier.weight(1f),
+                item = item,
             )
 
             is ExamsUiData.Item.EmptyPlaceholder -> LeonText(
@@ -266,6 +277,31 @@ private fun ZalikContent(
             icon = FeatherIcons.Trash2,
             tint = LeonTheme.colors.error,
             onClick = onDelete,
+        )
+    }
+}
+
+@Composable
+private fun AddNewContent(
+    modifier: Modifier = Modifier,
+    item: ExamsUiData.Item.AddNew,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = FeatherIcons.Plus,
+            tint = LeonTheme.colors.surfaceTint,
+            contentDescription = null,
+        )
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
+
+        LeonText(
+            text = item.name,
+            color = LeonTheme.colors.surfaceTint,
+            weight = LeonTextWeight.Bold,
         )
     }
 }

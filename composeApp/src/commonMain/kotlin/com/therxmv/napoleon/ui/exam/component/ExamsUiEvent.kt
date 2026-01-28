@@ -20,4 +20,6 @@ sealed interface ExamsUiEvent {
         val sectionId: String,
         val itemId: String,
     ) : ExamsUiEvent
+
+    data class AddNewItem(val sectionId: String) : ExamsUiEvent
 }
