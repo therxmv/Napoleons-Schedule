@@ -36,6 +36,7 @@ data class ExamsUiData(
         val id: String
         val name: String
 
+        @Stable
         sealed interface Editable : Item {
             val isEditing: Boolean
             fun toggleEdit(isEditing: Boolean): Item
