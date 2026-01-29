@@ -168,7 +168,7 @@ object PreviewMockData {
         ),
         sections = listOf(
             ExamsUiData.Section(
-                id = ExamsUiData.Section.EXAM_ID,
+                id = ExamsUiData.Section.Id.Exam,
                 title = Res.string.exams_list_title,
                 items = listOf(
                     ExamsUiData.Item.Editable.Exam(
@@ -185,7 +185,7 @@ object PreviewMockData {
                 ),
             ),
             ExamsUiData.Section(
-                id = ExamsUiData.Section.ZALIK_ID,
+                id = ExamsUiData.Section.Id.Zalik,
                 title = Res.string.zalik_list_title,
                 items = listOf(
                     ExamsUiData.Item.EmptyPlaceholder(name = "Empty Placeholder Example"),

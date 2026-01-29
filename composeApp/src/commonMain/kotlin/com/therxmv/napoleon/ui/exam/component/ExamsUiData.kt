@@ -19,17 +19,14 @@ data class ExamsUiData(
 
     @Immutable
     data class Section(
-        val id: String,
+        val id: Id,
         val title: String,
         val items: List<Item>,
     ) {
         override fun toString(): String =
             "$title:\n${items.joinToString("\n") { it.toString() }}"
 
-        companion object {
-            const val EXAM_ID = "exam"
-            const val ZALIK_ID = "zalik"
-        }
+        enum class Id { Exam, Zalik }
     }
 
     @OptIn(ExperimentalUuidApi::class)

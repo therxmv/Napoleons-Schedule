@@ -21,6 +21,7 @@ import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Item
+import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Section
 import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent
 import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent.UpdateItem
 import compose.icons.FeatherIcons
@@ -31,7 +32,7 @@ import compose.icons.feathericons.Trash2
 @Composable
 fun ExamItemContent(
     modifier: Modifier = Modifier,
-    sectionId: String,
+    sectionId: Section.Id,
     item: Item.Editable.Exam,
     isLast: Boolean,
     onEvent: (ExamsUiEvent) -> Unit,
@@ -79,7 +80,7 @@ fun ExamItemContent(
 @Composable
 fun ZalikItemContent(
     modifier: Modifier = Modifier,
-    sectionId: String,
+    sectionId: Section.Id,
     item: Item.Editable.Zalik,
     isLast: Boolean,
     onEvent: (ExamsUiEvent) -> Unit,

@@ -12,8 +12,7 @@ import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
 import com.therxmv.napoleon.data.source.remote.result.Result
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Item
-import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Section.Companion.EXAM_ID
-import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Section.Companion.ZALIK_ID
+import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Section
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -56,7 +55,7 @@ class ExamsComponent(
         }
     }
 
-    private fun toggleItemEditing(sectionId: String, itemId: String, isEditing: Boolean) {
+    private fun toggleItemEditing(sectionId: Section.Id, itemId: String, isEditing: Boolean) {
         _uiState.update { state ->
             state.mapReady { data ->
                 data.mapSectionItemsById(sectionId, itemId) { item ->
@@ -122,21 +121,19 @@ class ExamsComponent(
         }
     }
 
-    private fun createNewItem(sectionId: String): Item =
+    private fun createNewItem(sectionId: Section.Id): Item =
         when (sectionId) {
-            EXAM_ID -> Item.Editable.Exam(
+            Section.Id.Exam -> Item.Editable.Exam(
                 name = Res.string.exams_default_exam_name,
                 teacher = Res.string.exams_default_exam_teacher,
                 date = "TBD", // TODO calculate today when implement date picker
                 isEditing = true,
             )
 
-            ZALIK_ID -> Item.Editable.Zalik(
+            Section.Id.Zalik -> Item.Editable.Zalik(
                 name = Res.string.exams_default_zalik_name,
                 isEditing = true,
             )
-
-            else -> error("Unknown section id")
         }
 
     private fun loadData() {
@@ -163,8 +160,8 @@ class ExamsComponent(
     }
 
     private fun ExamsModel.toUiData(): ExamsUiData {
-        val examData = ExamsUiData.Section(
-            id = EXAM_ID,
+        val examData = Section(
+            id = Section.Id.Exam,
             title = Res.string.exams_list_title,
             items = exams.map {
                 Item.Editable.Exam(
@@ -175,8 +172,8 @@ class ExamsComponent(
             }.orEmptyPlaceholder(),
         )
 
-        val zalikData = ExamsUiData.Section(
-            id = ZALIK_ID,
+        val zalikData = Section(
+            id = Section.Id.Zalik,
             title = Res.string.zalik_list_title,
             items = zalik.map { Item.Editable.Zalik(name = it.lesson) }.orEmptyPlaceholder(),
         )
@@ -201,8 +198,8 @@ class ExamsComponent(
         ifEmpty { listOf(Item.EmptyPlaceholder(name = Res.string.exams_empty_placeholder)) }
 
     private inline fun ExamsUiData.mapSectionById(
-        sectionId: String,
-        crossinline transform: (ExamsUiData.Section) -> ExamsUiData.Section,
+        sectionId: Section.Id,
+        crossinline transform: (Section) -> Section,
     ): ExamsUiData =
         copy(
             sections = sections.map { section ->
@@ -213,7 +210,7 @@ class ExamsComponent(
         )
 
     private inline fun ExamsUiData.mapSectionItemsById(
-        sectionId: String,
+        sectionId: Section.Id,
         itemId: String,
         crossinline transform: (Item) -> Item,
     ): ExamsUiData =
