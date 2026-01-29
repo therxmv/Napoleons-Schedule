@@ -96,9 +96,8 @@
     <string name="zalik_list_title">Заліки</string>
     <string name="exams_no_data">У нас немає інформації про екзамени та заліки</string>
     <string name="exams_empty_placeholder">Немає інформації</string>
-    <string name="exams_edit_info">Натисніть на значок олівця, щоб власноруч ввести та зберегти інформацію про екзамени.\n\nРозклад екзаменів можете знайти </string>
+    <string name="exams_edit_info">Ви можете додати екзамени власноруч або провести ліворуч по вже існуючим, щоб редагувати або видалити.\n\nРозклад екзаменів можете знайти </string>
     <string name="exams_edit_info_link_text">тут</string>
-    <string name="exams_edit_save">Зберегти</string>
     <string name="exams_add_new">Додати</string>
     <string name="exams_default_exam_name">Екзамен</string>
     <string name="exams_default_exam_teacher">Викладач</string>

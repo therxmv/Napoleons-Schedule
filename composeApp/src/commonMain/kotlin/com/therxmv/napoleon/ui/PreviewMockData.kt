@@ -171,28 +171,26 @@ object PreviewMockData {
                 id = ExamsUiData.Section.EXAM_ID,
                 title = Res.string.exams_list_title,
                 items = listOf(
-                    ExamsUiData.Item.Exam(
+                    ExamsUiData.Item.Editable.Exam(
                         teacher = "Teacher's full name",
                         name = "This is Lesson1",
                         date = "19.11",
                     ),
-                    ExamsUiData.Item.Exam(
+                    ExamsUiData.Item.Editable.Exam(
                         teacher = "Teacher's full name",
                         name = "This is\nLesson2",
                         date = "25.11",
+                        isEditing = true,
                     ),
                 ),
             ),
             ExamsUiData.Section(
                 id = ExamsUiData.Section.ZALIK_ID,
                 title = Res.string.zalik_list_title,
-                isEditing = true,
                 items = listOf(
                     ExamsUiData.Item.EmptyPlaceholder(name = "Empty Placeholder Example"),
-                    ExamsUiData.Item.Zalik(name = "This is Lesson3"),
-                    ExamsUiData.Item.Zalik(name = "This is\nLesson4"),
-                    ExamsUiData.Item.Zalik(name = "This is Lesson5"),
-                    ExamsUiData.Item.AddNew(name = "Add New"),
+                    ExamsUiData.Item.Editable.Zalik(name = "This is Lesson3", isEditing = true),
+                    ExamsUiData.Item.Editable.Zalik(name = "This is\nLesson4"),
                 ),
             )
         )

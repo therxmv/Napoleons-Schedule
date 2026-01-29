@@ -24,10 +24,9 @@ fun LeonIconButton(
     onClick: () -> Unit,
     style: LeonIconButtonStyle = LeonIconButtonStyle.Default,
 ) {
-    val colors = style.colors
     IconButton(
         modifier = modifier,
-        colors = colors,
+        colors = style.colors,
         onClick = onClick,
     ) {
         Icon(
@@ -59,6 +58,6 @@ private fun LeonIconButtonPreview(
 private class LeonIconButtonStyleProvider : PreviewParameterProvider<LeonIconButtonStyle> {
     override val values = sequenceOf(
         LeonIconButtonStyle.Default,
-        LeonIconButtonStyle.Filled,
+        LeonIconButtonStyle.Filled(),
     )
 }

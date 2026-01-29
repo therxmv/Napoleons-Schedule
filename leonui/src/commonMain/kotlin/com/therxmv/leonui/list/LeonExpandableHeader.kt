@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,37 +57,7 @@ fun LeonExpandableHeader(
 }
 
 @Composable
-fun LeonExpandableSubItem(
-    modifier: Modifier = Modifier,
-    isLast: Boolean,
-    paddingValues: PaddingValues = PaddingValues(
-        start = LeonTheme.paddings.horizontal.base,
-        top = LeonTheme.paddings.vertical.skinny,
-        bottom = LeonTheme.paddings.vertical.skinny,
-    ),
-    onClick: (() -> Unit)? = null,
-    content: @Composable (RowScope.() -> Unit),
-) {
-    val shape = LeonTheme.shapes.onlyBottomRounded().takeIf { isLast }
-        ?: LeonTheme.shapes.noneRounded
-
-    Row(
-        modifier = modifier
-            .padding(top = LeonTheme.sizes.divider.thin)
-            .fillMaxWidth()
-            .clip(shape)
-            .background(LeonTheme.colors.surfaceVariant)
-            .applyIf(onClick != null) {
-                clickable { onClick?.invoke() }
-            }
-            .padding(paddingValues),
-        verticalAlignment = Alignment.CenterVertically,
-        content = content,
-    )
-}
-
-@Composable
-fun LeonEmptyExpandableItem(
+fun LeonEmptyExpandableHeader(
     modifier: Modifier = Modifier,
     color: Color,
     content: @Composable RowScope.() -> Unit,
@@ -113,7 +82,7 @@ private fun LeonExpandableItemsPreview() {
             content = { LeonText("Collapsed Header") },
         )
 
-        LeonEmptyExpandableItem(
+        LeonEmptyExpandableHeader(
             color = LeonTheme.colors.tertiary,
             content = { LeonText("Empty Header") },
         )
@@ -125,9 +94,9 @@ private fun LeonExpandableItemsPreview() {
                 content = { LeonText("Expanded Header") },
             )
 
-            repeat(4) {
+            repeat(2) {
                 LeonExpandableSubItem(
-                    isLast = it == 3,
+                    isLast = it == 1,
                     onClick = {},
                     content = { LeonText("item$it") },
                 )

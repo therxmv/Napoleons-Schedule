@@ -4,6 +4,7 @@ import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.graphics.Color
 import com.therxmv.leonui.theme.LeonTheme
 
 @Stable
@@ -17,10 +18,12 @@ sealed interface LeonIconButtonStyle {
             @Composable get() = IconButtonDefaults.iconButtonColors()
     }
 
-    data object Filled : LeonIconButtonStyle {
+    data class Filled(
+        val containerColor: Color? = null,
+    ) : LeonIconButtonStyle {
         override val colors: IconButtonColors
             @Composable get() = IconButtonDefaults.filledIconButtonColors(
-                containerColor = LeonTheme.colors.tertiary,
+                containerColor = containerColor ?: LeonTheme.colors.tertiary,
                 contentColor = LeonTheme.colors.onTertiary,
             )
     }

@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.therxmv.leonui.list.LeonEmptyExpandableItem
+import com.therxmv.leonui.list.LeonEmptyExpandableHeader
 import com.therxmv.leonui.list.LeonExpandableHeader
 import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.text.LeonText
@@ -58,7 +58,7 @@ fun LazyListScope.scheduleDayOfWeekItem(
 
         is ScheduleUiData.Day.Empty -> {
             item(key = data.name, contentType = data) {
-                LeonEmptyExpandableItem(
+                LeonEmptyExpandableHeader(
                     modifier = modifier,
                     color = color,
                     content = { ScheduleEmptyDayContent(data = data) },

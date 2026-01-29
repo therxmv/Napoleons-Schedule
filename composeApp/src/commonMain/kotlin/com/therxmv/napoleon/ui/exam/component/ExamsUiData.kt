@@ -22,7 +22,6 @@ data class ExamsUiData(
         val id: String,
         val title: String,
         val items: List<Item>,
-        val isEditing: Boolean = false,
     ) {
         override fun toString(): String =
             "$title:\n${items.joinToString("\n") { it.toString() }}"
@@ -40,35 +39,39 @@ data class ExamsUiData(
         val id: String
         val name: String
 
+        sealed interface Editable : Item {
+            val isEditing: Boolean
+            fun toggleEdit(isEditing: Boolean): Item
+
+            data class Exam(
+                override val id: String = Uuid.random().toHexDashString(),
+                override val name: String,
+                override val isEditing: Boolean = false,
+                val teacher: String,
+                val date: String,
+            ) : Editable {
+                override fun toggleEdit(isEditing: Boolean): Item = copy(isEditing = isEditing)
+
+                override fun toString(): String =
+                    "$date - $name, $teacher"
+            }
+
+            data class Zalik(
+                override val id: String = Uuid.random().toHexDashString(),
+                override val name: String,
+                override val isEditing: Boolean = false,
+            ) : Editable {
+                override fun toggleEdit(isEditing: Boolean): Item = copy(isEditing = isEditing)
+
+                override fun toString(): String = name
+            }
+        }
+
         data class EmptyPlaceholder(
             override val id: String = Uuid.random().toHexDashString(),
             override val name: String,
         ) : Item {
             override fun toString(): String = name
-        }
-
-        data class Exam(
-            override val id: String = Uuid.random().toHexDashString(),
-            override val name: String,
-            val teacher: String,
-            val date: String,
-        ) : Item {
-            override fun toString(): String =
-                "$date - $name, $teacher"
-        }
-
-        data class Zalik(
-            override val id: String = Uuid.random().toHexDashString(),
-            override val name: String,
-        ) : Item {
-            override fun toString(): String = name
-        }
-
-        data class AddNew(
-            override val id: String = Uuid.random().toHexDashString(),
-            override val name: String,
-        ) : Item {
-            override fun toString(): String = ""
         }
     }
 }

@@ -98,10 +98,9 @@
     <string name="zalik_list_title">Zaliks</string>
     <string name="exams_no_data">We don't have any information about exams</string>
     <string name="exams_empty_placeholder">No information</string>
-    <string name="exams_edit_info">Click on the pencil icon to manually enter and save information about exams.\n\nInformation about exams you can find </string>
+    <string name="exams_edit_info">You can add exams yourself or swipe left on existing ones to edit or delete them.\n\nInformation about exams you can find </string>
     <string name="exams_edit_info_link_text">here</string>
-    <string name="exams_edit_save">Save</string>
-    <string name="exams_add_new">Add new</string>
+    <string name="exams_add_new">Add</string>
     <string name="exams_default_exam_name">Exam</string>
     <string name="exams_default_exam_teacher">Teacher</string>
     <string name="exams_default_zalik_name">Zalik</string>

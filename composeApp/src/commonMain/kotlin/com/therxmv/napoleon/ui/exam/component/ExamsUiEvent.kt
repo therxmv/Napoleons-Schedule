@@ -5,9 +5,15 @@ import androidx.compose.runtime.Stable
 @Stable
 sealed interface ExamsUiEvent {
 
-    data class EditSection(val sectionId: String) : ExamsUiEvent
+    data class EditItem(
+        val sectionId: String,
+        val itemId: String,
+    ) : ExamsUiEvent
 
-    data class SaveSection(val sectionId: String) : ExamsUiEvent
+    data class SaveItem(
+        val sectionId: String,
+        val itemId: String,
+    ) : ExamsUiEvent
 
     data class UpdateItem(
         val sectionId: String,

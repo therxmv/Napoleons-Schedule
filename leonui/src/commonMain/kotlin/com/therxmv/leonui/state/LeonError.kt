@@ -63,7 +63,7 @@ fun LeonError(
                 modifier = Modifier.size(75.dp),
                 icon = Icons.Default.Refresh,
                 onClick = onRetry,
-                style = LeonIconButtonStyle.Filled,
+                style = LeonIconButtonStyle.Filled(),
             )
         }
     }

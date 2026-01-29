@@ -3,7 +3,7 @@ package com.therxmv.napoleon.ui.dashboard.content.widget
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.therxmv.leonui.list.LeonEmptyExpandableItem
+import com.therxmv.leonui.list.LeonEmptyExpandableHeader
 import com.therxmv.leonui.list.LeonExpandableHeader
 import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.theme.LeonTheme
@@ -50,7 +50,7 @@ fun ScheduleWidget(
             }
 
             is ScheduleUiData.Day.Empty -> {
-                LeonEmptyExpandableItem(
+                LeonEmptyExpandableHeader(
                     color = color,
                     content = { ScheduleEmptyDayContent(data = day) },
                 )
