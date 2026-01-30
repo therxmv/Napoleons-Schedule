@@ -12,7 +12,6 @@ import androidx.compose.ui.text.style.TextAlign
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.button.LeonIconButtonStyle
 import com.therxmv.leonui.input.LeonTextInput
-import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.list.LeonSwipeState
 import com.therxmv.leonui.list.LeonSwipeableExpandableSubItem
 import com.therxmv.leonui.text.LeonText
@@ -28,110 +27,75 @@ import compose.icons.feathericons.Edit2
 import compose.icons.feathericons.Trash2
 
 @Composable
-fun ExamItemContent(
-    modifier: Modifier = Modifier,
-    sectionId: Section.Id,
+fun RowScope.ExamItemContent(
     item: Item.Editable.Exam,
-    isLast: Boolean,
-    swipedId: String?,
-    onSwipe: (LeonSwipeState) -> Unit,
-    onEvent: (ExamsUiEvent) -> Unit,
-) {
-    SwipeableSubItem(
-        modifier = modifier,
-        isLast = isLast,
-        item = item,
-        swipedId = swipedId,
-        onSwipe = onSwipe,
-        onEdit = { onEvent(ExamsUiEvent.EditItem(sectionId, item.id)) },
-        onDelete = { onEvent(ExamsUiEvent.DeleteItem(sectionId, item.id)) },
-    ) {
-        LeonText(
-            // TODO edit date
-            text = item.date,
-            weight = LeonTextWeight.Bold,
-            color = LeonTheme.colors.surfaceTint,
-        )
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
-
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.skinny),
-        ) {
-            EditableText(
-                modifier = Modifier.fillMaxWidth(),
-                value = item.name,
-                onValueChange = { onEvent(UpdateItem(sectionId, item.id, newName = it)) },
-                isEditing = item.isEditing,
-            )
-
-            EditableText(
-                modifier = Modifier.fillMaxWidth(),
-                value = item.teacher,
-                onValueChange = { onEvent(UpdateItem(sectionId, item.id, newTeacher = it)) },
-                isEditing = item.isEditing,
-            )
-        }
-
-        if (item.isEditing) {
-            SaveAction(onClick = { onEvent(ExamsUiEvent.SaveItem(sectionId, item.id)) })
-        }
-    }
-}
-
-@Composable
-fun ZalikItemContent(
-    modifier: Modifier = Modifier,
     sectionId: Section.Id,
-    item: Item.Editable.Zalik,
-    isLast: Boolean,
-    swipedId: String?,
-    onSwipe: (LeonSwipeState) -> Unit,
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
-    SwipeableSubItem(
-        modifier = modifier,
-        isLast = isLast,
-        item = item,
-        swipedId = swipedId,
-        onSwipe = onSwipe,
-        onEdit = { onEvent(ExamsUiEvent.EditItem(sectionId, item.id)) },
-        onDelete = { onEvent(ExamsUiEvent.DeleteItem(sectionId, item.id)) },
+    LeonText(
+        // TODO edit date
+        text = item.date,
+        weight = LeonTextWeight.Bold,
+        color = LeonTheme.colors.surfaceTint,
+    )
+    Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
+
+    Column(
+        modifier = Modifier.weight(1f),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.skinny),
     ) {
         EditableText(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxWidth(),
             value = item.name,
             onValueChange = { onEvent(UpdateItem(sectionId, item.id, newName = it)) },
             isEditing = item.isEditing,
         )
 
-        if (item.isEditing) {
-            SaveAction(onClick = { onEvent(ExamsUiEvent.SaveItem(sectionId, item.id)) })
-        }
-    }
-}
-
-@Composable
-fun EmptyItemContent(
-    modifier: Modifier = Modifier,
-    item: Item.EmptyPlaceholder,
-    isLast: Boolean,
-) {
-    LeonExpandableSubItem(
-        modifier = modifier,
-        isLast = isLast,
-    ) {
-        LeonText(
-            modifier = Modifier.weight(1f),
-            text = item.name,
-            weight = LeonTextWeight.Bold,
-            textAlign = TextAlign.Center,
+        EditableText(
+            modifier = Modifier.fillMaxWidth(),
+            value = item.teacher,
+            onValueChange = { onEvent(UpdateItem(sectionId, item.id, newTeacher = it)) },
+            isEditing = item.isEditing,
         )
     }
+
+    if (item.isEditing) {
+        SaveAction(onClick = { onEvent(ExamsUiEvent.SaveItem(sectionId, item.id)) })
+    }
 }
 
 @Composable
-private fun SwipeableSubItem(
+fun RowScope.ZalikItemContent(
+    sectionId: Section.Id,
+    item: Item.Editable.Zalik,
+    onEvent: (ExamsUiEvent) -> Unit,
+) {
+    EditableText(
+        modifier = Modifier.weight(1f),
+        value = item.name,
+        onValueChange = { onEvent(UpdateItem(sectionId, item.id, newName = it)) },
+        isEditing = item.isEditing,
+    )
+
+    if (item.isEditing) {
+        SaveAction(onClick = { onEvent(ExamsUiEvent.SaveItem(sectionId, item.id)) })
+    }
+}
+
+@Composable
+fun RowScope.EmptyItemContent(
+    item: Item.EmptyPlaceholder,
+) {
+    LeonText(
+        modifier = Modifier.weight(1f),
+        text = item.name,
+        weight = LeonTextWeight.Bold,
+        textAlign = TextAlign.Center,
+    )
+}
+
+@Composable
+fun SwipeableSubItem(
     modifier: Modifier = Modifier,
     item: Item.Editable,
     isLast: Boolean,

@@ -19,6 +19,7 @@ import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.list.LeonExpandableHeader
+import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.list.LeonSwipeState
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
@@ -159,31 +160,44 @@ private fun SectionSubItem(
     val isLast = item == section.items.last()
 
     when (item) {
-        is Item.Editable.Exam -> ExamItemContent(
-            modifier = modifier,
-            sectionId = section.id,
-            item = item,
-            isLast = isLast,
-            swipedId = swipedId,
-            onSwipe = onSwipe,
-            onEvent = onEvent,
-        )
+        is Item.Editable -> {
+            SwipeableSubItem(
+                modifier = modifier,
+                isLast = isLast,
+                item = item,
+                swipedId = swipedId,
+                onSwipe = onSwipe,
+                onEdit = { onEvent(ExamsUiEvent.EditItem(section.id, item.id)) },
+                onDelete = { onEvent(ExamsUiEvent.DeleteItem(section.id, item.id)) },
+            ) {
+                when (item) {
+                    is Item.Editable.Exam -> ExamItemContent(
+                        item = item,
+                        sectionId = section.id,
+                        onEvent = onEvent,
+                    )
 
-        is Item.Editable.Zalik -> ZalikItemContent(
-            modifier = modifier,
-            sectionId = section.id,
-            item = item,
-            isLast = isLast,
-            swipedId = swipedId,
-            onSwipe = onSwipe,
-            onEvent = onEvent,
-        )
+                    is Item.Editable.Zalik -> ZalikItemContent(
+                        item = item,
+                        sectionId = section.id,
+                        onEvent = onEvent,
+                    )
+                }
+            }
+        }
 
-        is Item.EmptyPlaceholder -> EmptyItemContent(
-            modifier = modifier,
-            item = item,
-            isLast = isLast,
-        )
+        else -> {
+            LeonExpandableSubItem(
+                modifier = modifier,
+                isLast = isLast,
+            ) {
+                when (item) {
+                    is Item.EmptyPlaceholder -> EmptyItemContent(item)
+
+                    else -> Unit
+                }
+            }
+        }
     }
 }
 
