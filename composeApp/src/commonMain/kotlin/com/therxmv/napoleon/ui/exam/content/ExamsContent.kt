@@ -7,6 +7,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.therxmv.leonui.animation.leonLazyListAnimation
@@ -15,6 +19,7 @@ import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
 import com.therxmv.leonui.list.LeonExpandableHeader
+import com.therxmv.leonui.list.LeonSwipeState
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
@@ -37,6 +42,7 @@ fun ExamsContent(
     fallbackReason: String?,
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
+    var swipedItemId by remember { mutableStateOf<String?>(null) }
     LazyColumn(
         modifier = modifier,
         contentPadding = LeonTheme.paddings.baseValues,
@@ -87,6 +93,18 @@ fun ExamsContent(
                     modifier = Modifier.leonLazyListAnimation(),
                     item = item,
                     section = section,
+                    swipedId = swipedItemId,
+                    onSwipe = { state ->
+                        when (state) {
+                            LeonSwipeState.Start -> {
+                                if (swipedItemId == item.id) swipedItemId == null
+                            }
+
+                            LeonSwipeState.End -> {
+                                swipedItemId = item.id
+                            }
+                        }
+                    },
                     onEvent = onEvent,
                 )
             }
@@ -133,6 +151,8 @@ private fun SectionHeader(
 private fun SectionSubItem(
     modifier: Modifier = Modifier,
     item: Item,
+    swipedId: String?,
+    onSwipe: (LeonSwipeState) -> Unit,
     section: ExamsUiData.Section,
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
@@ -144,6 +164,8 @@ private fun SectionSubItem(
             sectionId = section.id,
             item = item,
             isLast = isLast,
+            swipedId = swipedId,
+            onSwipe = onSwipe,
             onEvent = onEvent,
         )
 
@@ -152,6 +174,8 @@ private fun SectionSubItem(
             sectionId = section.id,
             item = item,
             isLast = isLast,
+            swipedId = swipedId,
+            onSwipe = onSwipe,
             onEvent = onEvent,
         )
 

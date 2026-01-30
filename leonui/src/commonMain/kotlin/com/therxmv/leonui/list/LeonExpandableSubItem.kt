@@ -6,6 +6,7 @@ import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,7 +74,8 @@ fun LeonExpandableSubItem(
 fun LeonSwipeableExpandableSubItem(
     modifier: Modifier = Modifier,
     isLast: Boolean,
-    onStateChange: @Composable (AnchoredDraggableState<LeonSwipeState>) -> Unit = {},
+    shouldResetState: Boolean = false,
+    onStateChanged: (LeonSwipeState) -> Unit = {},
     actions: @Composable RowScope.() -> Unit,
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -92,7 +95,6 @@ fun LeonSwipeableExpandableSubItem(
             anchors = anchors,
         )
     }
-    onStateChange(state)
 
     Box(modifier = modifier.height(IntrinsicSize.Max)) {
         Row(
@@ -117,6 +119,16 @@ fun LeonSwipeableExpandableSubItem(
             isLast = isLast,
             content = content,
         )
+    }
+
+    LaunchedEffect(shouldResetState) {
+        if (shouldResetState) {
+            state.animateTo(LeonSwipeState.Start)
+        }
+    }
+
+    LaunchedEffect(state.currentValue) {
+        onStateChanged(state.currentValue)
     }
 }
 

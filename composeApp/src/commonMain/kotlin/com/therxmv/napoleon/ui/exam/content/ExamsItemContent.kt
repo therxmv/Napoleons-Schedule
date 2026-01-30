@@ -1,6 +1,5 @@
 package com.therxmv.napoleon.ui.exam.content
 
-import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import com.therxmv.leonui.button.LeonIconButton
@@ -35,12 +33,16 @@ fun ExamItemContent(
     sectionId: Section.Id,
     item: Item.Editable.Exam,
     isLast: Boolean,
+    swipedId: String?,
+    onSwipe: (LeonSwipeState) -> Unit,
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
     SwipeableSubItem(
         modifier = modifier,
         isLast = isLast,
-        isEditing = item.isEditing,
+        item = item,
+        swipedId = swipedId,
+        onSwipe = onSwipe,
         onEdit = { onEvent(ExamsUiEvent.EditItem(sectionId, item.id)) },
         onDelete = { onEvent(ExamsUiEvent.DeleteItem(sectionId, item.id)) },
     ) {
@@ -83,12 +85,16 @@ fun ZalikItemContent(
     sectionId: Section.Id,
     item: Item.Editable.Zalik,
     isLast: Boolean,
+    swipedId: String?,
+    onSwipe: (LeonSwipeState) -> Unit,
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
     SwipeableSubItem(
         modifier = modifier,
         isLast = isLast,
-        isEditing = item.isEditing,
+        item = item,
+        swipedId = swipedId,
+        onSwipe = onSwipe,
         onEdit = { onEvent(ExamsUiEvent.EditItem(sectionId, item.id)) },
         onDelete = { onEvent(ExamsUiEvent.DeleteItem(sectionId, item.id)) },
     ) {
@@ -127,8 +133,10 @@ fun EmptyItemContent(
 @Composable
 private fun SwipeableSubItem(
     modifier: Modifier = Modifier,
+    item: Item.Editable,
     isLast: Boolean,
-    isEditing: Boolean,
+    swipedId: String?,
+    onSwipe: (LeonSwipeState) -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
     content: @Composable RowScope.() -> Unit,
@@ -136,14 +144,11 @@ private fun SwipeableSubItem(
     LeonSwipeableExpandableSubItem(
         modifier = modifier,
         isLast = isLast,
-        onStateChange = {
-            LaunchedEffect(isEditing) {
-                it.animateTo(LeonSwipeState.Start)
-            }
-        },
+        shouldResetState = swipedId != item.id,
+        onStateChanged = onSwipe,
         actions = {
             SwipeableActions(
-                isEditing = isEditing,
+                isEditing = item.isEditing,
                 onEdit = onEdit,
                 onDelete = onDelete,
             )
