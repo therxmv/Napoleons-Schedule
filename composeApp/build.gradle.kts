@@ -71,6 +71,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":leonui"))
+                implementation(project(":datetime"))
 
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.tooling.preview)
@@ -80,7 +81,6 @@ kotlin {
 
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
-                implementation(libs.kotlinx.datetime)
 
                 implementation(libs.libres)
 

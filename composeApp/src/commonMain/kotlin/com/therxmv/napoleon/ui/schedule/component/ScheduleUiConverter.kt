@@ -1,7 +1,7 @@
 package com.therxmv.napoleon.ui.schedule.component
 
+import com.therxmv.datetime.getNowDateTime
 import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.base.date.getTodayDateTime
 import com.therxmv.napoleon.data.repository.specialty.model.LessonModel
 import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -78,7 +78,7 @@ class ScheduleUiConverter(
         }
 
     private fun Map<String, List<LessonModel>>.findSelectedKey(): String? {
-        val date = getTodayDateTime()
+        val date = getNowDateTime()
         val todayIndex = date.dayOfWeek.ordinal
         val indexByHour = todayIndex.takeIf { date.hour < END_OF_DAY } ?: (todayIndex + 1)
 

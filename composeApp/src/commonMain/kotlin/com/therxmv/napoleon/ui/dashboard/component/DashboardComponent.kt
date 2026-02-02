@@ -3,8 +3,8 @@ package com.therxmv.napoleon.ui.dashboard.component
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.therxmv.datetime.getNowDate
 import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.base.date.getTodayDateTime
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.info.InfoRepository
@@ -205,7 +205,7 @@ class DashboardComponent(
     }
 
     private fun indexOfToday(): Int =
-        getTodayDateTime().dayOfWeek.ordinal
+        getNowDate().dayOfWeek.ordinal
 
     private fun openLessonUrl(url: String) {
         scope.launch {

@@ -1,6 +1,6 @@
 package com.therxmv.napoleon.data.repository.specialty
 
-import com.therxmv.napoleon.base.date.getNowMillis
+import com.therxmv.datetime.getNowMillis
 import com.therxmv.napoleon.data.repository.converter.ScheduleConverter
 import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
