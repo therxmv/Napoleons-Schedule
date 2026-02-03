@@ -1,14 +1,19 @@
 package com.therxmv.napoleon.ui.exam.content
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
+import com.therxmv.datetime.DateTimeConstants
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.button.LeonIconButtonStyle
 import com.therxmv.leonui.input.LeonTextInput
@@ -25,6 +30,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Check
 import compose.icons.feathericons.Edit2
 import compose.icons.feathericons.Trash2
+import kotlinx.datetime.format
 
 @Composable
 fun RowScope.ExamItemContent(
@@ -32,11 +38,10 @@ fun RowScope.ExamItemContent(
     sectionId: Section.Id,
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
-    LeonText(
-        // TODO edit date
-        text = item.date,
-        weight = LeonTextWeight.Bold,
-        color = LeonTheme.colors.surfaceTint,
+    EditableDate(
+        text = item.date.format(DateTimeConstants.Format.dayMonthFormat),
+        isEditing = item.isEditing,
+        onClick = { onEvent(ExamsUiEvent.ChangeItemDate(sectionId, item.id, item.date)) },
     )
     Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
 
@@ -139,6 +144,33 @@ private fun EditableText(
         LeonText(
             modifier = modifier,
             text = value,
+        )
+    }
+}
+
+@Composable
+private fun EditableDate(
+    text: String,
+    isEditing: Boolean,
+    onClick: () -> Unit,
+) {
+    if (isEditing) {
+        // TODO maybe change button
+        LeonText(
+            modifier = Modifier
+                .clip(LeonTheme.shapes.allRounded)
+                .background(LeonTheme.colors.surface)
+                .clickable(onClick = onClick)
+                .padding(LeonTheme.paddings.vertical.base),
+            text = text,
+            weight = LeonTextWeight.Bold,
+            color = LeonTheme.colors.onSurface,
+        )
+    } else {
+        LeonText(
+            text = text,
+            weight = LeonTextWeight.Bold,
+            color = LeonTheme.colors.surfaceTint,
         )
     }
 }

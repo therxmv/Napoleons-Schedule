@@ -3,7 +3,7 @@ package com.therxmv.napoleon.ui.exam.content
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,11 +13,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.therxmv.datetime.picker.state.rememberDatePickerState
+import com.therxmv.datetime.toMillis
 import com.therxmv.leonui.animation.leonLazyListAnimation
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
+import com.therxmv.leonui.datepicker.LeonMonthCalendar
 import com.therxmv.leonui.list.LeonExpandableHeader
 import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.list.LeonSwipeState
@@ -85,11 +88,11 @@ fun ExamsContent(
             }
 
             // TODO drag reorder
-            itemsIndexed(
+            items(
                 items = section.items,
-                key = { _, item -> item.id },
-                contentType = { _, item -> item },
-            ) { index, item ->
+                key = { it.id },
+                contentType = { it },
+            ) { item ->
                 SectionSubItem(
                     modifier = Modifier.leonLazyListAnimation(),
                     item = item,
@@ -110,6 +113,15 @@ fun ExamsContent(
                 )
             }
         }
+    }
+
+    if (data.datePickerData != null) {
+        // TODO show datepicker
+        val state = rememberDatePickerState(data.datePickerData.date.toMillis())
+        LeonMonthCalendar(
+            state = state,
+            onDayClick = { state.selectDate(it) },
+        )
     }
 }
 

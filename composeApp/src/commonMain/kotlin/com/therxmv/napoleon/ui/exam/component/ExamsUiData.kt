@@ -2,6 +2,9 @@ package com.therxmv.napoleon.ui.exam.component
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
+import com.therxmv.datetime.DateTimeConstants
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -9,12 +12,19 @@ import kotlin.uuid.Uuid
 data class ExamsUiData(
     val infoData: Info,
     val sections: List<Section>,
+    val datePickerData: DatePicker? = null,
 ) {
 
     data class Info(
         val text: String,
         val link: String,
         val linkText: String,
+    )
+
+    data class DatePicker(
+        val sectionId: Section.Id,
+        val itemId: String,
+        val date: LocalDate,
     )
 
     @Immutable
@@ -46,12 +56,12 @@ data class ExamsUiData(
                 override val name: String,
                 override val isEditing: Boolean = false,
                 val teacher: String,
-                val date: String,
+                val date: LocalDate,
             ) : Editable {
                 override fun toggleEdit(isEditing: Boolean): Item = copy(isEditing = isEditing)
 
                 override fun toString(): String =
-                    "$date - $name, $teacher"
+                    "${date.format(DateTimeConstants.Format.dayMonthFormat)} - $name, $teacher"
             }
 
             data class Zalik(

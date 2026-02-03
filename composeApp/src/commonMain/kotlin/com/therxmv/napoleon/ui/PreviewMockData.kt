@@ -18,6 +18,7 @@ import compose.icons.feathericons.DivideCircle
 import compose.icons.feathericons.Folder
 import compose.icons.feathericons.Globe
 import compose.icons.feathericons.Layout
+import kotlinx.datetime.LocalDate
 
 object PreviewMockData {
 
@@ -174,12 +175,12 @@ object PreviewMockData {
                     ExamsUiData.Item.Editable.Exam(
                         teacher = "Teacher's full name",
                         name = "This is Lesson1",
-                        date = "19.11",
+                        date = LocalDate(2025, 1, 10),
                     ),
                     ExamsUiData.Item.Editable.Exam(
                         teacher = "Teacher's full name",
                         name = "This is\nLesson2",
-                        date = "25.11",
+                        date = LocalDate(2025, 1, 16),
                         isEditing = true,
                     ),
                 ),

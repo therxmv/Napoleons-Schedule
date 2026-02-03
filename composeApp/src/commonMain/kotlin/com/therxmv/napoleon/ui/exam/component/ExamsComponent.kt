@@ -3,6 +3,8 @@ package com.therxmv.napoleon.ui.exam.component
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.therxmv.datetime.getNowDate
+import com.therxmv.datetime.toDate
 import com.therxmv.leonui.state.LeonState
 import com.therxmv.leonui.state.mapReady
 import com.therxmv.napoleon.Res
@@ -52,6 +54,22 @@ class ExamsComponent(
             is ExamsUiEvent.UpdateItem -> updateItem(event)
             is ExamsUiEvent.DeleteItem -> deleteItem(event)
             is ExamsUiEvent.AddNewItem -> addNewItem(event)
+
+            is ExamsUiEvent.ChangeItemDate -> openDatePicker(event)
+        }
+    }
+
+    private fun openDatePicker(event: ExamsUiEvent.ChangeItemDate) {
+        _uiState.update { state ->
+            state.mapReady { data ->
+                data.copy(
+                    datePickerData = ExamsUiData.DatePicker(
+                        sectionId = event.sectionId,
+                        itemId = event.itemId,
+                        date = event.date,
+                    ),
+                )
+            }
         }
     }
 
@@ -126,7 +144,7 @@ class ExamsComponent(
             Section.Id.Exam -> Item.Editable.Exam(
                 name = Res.string.exams_default_exam_name,
                 teacher = Res.string.exams_default_exam_teacher,
-                date = "TBD", // TODO calculate today when implement date picker
+                date = getNowDate(), // TODO calculate today when implement date picker
                 isEditing = true,
             )
 
@@ -163,11 +181,11 @@ class ExamsComponent(
         val examData = Section(
             id = Section.Id.Exam,
             title = Res.string.exams_list_title,
-            items = exams.map {
+            items = exams.sortedBy { it.dateMillis }.map {
                 Item.Editable.Exam(
                     teacher = it.teacher,
                     name = it.lesson,
-                    date = it.date,
+                    date = it.dateMillis.toDate(),
                 )
             }.orEmptyPlaceholder(),
         )
@@ -206,7 +224,8 @@ class ExamsComponent(
                 if (section.id != sectionId) return@map section
 
                 transform(section)
-            }
+            },
+            datePickerData = null,
         )
 
     private inline fun ExamsUiData.mapSectionItemsById(

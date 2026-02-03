@@ -2,6 +2,7 @@ package com.therxmv.napoleon.ui.exam.component
 
 import androidx.compose.runtime.Stable
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Section
+import kotlinx.datetime.LocalDate
 
 @Stable
 sealed interface ExamsUiEvent {
@@ -29,4 +30,10 @@ sealed interface ExamsUiEvent {
     ) : ExamsUiEvent
 
     data class AddNewItem(val sectionId: Section.Id) : ExamsUiEvent
+
+    data class ChangeItemDate(
+        val sectionId: Section.Id,
+        val itemId: String,
+        val date: LocalDate,
+    ) : ExamsUiEvent
 }

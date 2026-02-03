@@ -8,7 +8,7 @@ data class ExamsModel(
 data class ExamModel(
     val teacher: String,
     val lesson: String,
-    val date: String,
+    val dateMillis: Long,
 )
 
 data class ZalikModel(
