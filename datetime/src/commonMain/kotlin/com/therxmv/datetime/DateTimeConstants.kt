@@ -1,6 +1,6 @@
 package com.therxmv.datetime
 
-import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.format.DayOfWeekNames
 
 object DateTimeConstants {
 
@@ -10,7 +10,8 @@ object DateTimeConstants {
     }
 
     object Week {
-        val list = DayOfWeek.entries.toList()
+        // TODO localize week names; Migrate to normal resources
+        val list = DayOfWeekNames.ENGLISH_ABBREVIATED.names
         val size = list.size
     }
 }

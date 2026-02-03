@@ -29,6 +29,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":datetime"))
+
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.tooling.preview)
                 implementation(libs.compose.material3)
