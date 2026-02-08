@@ -1,6 +1,7 @@
 package com.therxmv.leonui.button
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -30,6 +31,10 @@ fun LeonButton(
     isEnabled: Boolean = true,
     prefixIcon: ImageVector? = null,
     suffixIcon: ImageVector? = null,
+    textPadding: PaddingValues = PaddingValues(
+        horizontal = LeonTheme.paddings.horizontal.skinny,
+        vertical = LeonTheme.paddings.vertical.base,
+    ),
 ) {
     val colors = style.colors
     Button(
@@ -58,10 +63,7 @@ fun LeonButton(
         }
 
         LeonText(
-            modifier = Modifier.padding(
-                horizontal = LeonTheme.paddings.horizontal.skinny,
-                vertical = LeonTheme.paddings.vertical.base,
-            ),
+            modifier = Modifier.padding(textPadding),
             text = label,
             weight = LeonTextWeight.Bold,
             color = contentColor,

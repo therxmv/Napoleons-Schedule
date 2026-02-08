@@ -187,7 +187,6 @@ private fun SwipeableActions(
             style = LeonIconButtonStyle.Filled(
                 containerColor = LeonTheme.colors.primaryContainer,
             ),
-            tint = LeonTheme.colors.onPrimaryContainer,
             onClick = onEdit,
         )
     }
@@ -197,7 +196,6 @@ private fun SwipeableActions(
         style = LeonIconButtonStyle.Filled(
             containerColor = LeonTheme.colors.errorContainer,
         ),
-        tint = LeonTheme.colors.onErrorContainer,
         onClick = onDelete,
     )
 }

@@ -20,7 +20,7 @@ import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.card.LeonCard
 import com.therxmv.leonui.card.LeonCardType
-import com.therxmv.leonui.datepicker.LeonMonthCalendar
+import com.therxmv.leonui.datepicker.LeonDatePickerDialog
 import com.therxmv.leonui.list.LeonExpandableHeader
 import com.therxmv.leonui.list.LeonExpandableSubItem
 import com.therxmv.leonui.list.LeonSwipeState
@@ -116,11 +116,11 @@ fun ExamsContent(
     }
 
     if (data.datePickerData != null) {
-        // TODO show datepicker
         val state = rememberDatePickerState(data.datePickerData.date.toMillis())
-        LeonMonthCalendar(
+        LeonDatePickerDialog(
             state = state,
-            onDayClick = { state.selectDate(it) },
+            onDateSelected = {},
+            onCancel = {},
         )
     }
 }

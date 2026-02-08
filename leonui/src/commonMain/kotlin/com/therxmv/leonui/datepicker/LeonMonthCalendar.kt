@@ -25,17 +25,16 @@ import com.therxmv.datetime.picker.state.rememberDatePickerState
 import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import kotlinx.datetime.LocalDate
 
 @Composable
 fun LeonMonthCalendar(
-    modifier: Modifier = Modifier,
     state: DatePickerState,
-    onDayClick: (LocalDate) -> Unit,
+    onDayClick: (LocalDate) -> Unit = {},
 ) {
     Column(
-        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(LeonTheme.sizes.divider.thin),
     ) {
         GridRow {
@@ -58,7 +57,10 @@ fun LeonMonthCalendar(
                                 text = day.number,
                                 withBackground = day.date == state.selectedDate,
                                 withBorder = day.isToday,
-                                onClick = { onDayClick(day.date) },
+                                onClick = {
+                                    state.selectDate(day.date)
+                                    onDayClick(day.date)
+                                },
                             )
                         } else {
                             NotCurrentMonthDay(day.number)
@@ -135,14 +137,12 @@ private fun RowScope.GridBox(
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-private fun CustomMonthCalendarPreview() {
-    val state = rememberDatePickerState()
-
-    Column {
+private fun LeonMonthCalendarPreview() {
+    LeonComponentPreview {
         LeonMonthCalendar(
-            state = state,
+            state = rememberDatePickerState(),
             onDayClick = {},
         )
     }

@@ -35,7 +35,7 @@ fun LeonIconButton(
                     fillMaxSize(0.45f)
                 },
             imageVector = icon,
-            tint = tint,
+            tint = if (style is LeonIconButtonStyle.Filled) style.colors.contentColor else tint,
             contentDescription = null,
         )
     }
