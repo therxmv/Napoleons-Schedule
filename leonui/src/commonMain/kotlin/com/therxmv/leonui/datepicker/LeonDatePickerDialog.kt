@@ -14,6 +14,7 @@ import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.theme.LeonTheme
 import kotlinx.datetime.LocalDate
 
+// TODO fix landscape
 @Composable
 fun LeonDatePickerDialog(
     state: DatePickerState,
@@ -23,7 +24,7 @@ fun LeonDatePickerDialog(
     Dialog(onDismissRequest = onCancel) {
         LeonDatePickerColumn {
             LeonDatePickerContent(state)
-            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.baggy))
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
 
             DialogActions(
                 modifier = Modifier.align(Alignment.End),

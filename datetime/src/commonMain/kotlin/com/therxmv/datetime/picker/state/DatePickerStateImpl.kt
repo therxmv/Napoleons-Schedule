@@ -10,6 +10,7 @@ import com.therxmv.datetime.DateTimeConstants.Week
 import com.therxmv.datetime.getNowDate
 import com.therxmv.datetime.getNowMillis
 import com.therxmv.datetime.picker.state.DatePickerState.Day
+import com.therxmv.datetime.picker.state.DatePickerStateImpl.Companion.MIN_WEEKS
 import com.therxmv.datetime.toDate
 import com.therxmv.datetime.toMillis
 import com.therxmv.datetime.withYear
@@ -90,24 +91,6 @@ private class DatePickerStateImpl(
     override fun formatSelectedDate(formatter: DateTimeFormat<LocalDate>): String =
         selectedDate.format(formatter)
 
-    companion object {
-        fun Saver(): Saver<DatePickerStateImpl, Any> =
-            listSaver(
-                save = {
-                    listOf(
-                        it.currentDate.toMillis(),
-                        it.selectedDate.toMillis(),
-                    )
-                },
-                restore = { value ->
-                    DatePickerStateImpl(
-                        currentDateMillis = value[0],
-                        selectedDateMillis = value[1],
-                    )
-                },
-            )
-    }
-
     /**
      * 1. Finds on which day of the week current month begins (2 for Tuesday).
      * 2. Gets previous month and it's length.
@@ -143,22 +126,40 @@ private class DatePickerStateImpl(
 
     /**
      * 1. Gets current number of filled days in the list.
-     * 2. If `daysFilled` is not divisible by the `Week.size`, computes the minimum slots by rounding up to the next full week.
-     *    Otherwise, uses `daysFilled` as the `totalSlots` and next step is skipped.
+     * 2. Calculates total slots needed based on [MIN_WEEKS] to fill remaining slots and ensure consistent height across all months.
      * 3. Iterates from `daysFilled` until `totalSlots`, adding the Day objects to the list.
      */
     private fun MutableList<Day>.fillNextMonth(currentMonth: YearMonth) {
         val daysFilled = this.size
 
         val nextMonth = currentMonth.plusMonth()
-        val totalSlots = if (daysFilled % Week.size != 0) {
-            (daysFilled / Week.size).plus(1).times(Week.size)
-        } else daysFilled
+
+        val totalSlots = MIN_WEEKS * Week.size
 
         for (i in daysFilled until totalSlots) {
             Day(
                 date = nextMonth.onDay(i - daysFilled + 1),
             ).also(::add)
         }
+    }
+
+    companion object {
+        private const val MIN_WEEKS = 6
+
+        fun Saver(): Saver<DatePickerStateImpl, Any> =
+            listSaver(
+                save = {
+                    listOf(
+                        it.currentDate.toMillis(),
+                        it.selectedDate.toMillis(),
+                    )
+                },
+                restore = { value ->
+                    DatePickerStateImpl(
+                        currentDateMillis = value[0],
+                        selectedDateMillis = value[1],
+                    )
+                },
+            )
     }
 }
