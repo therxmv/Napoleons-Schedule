@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import com.therxmv.datetime.DateTimeConstants
 import com.therxmv.datetime.picker.state.DatePickerState
 import com.therxmv.datetime.picker.state.rememberDatePickerState
 import com.therxmv.leonui.button.LeonButton
@@ -50,9 +51,9 @@ fun LeonDatePicker(
 @Composable
 internal fun LeonDatePickerContent(
     state: DatePickerState,
-    onDateSelected: (LocalDate) -> Unit,
+    onDateSelected: (LocalDate) -> Unit = {},
 ) {
-    Header()
+    Header(state)
     Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.baggy))
 
     CalendarActions(state = state)
@@ -62,7 +63,9 @@ internal fun LeonDatePickerContent(
 }
 
 @Composable
-private fun Header() {
+private fun Header(
+    state: DatePickerState,
+) {
     Row(
         modifier = Modifier.height(IntrinsicSize.Max),
         verticalAlignment = Alignment.CenterVertically,
@@ -82,7 +85,7 @@ private fun Header() {
             )
 
             LeonText(
-                text = "January 12, 2026", // TODO translate string
+                text = state.formatSelectedDate(DateTimeConstants.Format.fullDate),
                 size = LeonTextSize.Title1,
                 weight = LeonTextWeight.Bold,
             )
@@ -100,9 +103,9 @@ private fun CalendarActions(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         LeonButton(
-            label = "2026", // TODO translate string
+            label = state.formatCurrentDate(DateTimeConstants.Format.fullMonthSpaceYear),
             textPadding = PaddingValues(
-                horizontal = LeonTheme.paddings.horizontal.skinny,
+                end = LeonTheme.paddings.horizontal.skinny,
             ),
             suffixIcon = FeatherIcons.ChevronDown,
             onClick = {}, // TODO show year grid

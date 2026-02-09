@@ -61,7 +61,7 @@ data class ExamsUiData(
                 override fun toggleEdit(isEditing: Boolean): Item = copy(isEditing = isEditing)
 
                 override fun toString(): String =
-                    "${date.format(DateTimeConstants.Format.dayMonthFormat)} - $name, $teacher"
+                    "${date.format(DateTimeConstants.Format.dayDotMonthNumber)} - $name, $teacher"
             }
 
             data class Zalik(

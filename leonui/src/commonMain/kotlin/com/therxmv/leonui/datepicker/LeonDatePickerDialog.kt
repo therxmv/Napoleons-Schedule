@@ -22,7 +22,7 @@ fun LeonDatePickerDialog(
 ) {
     Dialog(onDismissRequest = onCancel) {
         LeonDatePickerColumn {
-            LeonDatePickerContent(state, onDateSelected)
+            LeonDatePickerContent(state)
             Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.baggy))
 
             DialogActions(

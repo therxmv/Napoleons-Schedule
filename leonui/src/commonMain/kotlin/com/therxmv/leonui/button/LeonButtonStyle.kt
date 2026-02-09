@@ -15,7 +15,9 @@ sealed interface LeonButtonStyle {
         @Composable get
 
     val contentPadding: PaddingValues
-        get() = ButtonDefaults.ContentPadding
+        get() = PaddingValues(
+            horizontal = LeonTheme.paddings.horizontal.base,
+        )
 
     data object Default : LeonButtonStyle {
         override val colors: ButtonColors

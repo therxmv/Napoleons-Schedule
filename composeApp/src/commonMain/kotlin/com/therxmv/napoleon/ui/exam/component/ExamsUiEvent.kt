@@ -22,6 +22,7 @@ sealed interface ExamsUiEvent {
         val itemId: String,
         val newName: String? = null,
         val newTeacher: String? = null,
+        val newDate: LocalDate? = null,
     ) : ExamsUiEvent
 
     data class DeleteItem(
@@ -36,4 +37,6 @@ sealed interface ExamsUiEvent {
         val itemId: String,
         val date: LocalDate,
     ) : ExamsUiEvent
+
+    data object CloseDatePicker : ExamsUiEvent
 }

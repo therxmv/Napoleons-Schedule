@@ -39,7 +39,7 @@ fun RowScope.ExamItemContent(
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
     EditableDate(
-        text = item.date.format(DateTimeConstants.Format.dayMonthFormat),
+        text = item.date.format(DateTimeConstants.Format.dayMonthYear),
         isEditing = item.isEditing,
         onClick = { onEvent(ExamsUiEvent.ChangeItemDate(sectionId, item.id, item.date)) },
     )
@@ -165,12 +165,14 @@ private fun EditableDate(
             text = text,
             weight = LeonTextWeight.Bold,
             color = LeonTheme.colors.onSurface,
+            textAlign = TextAlign.Center,
         )
     } else {
         LeonText(
             text = text,
             weight = LeonTextWeight.Bold,
             color = LeonTheme.colors.surfaceTint,
+            textAlign = TextAlign.Center,
         )
     }
 }

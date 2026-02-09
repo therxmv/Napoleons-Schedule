@@ -36,6 +36,7 @@ import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Item
 import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent
+import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent.UpdateItem
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Plus
 
@@ -119,8 +120,8 @@ fun ExamsContent(
         val state = rememberDatePickerState(data.datePickerData.date.toMillis())
         LeonDatePickerDialog(
             state = state,
-            onDateSelected = {},
-            onCancel = {},
+            onDateSelected = { onEvent(UpdateItem(data.datePickerData.sectionId, data.datePickerData.itemId, newDate = it)) },
+            onCancel = { onEvent(ExamsUiEvent.CloseDatePicker) },
         )
     }
 }

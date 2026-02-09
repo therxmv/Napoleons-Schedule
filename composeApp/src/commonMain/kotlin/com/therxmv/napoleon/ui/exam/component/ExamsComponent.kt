@@ -56,6 +56,8 @@ class ExamsComponent(
             is ExamsUiEvent.AddNewItem -> addNewItem(event)
 
             is ExamsUiEvent.ChangeItemDate -> openDatePicker(event)
+
+            is ExamsUiEvent.CloseDatePicker -> closeDatePicker()
         }
     }
 
@@ -69,6 +71,14 @@ class ExamsComponent(
                         date = event.date,
                     ),
                 )
+            }
+        }
+    }
+
+    private fun closeDatePicker() {
+        _uiState.update { state ->
+            state.mapReady { data ->
+                data.copy(datePickerData = null)
             }
         }
     }
@@ -96,6 +106,7 @@ class ExamsComponent(
                         is Item.Editable.Exam -> item.copy(
                             name = event.newName ?: item.name,
                             teacher = event.newTeacher ?: item.teacher,
+                            date = event.newDate ?: item.date,
                         )
 
                         is Item.Editable.Zalik -> item.copy(
@@ -144,7 +155,7 @@ class ExamsComponent(
             Section.Id.Exam -> Item.Editable.Exam(
                 name = Res.string.exams_default_exam_name,
                 teacher = Res.string.exams_default_exam_teacher,
-                date = getNowDate(), // TODO calculate today when implement date picker
+                date = getNowDate(),
                 isEditing = true,
             )
 
