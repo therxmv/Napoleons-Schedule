@@ -16,10 +16,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.therxmv.datetime.DateTimeConstants
 import com.therxmv.datetime.picker.state.DatePickerState
 import com.therxmv.datetime.picker.state.rememberDatePickerState
@@ -36,6 +43,7 @@ import compose.icons.feathericons.ArrowLeft
 import compose.icons.feathericons.ArrowRight
 import compose.icons.feathericons.Calendar
 import compose.icons.feathericons.ChevronDown
+import compose.icons.feathericons.ChevronUp
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -53,13 +61,35 @@ internal fun LeonDatePickerContent(
     state: DatePickerState,
     onDateSelected: (LocalDate) -> Unit = {},
 ) {
+    val density = LocalDensity.current
+    var showYearsGrid by remember { mutableStateOf(false) }
+    var yearsGridHeight by remember { mutableStateOf(0.dp) }
+
     Header(state)
     Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.baggy))
 
-    CalendarActions(state = state)
+    CalendarActions(
+        state = state,
+        isYearVisible = showYearsGrid,
+        toggleYearCalendar = { showYearsGrid = showYearsGrid.not() }
+    )
     Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.skinny))
 
-    LeonMonthCalendar(state = state, onDayClick = onDateSelected)
+    if (showYearsGrid) {
+        LeonYearCalendar(
+            modifier = Modifier.height(yearsGridHeight),
+            state = state,
+            onYearClick = { onDateSelected(state.selectedDate) },
+        )
+    } else {
+        LeonMonthCalendar(
+            modifier = Modifier.onSizeChanged {
+                with(density) { yearsGridHeight = it.height.toDp() }
+            },
+            state = state,
+            onDayClick = onDateSelected,
+        )
+    }
 }
 
 @Composable
@@ -96,6 +126,8 @@ private fun Header(
 @Composable
 private fun CalendarActions(
     state: DatePickerState,
+    isYearVisible: Boolean,
+    toggleYearCalendar: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -107,8 +139,8 @@ private fun CalendarActions(
             textPadding = PaddingValues(
                 end = LeonTheme.paddings.horizontal.skinny,
             ),
-            suffixIcon = FeatherIcons.ChevronDown,
-            onClick = {}, // TODO show year grid
+            suffixIcon = if (isYearVisible) FeatherIcons.ChevronUp else FeatherIcons.ChevronDown,
+            onClick = toggleYearCalendar,
         )
 
         Row {

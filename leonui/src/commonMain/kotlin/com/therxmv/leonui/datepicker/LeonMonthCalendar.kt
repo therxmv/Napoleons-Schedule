@@ -31,10 +31,12 @@ import kotlinx.datetime.LocalDate
 
 @Composable
 fun LeonMonthCalendar(
+    modifier: Modifier = Modifier,
     state: DatePickerState,
     onDayClick: (LocalDate) -> Unit = {},
 ) {
     Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(LeonTheme.sizes.divider.thin),
     ) {
         GridRow {
