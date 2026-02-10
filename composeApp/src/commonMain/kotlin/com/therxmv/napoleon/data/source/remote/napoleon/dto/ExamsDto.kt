@@ -1,12 +1,15 @@
 package com.therxmv.napoleon.data.source.remote.napoleon.dto
 
+import com.therxmv.datetime.DateTimeConstants
 import com.therxmv.datetime.getNowDate
 import com.therxmv.datetime.getNowMillis
+import com.therxmv.datetime.toDate
 import com.therxmv.datetime.toMillis
 import com.therxmv.napoleon.data.repository.specialty.model.ExamModel
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
 import com.therxmv.napoleon.data.repository.specialty.model.ZalikModel
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format
 import kotlinx.datetime.number
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -56,3 +59,19 @@ fun ExamItemDto.toModel(): ExamModel {
 
 fun ZalikItemDto.toModel(): ZalikModel =
     ZalikModel(lesson)
+
+fun ExamsModel.toDto(): ExamsDto =
+    ExamsDto(
+        exams = exams.map { it.toDto() },
+        zalik = zalik.map { it.toDto() },
+    )
+
+fun ExamModel.toDto(): ExamItemDto =
+    ExamItemDto(
+        teacher = teacher,
+        lesson = lesson,
+        date = dateMillis.toDate().format(DateTimeConstants.Format.dayDotMonthDotYear),
+    )
+
+fun ZalikModel.toDto(): ZalikItemDto =
+    ZalikItemDto(lesson)

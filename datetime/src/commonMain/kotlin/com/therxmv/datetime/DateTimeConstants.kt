@@ -19,12 +19,14 @@ object DateTimeConstants {
     }
 
     object Format {
-        val dayDotMonthNumber = LocalDate.Format {
+        val dayDotMonthDotYear = LocalDate.Format {
             day()
             char('.')
             monthNumber()
+            char('.')
+            year()
         }
-        val dayMonthYear = LocalDate.Format {
+        val dayDotMonthNewLineYear = LocalDate.Format {
             day()
             char('.')
             monthNumber()

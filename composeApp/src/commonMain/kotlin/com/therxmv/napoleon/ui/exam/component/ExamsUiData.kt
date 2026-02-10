@@ -3,6 +3,10 @@ package com.therxmv.napoleon.ui.exam.component
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.therxmv.datetime.DateTimeConstants
+import com.therxmv.datetime.toMillis
+import com.therxmv.napoleon.data.repository.specialty.model.ExamModel
+import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
+import com.therxmv.napoleon.data.repository.specialty.model.ZalikModel
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format
 import kotlin.uuid.ExperimentalUuidApi
@@ -61,7 +65,7 @@ data class ExamsUiData(
                 override fun toggleEdit(isEditing: Boolean): Item = copy(isEditing = isEditing)
 
                 override fun toString(): String =
-                    "${date.format(DateTimeConstants.Format.dayDotMonthNumber)} - $name, $teacher"
+                    "${date.format(DateTimeConstants.Format.dayDotMonthDotYear)} - $name, $teacher"
             }
 
             data class Zalik(
@@ -82,4 +86,27 @@ data class ExamsUiData(
             override fun toString(): String = name
         }
     }
+}
+
+fun ExamsUiData.toModel(): ExamsModel {
+    val exams = sections
+        .first { it.id == ExamsUiData.Section.Id.Exam }
+        .items
+        .filterIsInstance<ExamsUiData.Item.Editable.Exam>()
+        .map {
+            ExamModel(
+                teacher = it.teacher,
+                lesson = it.name,
+                dateMillis = it.date.toMillis(),
+            )
+        }
+    val zaliks = sections
+        .first { it.id == ExamsUiData.Section.Id.Zalik }
+        .items
+        .filterIsInstance<ExamsUiData.Item.Editable.Zalik>()
+        .map {
+            ZalikModel(lesson = it.name)
+        }
+
+    return ExamsModel(exams, zaliks)
 }

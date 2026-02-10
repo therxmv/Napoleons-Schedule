@@ -39,7 +39,7 @@ fun RowScope.ExamItemContent(
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
     EditableDate(
-        text = item.date.format(DateTimeConstants.Format.dayMonthYear),
+        text = item.date.format(DateTimeConstants.Format.dayDotMonthNewLineYear),
         isEditing = item.isEditing,
         onClick = { onEvent(ExamsUiEvent.ChangeItemDate(sectionId, item.id, item.date)) },
     )

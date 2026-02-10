@@ -97,7 +97,6 @@ class ExamsComponent(
         }
     }
 
-    // TODO save new data locally
     private fun updateItem(event: ExamsUiEvent.UpdateItem) {
         _uiState.update { state ->
             state.mapReady { data ->
@@ -115,12 +114,11 @@ class ExamsComponent(
 
                         else -> item
                     }
-                }
+                }.also(::saveData)
             }
         }
     }
 
-    // TODO save new data locally
     private fun deleteItem(event: ExamsUiEvent.DeleteItem) {
         _uiState.update { state ->
             state.mapReady { data ->
@@ -130,12 +128,11 @@ class ExamsComponent(
                         .orEmptyPlaceholder()
 
                     section.copy(items = withoutDeleted)
-                }
+                }.also(::saveData)
             }
         }
     }
 
-    // TODO save new data locally
     private fun addNewItem(event: ExamsUiEvent.AddNewItem) {
         _uiState.update { state ->
             state.mapReady { data ->
@@ -145,8 +142,15 @@ class ExamsComponent(
                     val newItem = createNewItem(sectionId = section.id)
 
                     section.copy(items = listOf(newItem) + withoutPlaceholder)
-                }
+                }.also(::saveData)
             }
+        }
+    }
+
+    private fun saveData(data: ExamsUiData) {
+        scope.launch {
+            val profile = profileRepository.getNotNullProfileSync()
+            specialtyRepository.saveExams(profile, data.toModel())
         }
     }
 

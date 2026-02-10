@@ -6,9 +6,9 @@ import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
 import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
-import com.therxmv.napoleon.data.source.remote.mock.MockData
 import com.therxmv.napoleon.data.source.remote.napoleon.NapoleonApi
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
+import com.therxmv.napoleon.data.source.remote.napoleon.dto.toDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.toModel
 import com.therxmv.napoleon.data.source.remote.result.Result
 import kotlin.time.ExperimentalTime
@@ -54,22 +54,29 @@ class SpecialtyRepositoryImpl(
     }
 
     override suspend fun getExams(profile: ProfileModel): Result<ExamsModel> {
+        if (dataStoreSource.getIsCustomExams()) {
+            val result = Result.of(
+                block = {
+                    requireNotNull(dataStoreSource.getExamsBySpecialty(profile.specialtyName)?.toModel())
+                },
+            )
+            if (result.isSuccess) return result
+        }
+
         val cachedResult = cachedExams[profile.specialtyName]?.let { cache ->
             cache.result.takeIf { cache.timestamp + DEFAULT_TTL < getNowMillis() }
         }
 
         return cachedResult ?: Result.of(
             block = {
-                // TODO uncomment
-                MockData.examsDto.toModel()
-//                napoleonApi
-//                    .getExamsBySpecialty(
-//                        faculty = profile.facultyPath,
-//                        year = profile.year,
-//                        specialty = profile.specialtyName,
-//                    )
-//                    .also { dataStoreSource.setExamsBySpecialty(profile.specialtyName, it) }
-//                    .toModel()
+                napoleonApi
+                    .getExamsBySpecialty(
+                        faculty = profile.facultyPath,
+                        year = profile.year,
+                        specialty = profile.specialtyName,
+                    )
+                    .also { dataStoreSource.setExamsBySpecialty(profile.specialtyName, it) }
+                    .toModel()
             },
             fallbackBlock = {
                 requireNotNull(dataStoreSource.getExamsBySpecialty(profile.specialtyName)?.toModel())
@@ -79,6 +86,11 @@ class SpecialtyRepositoryImpl(
                 cachedExams[profile.specialtyName] = CacheData(result)
             }
         }
+    }
+
+    override suspend fun saveExams(profile: ProfileModel, exams: ExamsModel) {
+        dataStoreSource.setExamsBySpecialty(profile.specialtyName, exams.toDto())
+        dataStoreSource.setIsCustomExams()
     }
 
     private suspend fun ScheduleDto.toModel(): ScheduleModel =
