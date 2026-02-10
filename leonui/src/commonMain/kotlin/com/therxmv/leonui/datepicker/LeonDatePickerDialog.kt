@@ -50,7 +50,7 @@ private fun DialogActions(
             style = LeonButtonStyle.Text(),
             onClick = onCancel,
         )
-        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.base))
+        Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
 
         LeonButton(
             label = "Confirm", // TODO translate string

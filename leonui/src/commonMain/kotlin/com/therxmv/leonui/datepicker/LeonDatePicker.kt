@@ -166,7 +166,7 @@ internal fun LeonDatePickerColumn(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(LeonTheme.shapes.allRounded)
+            .clip(LeonTheme.shapes.largeRounded)
             .background(LeonTheme.colors.surface)
             .padding(
                 vertical = LeonTheme.paddings.vertical.baggy,

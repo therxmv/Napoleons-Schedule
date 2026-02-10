@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.Dp
 object LeonShapes {
 
     val allRounded = RoundedCornerShape(size = LeonSizes.corner.defaultRadius)
+    val largeRounded = RoundedCornerShape(size = LeonSizes.corner.largeRadius)
     val noneRounded = RoundedCornerShape(size = LeonSizes.corner.zeroRadius)
 
     val button = RoundedCornerShape(size = LeonSizes.corner.largeRadius)
