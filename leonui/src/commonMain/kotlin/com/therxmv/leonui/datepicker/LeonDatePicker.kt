@@ -161,6 +161,7 @@ private fun CalendarActions(
 
 @Composable
 internal fun LeonDatePickerColumn(
+    modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
@@ -168,6 +169,7 @@ internal fun LeonDatePickerColumn(
             .fillMaxWidth()
             .clip(LeonTheme.shapes.largeRounded)
             .background(LeonTheme.colors.surface)
+            .then(modifier)
             .padding(
                 vertical = LeonTheme.paddings.vertical.baggy,
                 horizontal = LeonTheme.paddings.horizontal.base,

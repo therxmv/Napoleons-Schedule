@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +17,6 @@ import com.therxmv.leonui.theme.LeonTheme
 import kotlinx.datetime.LocalDate
 
 // TODO add preview
-// TODO fix landscape
 @Composable
 fun LeonDatePickerDialog(
     state: DatePickerState,
@@ -23,7 +24,9 @@ fun LeonDatePickerDialog(
     onCancel: () -> Unit,
 ) {
     Dialog(onDismissRequest = onCancel) {
-        LeonDatePickerColumn {
+        LeonDatePickerColumn(
+            modifier = Modifier.verticalScroll(rememberScrollState()),
+        ) {
             LeonDatePickerContent(state)
             Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
 
