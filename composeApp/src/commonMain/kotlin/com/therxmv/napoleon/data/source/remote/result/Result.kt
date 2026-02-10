@@ -10,6 +10,9 @@ sealed interface Result<out T> {
         get() = this is Success
 
     companion object {
+        inline fun <T> of(cachedResult: () -> Result<T>?, block: () -> T, fallbackBlock: () -> T): Result<T> =
+            cachedResult() ?: of(block, fallbackBlock)
+
         inline fun <T> of(block: () -> T, fallbackBlock: () -> T): Result<T> =
             runCatching(block)
                 .fold(

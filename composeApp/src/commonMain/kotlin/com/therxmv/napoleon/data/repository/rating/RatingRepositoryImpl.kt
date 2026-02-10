@@ -57,7 +57,7 @@ class RatingRepositoryImpl(
     override fun validateScore(value: String): ValidValueModel {
         val intScore = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_score_number)
 
-        if (intScore < MIN_SCORE || intScore > MAX_SCORE) {
+        if (intScore !in MIN_SCORE..MAX_SCORE) {
             return ValidValueModel(value, "${Res.string.rating_error_score_range} $MIN_SCORE-$MAX_SCORE")
         }
 

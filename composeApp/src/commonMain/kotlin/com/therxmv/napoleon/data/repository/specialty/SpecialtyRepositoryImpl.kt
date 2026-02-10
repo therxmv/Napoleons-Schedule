@@ -28,11 +28,12 @@ class SpecialtyRepositoryImpl(
     private val cachedExams: MutableMap<String, CacheData<ExamsModel>> = mutableMapOf()
 
     override suspend fun getSchedule(profile: ProfileModel): Result<ScheduleModel> {
-        val cachedResult = cachedSchedule[profile.specialtyName]?.let { cache ->
-            cache.result.takeIf { cache.timestamp + SCHEDULE_TTL < getNowMillis() }
-        }
-
-        return cachedResult ?: Result.of(
+        return Result.of(
+            cachedResult = {
+                cachedSchedule[profile.specialtyName]?.let { cache ->
+                    cache.result.takeIf { cache.timestamp + SCHEDULE_TTL < getNowMillis() }
+                }
+            },
             block = {
                 napoleonApi
                     .getScheduleBySpecialty(
@@ -63,11 +64,12 @@ class SpecialtyRepositoryImpl(
             if (result.isSuccess) return result
         }
 
-        val cachedResult = cachedExams[profile.specialtyName]?.let { cache ->
-            cache.result.takeIf { cache.timestamp + DEFAULT_TTL < getNowMillis() }
-        }
-
-        return cachedResult ?: Result.of(
+        return Result.of(
+            cachedResult = {
+                cachedExams[profile.specialtyName]?.let { cache ->
+                    cache.result.takeIf { cache.timestamp + DEFAULT_TTL < getNowMillis() }
+                }
+            },
             block = {
                 napoleonApi
                     .getExamsBySpecialty(
