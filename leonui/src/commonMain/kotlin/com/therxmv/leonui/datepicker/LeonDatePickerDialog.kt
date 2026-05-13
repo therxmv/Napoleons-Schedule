@@ -16,7 +16,7 @@ import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.theme.LeonTheme
 import kotlinx.datetime.LocalDate
 
-// TODO add preview
+// TODO p4 add preview
 @Composable
 fun LeonDatePickerDialog(
     state: DatePickerState,
@@ -49,14 +49,14 @@ private fun DialogActions(
         modifier = modifier,
     ) {
         LeonButton(
-            label = "Cancel", // TODO translate string
+            label = "Cancel", // TODO p1 translate string
             style = LeonButtonStyle.Text(),
             onClick = onCancel,
         )
         Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
 
         LeonButton(
-            label = "Confirm", // TODO translate string
+            label = "Confirm", // TODO p1 translate string
             style = LeonButtonStyle.Text(),
             onClick = onConfirm,
         )

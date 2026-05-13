@@ -46,7 +46,7 @@ import compose.icons.feathericons.ChevronDown
 import compose.icons.feathericons.ChevronUp
 import kotlinx.datetime.LocalDate
 
-// TODO add preview
+// TODO p4 add preview
 @Composable
 fun LeonDatePicker(
     state: DatePickerState,
@@ -112,7 +112,7 @@ private fun Header(
 
         Column {
             LeonText(
-                text = "Selected date", // TODO translate string
+                text = "Selected date", // TODO p1 translate string
             )
 
             LeonText(

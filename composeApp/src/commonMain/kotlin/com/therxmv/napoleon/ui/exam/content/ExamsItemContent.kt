@@ -155,7 +155,7 @@ private fun EditableDate(
     onClick: () -> Unit,
 ) {
     if (isEditing) {
-        // TODO maybe change button
+        // TODO p3 maybe change to button
         LeonText(
             modifier = Modifier
                 .clip(LeonTheme.shapes.allRounded)

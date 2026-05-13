@@ -13,7 +13,7 @@ object DateTimeConstants {
     }
 
     object Week {
-        // TODO localize week names; Migrate to normal resources
+        // TODO p1 localize week names; Migrate to normal resources
         val list = DayOfWeekNames.ENGLISH_ABBREVIATED.names
         val size = list.size
     }
