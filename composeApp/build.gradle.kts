@@ -10,8 +10,6 @@ plugins {
 
     alias(libs.plugins.firebase)
     alias(libs.plugins.firebase.crashlytics)
-
-    alias(libs.plugins.libres)
 }
 
 android {
@@ -72,6 +70,7 @@ kotlin {
             dependencies {
                 implementation(project(":leonui"))
                 implementation(project(":datetime"))
+                implementation(project(":leonres"))
 
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.tooling.preview)
@@ -81,8 +80,6 @@ kotlin {
 
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
-
-                implementation(libs.libres)
 
                 implementation(libs.bundles.voyager)
                 implementation(libs.bundles.decompose)
@@ -118,8 +115,4 @@ kotlin {
             }
         }
     }
-}
-
-libres {
-    // https://github.com/Skeptick/libres#setup
 }

@@ -28,7 +28,6 @@ koin = "4.1.0"
 ktor = "3.2.3"
 
 firebaseBom = "34.1.0"
-libres = "1.2.4"
 
 voyager = "1.0.1"
 decompose = "3.3.0"
@@ -64,8 +63,6 @@ ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "kto
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-
-libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 
 voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
@@ -119,5 +116,3 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 
 firebase = { id = "com.google.gms.google-services", version.ref = "firebase" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
-
-libres = { id = "io.github.skeptick.libres", version.ref = "libres" }

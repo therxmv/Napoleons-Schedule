@@ -5,9 +5,9 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.datetime.getNowDate
 import com.therxmv.datetime.toDate
+import com.therxmv.leonres.getSyncString
 import com.therxmv.leonui.state.LeonState
 import com.therxmv.leonui.state.mapReady
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.info.InfoRepository
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.data.repository.specialty.SpecialtyRepository
@@ -20,6 +20,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.exams_default_exam_name
+import napoleon.leonres.generated.resources.exams_default_exam_teacher
+import napoleon.leonres.generated.resources.exams_default_zalik_name
+import napoleon.leonres.generated.resources.exams_edit_info
+import napoleon.leonres.generated.resources.exams_edit_info_link_text
+import napoleon.leonres.generated.resources.exams_empty_placeholder
+import napoleon.leonres.generated.resources.exams_list_title
+import napoleon.leonres.generated.resources.exams_no_data
+import napoleon.leonres.generated.resources.zalik_list_title
 
 @Stable
 class ExamsComponent(
@@ -157,14 +167,14 @@ class ExamsComponent(
     private fun createNewItem(sectionId: Section.Id): Item =
         when (sectionId) {
             Section.Id.Exam -> Item.Editable.Exam(
-                name = Res.string.exams_default_exam_name,
-                teacher = Res.string.exams_default_exam_teacher,
+                name = getSyncString(Res.string.exams_default_exam_name),
+                teacher = getSyncString(Res.string.exams_default_exam_teacher),
                 date = getNowDate(),
                 isEditing = true,
             )
 
             Section.Id.Zalik -> Item.Editable.Zalik(
-                name = Res.string.exams_default_zalik_name,
+                name = getSyncString(Res.string.exams_default_zalik_name),
                 isEditing = true,
             )
         }
@@ -185,7 +195,7 @@ class ExamsComponent(
 
                     is Result.Failure -> LeonState.Ready(
                         data = ExamsModel(exams = emptyList(), zalik = emptyList()).toUiData(),
-                        cacheReason = Res.string.exams_no_data,
+                        cacheReasonRes = Res.string.exams_no_data,
                     )
                 }
             }
@@ -195,7 +205,7 @@ class ExamsComponent(
     private fun ExamsModel.toUiData(): ExamsUiData {
         val examData = Section(
             id = Section.Id.Exam,
-            title = Res.string.exams_list_title,
+            titleRes = Res.string.exams_list_title,
             items = exams.sortedBy { it.dateMillis }.map {
                 Item.Editable.Exam(
                     teacher = it.teacher,
@@ -207,7 +217,7 @@ class ExamsComponent(
 
         val zalikData = Section(
             id = Section.Id.Zalik,
-            title = Res.string.zalik_list_title,
+            titleRes = Res.string.zalik_list_title,
             items = zalik.map { Item.Editable.Zalik(name = it.lesson) }.orEmptyPlaceholder(),
         )
 
@@ -221,14 +231,14 @@ class ExamsComponent(
         val link = infoRepository.getLinks().examCalendar
 
         return ExamsUiData.Info(
-            text = Res.string.exams_edit_info,
+            textRes = Res.string.exams_edit_info,
             link = link,
-            linkText = Res.string.exams_edit_info_link_text,
+            linkTextRes = Res.string.exams_edit_info_link_text,
         )
     }
 
     private fun List<Item>.orEmptyPlaceholder(): List<Item> =
-        ifEmpty { listOf(Item.EmptyPlaceholder(name = Res.string.exams_empty_placeholder)) }
+        ifEmpty { listOf(Item.EmptyPlaceholder(name = getSyncString(Res.string.exams_empty_placeholder))) }
 
     private inline fun ExamsUiData.mapSectionById(
         sectionId: Section.Id,

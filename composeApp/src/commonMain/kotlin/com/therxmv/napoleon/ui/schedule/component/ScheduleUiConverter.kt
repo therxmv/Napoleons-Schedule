@@ -1,11 +1,15 @@
 package com.therxmv.napoleon.ui.schedule.component
 
 import com.therxmv.datetime.getNowDateTime
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.specialty.model.LessonModel
 import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.schedule_no_lesson
+import napoleon.leonres.generated.resources.schedule_no_lessons
+import org.jetbrains.compose.resources.getString
 
 class ScheduleUiConverter(
     private val defaultDispatcher: CoroutineDispatcher,
@@ -20,22 +24,20 @@ class ScheduleUiConverter(
         openLessonUrl: (String) -> Unit,
     ): ScheduleUiData =
         withContext(defaultDispatcher) {
-            val selectedKey = model.lessonsByDays.findSelectedKey()
+            val selectedDay = model.lessonsByDays.findSelectedKey()
 
             ScheduleUiData(
-                days = model.lessonsByDays.map {
-                    val lessons = it.value
-
+                days = model.lessonsByDays.map { (day, lessons) ->
                     if (lessons.isEmpty()) {
                         ScheduleUiData.Day.Empty(
-                            name = "${it.key} - ${Res.string.schedule_no_lessons}",
+                            name = getString(Res.string.schedule_no_lessons, day),
                         )
                     } else {
                         ScheduleUiData.Day.Default(
-                            name = it.key,
+                            name = day,
                             lessons = lessons.toUiData(openLessonUrl),
-                            isExpanded = it.key == selectedKey,
-                            expandEvent = ScheduleUiEvent.ExpandDay(it.key),
+                            isExpanded = day == selectedDay,
+                            expandEvent = ScheduleUiEvent.ExpandDay(day),
                         )
                     }
                 }
@@ -52,6 +54,7 @@ class ScheduleUiConverter(
                 name.isNullOrBlank() -> ScheduleUiData.Lesson.Empty(
                     id = id,
                     number = number,
+                    name = getSyncString(Res.string.schedule_no_lesson),
                 )
 
                 number.isNullOrBlank() -> ScheduleUiData.Lesson.ByTime(

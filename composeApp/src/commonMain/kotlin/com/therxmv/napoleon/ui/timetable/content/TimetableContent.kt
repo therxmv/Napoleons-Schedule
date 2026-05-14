@@ -8,6 +8,7 @@ import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.timetable.component.TimetableUiData
 import com.therxmv.napoleon.ui.timetable.component.TimetableUiEvent
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TimetableContent(
@@ -16,10 +17,10 @@ fun TimetableContent(
 ) {
     LeonDialog(
         icon = data.icon,
-        title = data.title,
-        cancelLabel = data.closeLabel,
+        title = stringResource(data.titleRes),
+        cancelLabel = stringResource(data.closeLabelRes),
         onCancel = { onEvent(TimetableUiEvent.Dismiss) },
-        confirmLabel = data.copyLabel,
+        confirmLabel = stringResource(data.copyLabelRes),
         onConfirm = { onEvent(TimetableUiEvent.Copy) },
         content = {
             LeonText(

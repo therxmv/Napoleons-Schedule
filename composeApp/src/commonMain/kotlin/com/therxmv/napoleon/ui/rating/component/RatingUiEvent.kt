@@ -14,7 +14,7 @@ sealed interface RatingUiEvent {
     ) : RatingUiEvent
 
     data class UpdateProbabilityInput(
-        val id: String,
+        val id: RatingUiData.ProbabilityInput.Id,
         val value: String,
     ) : RatingUiEvent
 }

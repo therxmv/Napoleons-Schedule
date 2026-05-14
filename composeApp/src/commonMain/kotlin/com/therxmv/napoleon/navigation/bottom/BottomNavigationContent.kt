@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.navigation.bottom.BottomNavigationComponent.AppBarData
 import com.therxmv.napoleon.navigation.bottom.BottomNavigationComponent.Data
 import com.therxmv.napoleon.navigation.destination.child.Child
@@ -29,6 +28,11 @@ import compose.icons.feathericons.Clock
 import compose.icons.feathericons.Home
 import compose.icons.feathericons.List
 import compose.icons.feathericons.User
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.bottom_dashboard_label
+import napoleon.leonres.generated.resources.bottom_profile_label
+import napoleon.leonres.generated.resources.bottom_schedule_label
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,11 +119,11 @@ fun BottomNavBar(
                 selected = data.isSelected,
                 onClick = data.onClick,
                 icon = {
-                    Icon(imageVector = data.icon, contentDescription = data.label)
+                    Icon(imageVector = data.icon, contentDescription = stringResource(data.labelRes))
                 },
                 label = {
                     Text(
-                        text = data.label,
+                        text = stringResource(data.labelRes),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                     )
@@ -149,19 +153,19 @@ private fun BottomNavBarPreview() {
                 appBarData = appBarData,
                 tabs = listOf(
                     Data.Tab(
-                        label = Res.string.bottom_dashboard_label,
+                        labelRes = Res.string.bottom_dashboard_label,
                         icon = FeatherIcons.Home,
                         isSelected = true,
                         onClick = {},
                     ),
                     Data.Tab(
-                        label = Res.string.bottom_schedule_label,
+                        labelRes = Res.string.bottom_schedule_label,
                         icon = FeatherIcons.List,
                         isSelected = false,
                         onClick = {},
                     ),
                     Data.Tab(
-                        label = Res.string.bottom_profile_label,
+                        labelRes = Res.string.bottom_profile_label,
                         icon = FeatherIcons.User,
                         isSelected = false,
                         onClick = {},

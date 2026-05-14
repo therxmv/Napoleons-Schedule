@@ -1,6 +1,7 @@
 package com.therxmv.leonui.state
 
 import androidx.compose.runtime.Stable
+import org.jetbrains.compose.resources.StringResource
 
 @Stable
 sealed interface LeonState<out T> {
@@ -9,9 +10,9 @@ sealed interface LeonState<out T> {
 
     data object Loading : LeonState<Nothing>
 
-    data class Ready<out T>(val data: T, val cacheReason: String? = null) : LeonState<T>
+    data class Ready<out T>(val data: T, val cacheReasonRes: StringResource? = null) : LeonState<T>
 
-    data class Error(val message: String, val onRetry: (() -> Unit)? = null) : LeonState<Nothing>
+    data class Error(val messageRes: StringResource, val onRetry: (() -> Unit)? = null) : LeonState<Nothing>
 }
 
 inline fun <T> LeonState<T>.mapReady(crossinline transform: (T) -> T): LeonState<T> =

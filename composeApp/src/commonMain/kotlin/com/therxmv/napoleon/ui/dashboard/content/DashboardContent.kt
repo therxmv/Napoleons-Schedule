@@ -26,6 +26,7 @@ import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiEvent
 import com.therxmv.napoleon.ui.dashboard.content.widget.ScheduleWidget
 import com.therxmv.napoleon.ui.dashboard.content.widget.SkeletonWidget
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DashboardContent(
@@ -99,7 +100,7 @@ private fun LazyGridScope.tiles(list: List<DashboardUiData.Tile>) {
                     size = data.size,
                     type = data.type,
                     icon = data.icon,
-                    title = data.title,
+                    title = stringResource(data.titleRes),
                     ratio = data.ratio,
                     background = background,
                     onClick = data.onClick,

@@ -40,6 +40,7 @@ import com.therxmv.napoleon.ui.profile.component.ProfileUiEvent
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit2
 import compose.icons.feathericons.User
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ProfileContent(
@@ -75,13 +76,13 @@ private fun SpecialtyInfoCard(
     onEditClick: () -> Unit,
 ) {
     CardTitle(
-        title = data.infoTitle,
-        editLabel = data.editButtonLabel,
+        title = stringResource(data.infoTitleRes),
+        editLabel = stringResource(data.editButtonLabelRes),
         onEditClick = onEditClick,
     )
 
     InfoCard(
-        titleText = data.facultyLabel,
+        titleText = stringResource(data.facultyLabelRes),
         nameText = data.faculty,
         shape = LeonTheme.shapes.onlyTopRounded(),
     )
@@ -92,7 +93,7 @@ private fun SpecialtyInfoCard(
     )
 
     InfoCard(
-        titleText = data.specialtyLabel,
+        titleText = stringResource(data.specialtyLabelRes),
         nameText = data.specialty,
         shape = LeonTheme.shapes.onlyBottomRounded(),
     )

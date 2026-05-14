@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.therxmv.leonui.tile.LeonTileSize
 import com.therxmv.leonui.tile.LeonTileType
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
+import org.jetbrains.compose.resources.StringResource
 
 @Immutable
 data class DashboardUiData(
@@ -24,7 +25,7 @@ data class DashboardUiData(
 
         data class Default(
             val icon: ImageVector,
-            val title: String,
+            val titleRes: StringResource,
             val onClick: () -> Unit,
             override val gridSpan: Int,
             val ratio: Float,
@@ -53,11 +54,11 @@ data class DashboardUiData(
 
             fun smallSquare(
                 icon: ImageVector,
-                title: String,
+                titleRes: StringResource,
                 onClick: () -> Unit,
             ): Default = Default(
                 icon = icon,
-                title = title,
+                titleRes = titleRes,
                 onClick = onClick,
                 gridSpan = ONE_COLUMN,
                 ratio = SQUARE_RATIO,
@@ -65,11 +66,11 @@ data class DashboardUiData(
 
             fun wideRectangle(
                 icon: ImageVector,
-                title: String,
+                titleRes: StringResource,
                 onClick: () -> Unit,
             ): Default = Default(
                 icon = icon,
-                title = title,
+                titleRes = titleRes,
                 onClick = onClick,
                 gridSpan = TWO_COLUMN,
                 ratio = QUARTER_RATIO,
@@ -77,11 +78,11 @@ data class DashboardUiData(
 
             fun smallRectangle(
                 icon: ImageVector,
-                title: String,
+                titleRes: StringResource,
                 onClick: () -> Unit,
             ): Default = Default(
                 icon = icon,
-                title = title,
+                titleRes = titleRes,
                 onClick = onClick,
                 gridSpan = ONE_COLUMN,
                 ratio = HALF_RATIO,

@@ -51,11 +51,11 @@ class ScheduleComponent(
                     is Result.Success<ScheduleModel> -> {
                         LeonState.Ready(
                             data = scheduleUiConverter.modelToUiData(result.data, ::openLessonUrl),
-                            cacheReason = result.reason?.message,
+                            cacheReasonRes = result.reason?.messageRes,
                         )
                     }
 
-                    is Result.Failure -> LeonState.Error(result.reason.message, ::loadData)
+                    is Result.Failure -> LeonState.Error(result.reason.messageRes, ::loadData)
                 }
             }
 

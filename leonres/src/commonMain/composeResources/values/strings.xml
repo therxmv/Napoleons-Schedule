@@ -17,7 +17,7 @@
     <string name="dashboard_process_tile">Educational Process</string>
 
     <!--Profile-->
-    <string name="profile_welcome">Welcome</string>
+    <string name="profile_welcome">Welcome %1$s!</string>
     <string name="profile_faculty_label">Faculty:</string>
     <string name="profile_specialty_label">Specialty:</string>
     <string name="profile_edit_button">Edit</string>
@@ -34,7 +34,7 @@
     <string name="specialtyinfo_select">Select</string>
 
     <!--Schedule-->
-    <string name="schedule_title">Schedule for</string>
+    <string name="schedule_title">Schedule for %1$s, %2$s</string>
 
     <string name="schedule_monday">Monday</string>
     <string name="schedule_tuesday">Tuesday</string>
@@ -46,7 +46,7 @@
     <string name="schedule_unknown_day">Unknown day</string>
 
     <string name="schedule_no_lesson">None</string>
-    <string name="schedule_no_lessons">No lessons</string>
+    <string name="schedule_no_lessons">%1$s - No lessons</string>
 
     <string name="offline_open_schedule">Open schedule</string>
 
@@ -79,21 +79,21 @@
     <string name="rating_score_label">Score</string>
     <string name="rating_add_label">Add Subject</string>
 
-    <string name="rating_label">Your Rating</string>
-    <string name="rating_probability">Probability of Grant</string>
+    <string name="rating_label">Your Rating %1$s</string>
+    <string name="rating_probability">Probability of Grant %1$s</string>
 
     <string name="rating_info_text">Information about exams and credits you can find </string>
     <string name="rating_info_link_text">here</string>
 
     <string name="rating_error_score_number">Score must be a number</string>
-    <string name="rating_error_score_range">Score must be in range</string>
+    <string name="rating_error_score_range">Score must be in range %1$s</string>
     <string name="rating_error_credits_number">Credits must be a number</string>
-    <string name="rating_error_credits_range">Credits must be at least</string>
+    <string name="rating_error_credits_range">Credits must be at least %1$s</string>
     <string name="rating_error_it_number">It must be a number</string>
-    <string name="rating_error_it_range">It must be at least</string>
+    <string name="rating_error_it_range">It must be at least %1$s</string>
 
     <!-- Exams -->
-    <string name="exams_title">Exams Schedule for</string>
+    <string name="exams_title">Exams Schedule for %1$s, %2$s</string>
     <string name="exams_list_title">Exams</string>
     <string name="zalik_list_title">Zaliks</string>
     <string name="exams_no_data">We don't have any information about exams</string>

@@ -2,7 +2,6 @@ package com.therxmv.napoleon.ui.schedule.component
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import com.therxmv.napoleon.Res
 
 @Immutable
 data class ScheduleUiData(
@@ -78,7 +77,7 @@ data class ScheduleUiData(
         data class Empty(
             override val id: String,
             val number: String?,
-            override val name: String = Res.string.schedule_no_lesson,
+            override val name: String,
         ) : Lesson {
             override fun toString(): String =
                 "$number) $name"

@@ -49,6 +49,7 @@ import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.leonui.theme.values.RoundedCornerShape
 import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RatingResultAndProbability(
@@ -142,12 +143,12 @@ fun RatingResultAndProbability(
                 itemsIndexed(
                     items = data.probabilityInputs,
                     span = { _, _ -> GridItemSpan(1) },
-                    key = { index, item -> "$index-${item.title}" },
+                    key = { index, item -> "$index-${item.id}" },
                 ) { index, input ->
                     InputItem(
                         data = input,
                         onValueChange = {
-                            onEvent(RatingUiEvent.UpdateProbabilityInput(input.title, it))
+                            onEvent(RatingUiEvent.UpdateProbabilityInput(input.id, it))
                         },
                         isLast = index == data.probabilityInputs.lastIndex,
                     )
@@ -166,7 +167,7 @@ private fun InputItem(
     Column {
         LeonText(
             modifier = Modifier.fillMaxWidth(),
-            text = data.title,
+            text = stringResource(data.id.titleRes),
             color = LeonTheme.colors.onTertiary,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

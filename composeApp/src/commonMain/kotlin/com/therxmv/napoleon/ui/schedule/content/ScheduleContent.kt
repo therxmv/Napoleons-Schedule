@@ -17,12 +17,15 @@ import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEvent
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.fallback_offline
+import org.jetbrains.compose.resources.StringResource
 
 @Composable
 fun ScheduleContent(
     modifier: Modifier = Modifier,
     data: ScheduleUiData,
-    fallbackReason: String?,
+    fallbackReasonRes: StringResource?,
     onEvent: (ScheduleUiEvent) -> Unit,
 ) {
     val dayModifier = remember {
@@ -40,10 +43,10 @@ fun ScheduleContent(
             .fillMaxSize(),
         contentPadding = LeonTheme.paddings.baseValues,
     ) {
-        if (fallbackReason != null) {
+        if (fallbackReasonRes != null) {
             item {
                 LeonCard(
-                    text = fallbackReason,
+                    textRes = fallbackReasonRes,
                     type = LeonCardType.Error,
                 )
                 Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
@@ -71,7 +74,7 @@ private fun ScheduleContentPreview() {
     LeonPreview {
         ScheduleContent(
             data = PreviewMockData.scheduleUiData,
-            fallbackReason = "Fallback Reason",
+            fallbackReasonRes = Res.string.fallback_offline,
             onEvent = {},
         )
     }

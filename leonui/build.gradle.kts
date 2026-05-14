@@ -30,6 +30,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":datetime"))
+                implementation(project(":leonres"))
 
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.tooling.preview)
@@ -51,10 +52,7 @@ kotlin {
         }
 
         iosMain {
-            dependencies {
-
-            }
+            dependencies {}
         }
     }
-
 }

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.datetime.getNowDate
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.info.InfoRepository
@@ -32,6 +31,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.dashboard_exams_tile
+import napoleon.leonres.generated.resources.dashboard_excel_tile
+import napoleon.leonres.generated.resources.dashboard_process_tile
+import napoleon.leonres.generated.resources.dashboard_rating_tile
+import napoleon.leonres.generated.resources.dashboard_site_tile
+import napoleon.leonres.generated.resources.dashboard_tg_bot_tile
+import napoleon.leonres.generated.resources.dashboard_tg_channel_tile
+import napoleon.leonres.generated.resources.dashboard_timetable_tile
+import org.jetbrains.compose.resources.getString
 
 @Stable
 class DashboardComponent(
@@ -103,14 +112,14 @@ class DashboardComponent(
     private fun excelTile(url: String): DashboardUiData.Tile =
         DashboardUiData.Tile.wideRectangle(
             icon = FeatherIcons.Layout,
-            title = Res.string.dashboard_excel_tile,
+            titleRes = Res.string.dashboard_excel_tile,
             onClick = { openUrl(url) },
         )
 
     private fun examsTile(): DashboardUiData.Tile =
         DashboardUiData.Tile.smallSquare(
             icon = FeatherIcons.Calendar,
-            title = Res.string.dashboard_exams_tile,
+            titleRes = Res.string.dashboard_exams_tile,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Exams))
             },
@@ -119,7 +128,7 @@ class DashboardComponent(
     private fun ratingTile(): DashboardUiData.Tile =
         DashboardUiData.Tile.wideRectangle(
             icon = FeatherIcons.DivideCircle,
-            title = Res.string.dashboard_rating_tile,
+            titleRes = Res.string.dashboard_rating_tile,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Rating))
             },
@@ -128,7 +137,7 @@ class DashboardComponent(
     private fun timetableTile(): DashboardUiData.Tile =
         DashboardUiData.Tile.smallSquare(
             icon = FeatherIcons.Clock,
-            title = Res.string.dashboard_timetable_tile,
+            titleRes = Res.string.dashboard_timetable_tile,
             onClick = {
                 onEvent(DashboardUiEvent.OpenDialog(SlotDestination.TimetableDialog))
             },
@@ -137,28 +146,28 @@ class DashboardComponent(
     private fun tgChannelTile(url: String): DashboardUiData.Tile =
         DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Send,
-            title = Res.string.dashboard_tg_channel_tile,
+            titleRes = Res.string.dashboard_tg_channel_tile,
             onClick = { openUrl(url) },
         )
 
     private fun tgBotTile(url: String): DashboardUiData.Tile =
         DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.MessageCircle,
-            title = Res.string.dashboard_tg_bot_tile,
+            titleRes = Res.string.dashboard_tg_bot_tile,
             onClick = { openUrl(url) },
         )
 
     private fun siteTile(url: String): DashboardUiData.Tile =
         DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Globe,
-            title = Res.string.dashboard_site_tile,
+            titleRes = Res.string.dashboard_site_tile,
             onClick = { openUrl(url) },
         )
 
     private fun processTile(url: String): DashboardUiData.Tile =
         DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Folder,
-            title = Res.string.dashboard_process_tile,
+            titleRes = Res.string.dashboard_process_tile,
             onClick = { openUrl(url) },
         )
 
@@ -187,7 +196,7 @@ class DashboardComponent(
                                 widgets = data.widgets.map { widget ->
                                     scheduleWidget.takeIf { widget.isSchedule } ?: widget
                                 },
-                                cacheReason = result.reason?.message,
+                                cacheReason = result.reason?.messageRes?.let { getString(it) },
                             )
                         }
                     }

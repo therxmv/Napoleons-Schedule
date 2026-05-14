@@ -1,12 +1,21 @@
 package com.therxmv.napoleon.data.repository.converter
 
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.specialty.model.LessonModel
 import com.therxmv.napoleon.data.repository.specialty.model.ScheduleModel
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.LessonDto
 import com.therxmv.napoleon.data.source.remote.napoleon.dto.ScheduleDto
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.schedule_friday
+import napoleon.leonres.generated.resources.schedule_monday
+import napoleon.leonres.generated.resources.schedule_saturday
+import napoleon.leonres.generated.resources.schedule_sunday
+import napoleon.leonres.generated.resources.schedule_thursday
+import napoleon.leonres.generated.resources.schedule_tuesday
+import napoleon.leonres.generated.resources.schedule_unknown_day
+import napoleon.leonres.generated.resources.schedule_wednesday
 
 class ScheduleConverter(
     private val defaultDispatcher: CoroutineDispatcher,
@@ -34,7 +43,7 @@ class ScheduleConverter(
             5 -> Res.string.schedule_saturday
             6 -> Res.string.schedule_sunday
             else -> Res.string.schedule_unknown_day
-        }
+        }.let(::getSyncString)
 
     private fun List<LessonDto>.mapToModelWithGroups(day: String): List<LessonModel> =
         groupBy { it.lessonNumber }.values.map { group ->

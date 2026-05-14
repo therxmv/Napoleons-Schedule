@@ -4,11 +4,13 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.therxmv.datetime.DateTimeConstants
 import com.therxmv.datetime.toMillis
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.specialty.model.ExamModel
 import com.therxmv.napoleon.data.repository.specialty.model.ExamsModel
 import com.therxmv.napoleon.data.repository.specialty.model.ZalikModel
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format
+import org.jetbrains.compose.resources.StringResource
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -20,9 +22,9 @@ data class ExamsUiData(
 ) {
 
     data class Info(
-        val text: String,
+        val textRes: StringResource,
         val link: String,
-        val linkText: String,
+        val linkTextRes: StringResource,
     )
 
     data class DatePicker(
@@ -34,11 +36,11 @@ data class ExamsUiData(
     @Immutable
     data class Section(
         val id: Id,
-        val title: String,
+        val titleRes: StringResource,
         val items: List<Item>,
     ) {
         override fun toString(): String =
-            "$title:\n${items.joinToString("\n") { it.toString() }}"
+            "${getSyncString(titleRes)}:\n${items.joinToString("\n") { it.toString() }}"
 
         enum class Id { Exam, Zalik }
     }

@@ -1,11 +1,18 @@
 package com.therxmv.napoleon.data.repository.rating
 
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.rating.model.RatingModel
 import com.therxmv.napoleon.data.repository.rating.model.SubjectModel
 import com.therxmv.napoleon.data.repository.rating.model.ValidValueModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
 import kotlinx.coroutines.runBlocking
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.rating_error_credits_number
+import napoleon.leonres.generated.resources.rating_error_credits_range
+import napoleon.leonres.generated.resources.rating_error_it_number
+import napoleon.leonres.generated.resources.rating_error_it_range
+import napoleon.leonres.generated.resources.rating_error_score_number
+import napoleon.leonres.generated.resources.rating_error_score_range
 import kotlin.math.abs
 import kotlin.math.exp
 import kotlin.math.pow
@@ -45,30 +52,30 @@ class RatingRepositoryImpl(
         runBlocking { dataStoreSource.getRating() }
 
     override fun validateCredits(value: String): ValidValueModel {
-        val intCredits = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_credits_number)
+        val intCredits = value.toIntOrNull() ?: return ValidValueModel(value, getSyncString(Res.string.rating_error_credits_number))
 
         if (intCredits < MIN_CREDITS) {
-            return ValidValueModel(value, "${Res.string.rating_error_credits_range} $MIN_CREDITS")
+            return ValidValueModel(value, getSyncString(Res.string.rating_error_credits_range, "$MIN_CREDITS"))
         }
 
         return ValidValueModel(value)
     }
 
     override fun validateScore(value: String): ValidValueModel {
-        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_score_number)
+        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, getSyncString(Res.string.rating_error_score_number))
 
         if (intScore !in MIN_SCORE..MAX_SCORE) {
-            return ValidValueModel(value, "${Res.string.rating_error_score_range} $MIN_SCORE-$MAX_SCORE")
+            return ValidValueModel(value, getSyncString(Res.string.rating_error_score_range, "$MIN_SCORE-$MAX_SCORE"))
         }
 
         return ValidValueModel(value)
     }
 
     override fun validateProbabilityInput(value: String): ValidValueModel {
-        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_it_number)
+        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, getSyncString(Res.string.rating_error_it_number))
 
         if (intScore < MIN_PROBABILITY_VALUE) {
-            return ValidValueModel(value, "${Res.string.rating_error_it_range} $MIN_PROBABILITY_VALUE")
+            return ValidValueModel(value, getSyncString(Res.string.rating_error_it_range, "$MIN_PROBABILITY_VALUE"))
         }
 
         return ValidValueModel(value)

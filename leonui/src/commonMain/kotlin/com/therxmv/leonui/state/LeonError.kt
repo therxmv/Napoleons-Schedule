@@ -24,10 +24,11 @@ import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.AlertTriangle
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LeonError(data: LeonState.Error) {
-    LeonError(data.message, data.onRetry)
+    LeonError(stringResource(data.messageRes), data.onRetry)
 }
 
 @Composable

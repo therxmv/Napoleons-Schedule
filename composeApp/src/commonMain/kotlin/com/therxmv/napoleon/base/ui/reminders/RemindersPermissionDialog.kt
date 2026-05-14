@@ -18,9 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.therxmv.napoleon.Res
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Bell
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.reminders_dialog_deny
+import napoleon.leonres.generated.resources.reminders_dialog_description
+import napoleon.leonres.generated.resources.reminders_dialog_grant
+import napoleon.leonres.generated.resources.reminders_dialog_title
+import org.jetbrains.compose.resources.stringResource
 
 // Outdated/Deprecated
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,13 +69,13 @@ private fun RemindersPermissionContent(
 
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = Res.string.reminders_dialog_title,
+            text = stringResource(Res.string.reminders_dialog_title),
             style = MaterialTheme.typography.headlineSmall,
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(text = Res.string.reminders_dialog_description)
+        Text(text = stringResource(Res.string.reminders_dialog_description))
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -80,7 +85,7 @@ private fun RemindersPermissionContent(
             TextButton(
                 onClick = onDismiss,
             ) {
-                Text(Res.string.reminders_dialog_deny)
+                Text(stringResource(Res.string.reminders_dialog_deny))
             }
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -91,7 +96,7 @@ private fun RemindersPermissionContent(
                     onDismiss()
                 },
             ) {
-                Text(Res.string.reminders_dialog_grant)
+                Text(stringResource(Res.string.reminders_dialog_grant))
             }
         }
     }

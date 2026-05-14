@@ -5,7 +5,6 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.therxmv.leonui.input.LeonDropdownInputData
 import com.therxmv.leonui.state.LeonState
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.faculty.FacultyRepository
 import com.therxmv.napoleon.data.repository.faculty.model.FacultiesModel
@@ -25,6 +24,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.edit_profile_faculty_placeholder
+import napoleon.leonres.generated.resources.edit_profile_save_button
+import napoleon.leonres.generated.resources.edit_profile_specialty_placeholder
+import napoleon.leonres.generated.resources.edit_profile_year_placeholder
+import org.jetbrains.compose.resources.StringResource
 
 @Stable
 class EditProfileComponent(
@@ -78,11 +83,11 @@ class EditProfileComponent(
 
                     LeonState.Ready(
                         data = data,
-                        cacheReason = result.reason?.message,
+                        cacheReasonRes = result.reason?.messageRes,
                     )
                 }
 
-                is Result.Failure -> LeonState.Error(result.reason.message, ::loadData)
+                is Result.Failure -> LeonState.Error(result.reason.messageRes, ::loadData)
             }
         }
     }
@@ -97,7 +102,7 @@ class EditProfileComponent(
             is Result.Success<YearsModel> -> {
                 val prepopulatedYear = result.data.years.find { it == profile?.year }
 
-                _uiState.updateReady(result.reason?.message) { data ->
+                _uiState.updateReady(result.reason?.messageRes) { data ->
                     data.copy(
                         yearDropdown = data.yearDropdown.copy(
                             items = result.data.years,
@@ -113,7 +118,7 @@ class EditProfileComponent(
 
             is Result.Failure -> {
                 _uiState.update {
-                    LeonState.Error(result.reason.message, ::loadData)
+                    LeonState.Error(result.reason.messageRes, ::loadData)
                 }
             }
         }
@@ -130,7 +135,7 @@ class EditProfileComponent(
 
                 val prepopulatedSpecialty = specialties.find { it == profile?.specialtyName }
 
-                _uiState.updateReady(result.reason?.message) { data ->
+                _uiState.updateReady(result.reason?.messageRes) { data ->
                     data.copy(
                         specialtyDropdown = data.specialtyDropdown.copy(
                             items = specialties,
@@ -142,7 +147,7 @@ class EditProfileComponent(
 
             is Result.Failure -> {
                 _uiState.update {
-                    LeonState.Error(result.reason.message, ::loadData)
+                    LeonState.Error(result.reason.messageRes, ::loadData)
                 }
             }
         }
@@ -158,20 +163,20 @@ class EditProfileComponent(
     private fun createInitialData(facultyItems: List<String>, facultyName: String?): EditProfileUiData =
         EditProfileUiData(
             facultyDropdown = LeonDropdownInputData(
-                placeholder = Res.string.edit_profile_faculty_placeholder,
+                placeholderRes = Res.string.edit_profile_faculty_placeholder,
                 value = facultyName,
                 items = facultyItems,
                 onClick = ::onFacultyClick,
             ),
             yearDropdown = LeonDropdownInputData(
-                placeholder = Res.string.edit_profile_year_placeholder,
+                placeholderRes = Res.string.edit_profile_year_placeholder,
                 onClick = ::onYearClick,
             ),
             specialtyDropdown = LeonDropdownInputData(
-                placeholder = Res.string.edit_profile_specialty_placeholder,
+                placeholderRes = Res.string.edit_profile_specialty_placeholder,
                 onClick = ::onSpecialtyClick,
             ),
-            saveLabel = Res.string.edit_profile_save_button,
+            saveLabelRes = Res.string.edit_profile_save_button,
         )
 
     private fun onFacultyClick(value: String) {
@@ -255,7 +260,7 @@ class EditProfileComponent(
         return data
     }
 
-    private fun MutableStateFlow<LeonState<EditProfileUiData>>.updateReady(cacheReason: String? = null, dataCreator: (EditProfileUiData) -> EditProfileUiData) {
+    private fun MutableStateFlow<LeonState<EditProfileUiData>>.updateReady(cacheReasonRes: StringResource? = null, dataCreator: (EditProfileUiData) -> EditProfileUiData) {
         update { state ->
             if (state !is LeonState.Ready<*>) return@update state
 
@@ -263,7 +268,7 @@ class EditProfileComponent(
 
             LeonState.Ready(
                 data = dataCreator(data),
-                cacheReason = cacheReason,
+                cacheReasonRes = cacheReasonRes,
             )
         }
     }

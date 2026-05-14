@@ -18,12 +18,16 @@ import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiEvent
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.fallback_offline
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun EditProfileContent(
     modifier: Modifier = Modifier,
     data: EditProfileUiData,
-    fallbackReason: String?,
+    fallbackReasonRes: StringResource?,
     onEvent: (EditProfileUiEvent) -> Unit,
 ) {
     Column(
@@ -33,9 +37,9 @@ fun EditProfileContent(
             .focusable(), // Didn't work without focusable on API 26,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (fallbackReason != null) {
+        if (fallbackReasonRes != null) {
             LeonCard(
-                text = fallbackReason,
+                textRes = fallbackReasonRes,
                 type = LeonCardType.Error,
             )
             Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
@@ -51,7 +55,7 @@ fun EditProfileContent(
         Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.baggy))
 
         LeonButton(
-            label = data.saveLabel,
+            label = stringResource(data.saveLabelRes),
             isEnabled = data.isAllSelected,
             onClick = {
                 onEvent(EditProfileUiEvent.SaveProfile)
@@ -66,7 +70,7 @@ private fun EditProfileContentPreview() {
     LeonPreview {
         EditProfileContent(
             data = PreviewMockData.editProfileUiData,
-            fallbackReason = "Fallback Reason",
+            fallbackReasonRes = Res.string.fallback_offline,
             onEvent = {},
         )
     }

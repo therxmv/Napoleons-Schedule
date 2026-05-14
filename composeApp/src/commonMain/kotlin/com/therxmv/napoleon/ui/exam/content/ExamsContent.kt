@@ -29,7 +29,6 @@ import com.therxmv.leonui.text.LeonTextSize
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.leonui.theme.LeonTheme
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.base.ui.CopyIconButton
 import com.therxmv.napoleon.base.ui.LocalCopyIconColor
 import com.therxmv.napoleon.ui.PreviewMockData
@@ -39,12 +38,17 @@ import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent
 import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent.UpdateItem
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Plus
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.exams_add_new
+import napoleon.leonres.generated.resources.fallback_offline
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ExamsContent(
     modifier: Modifier = Modifier,
     data: ExamsUiData,
-    fallbackReason: String?,
+    fallbackReasonRes: StringResource?,
     onEvent: (ExamsUiEvent) -> Unit,
 ) {
     var swipedItemId by remember { mutableStateOf<String?>(null) }
@@ -52,10 +56,10 @@ fun ExamsContent(
         modifier = modifier,
         contentPadding = LeonTheme.paddings.baseValues,
     ) {
-        if (fallbackReason != null) {
+        if (fallbackReasonRes != null) {
             item {
                 LeonCard(
-                    text = fallbackReason,
+                    textRes = fallbackReasonRes,
                     type = LeonCardType.Error,
                 )
                 Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
@@ -64,8 +68,8 @@ fun ExamsContent(
 
         item {
             LeonCard(
-                text = data.infoData.text,
-                hyperlinkText = data.infoData.linkText,
+                text = stringResource(data.infoData.textRes),
+                hyperlinkText = stringResource(data.infoData.linkTextRes),
                 hyperlink = data.infoData.link,
                 type = LeonCardType.Info,
             )
@@ -142,7 +146,7 @@ private fun SectionHeader(
     ) {
         LeonText(
             modifier = Modifier.weight(1f),
-            text = section.title,
+            text = stringResource(section.titleRes),
             size = LeonTextSize.Title2,
             color = contentColor,
             weight = LeonTextWeight.Bold,
@@ -150,7 +154,7 @@ private fun SectionHeader(
 
         LeonButton(
             prefixIcon = FeatherIcons.Plus,
-            label = Res.string.exams_add_new,
+            label = stringResource(Res.string.exams_add_new),
             style = LeonButtonStyle.Text(contentColor),
             onClick = { onEvent(ExamsUiEvent.AddNewItem(section.id)) },
         )
@@ -220,7 +224,7 @@ private fun DashboardContentPreview() {
     LeonPreview {
         ExamsContent(
             data = PreviewMockData.examsUiData,
-            fallbackReason = "Fallback reason",
+            fallbackReasonRes = Res.string.fallback_offline,
             onEvent = {},
         )
     }

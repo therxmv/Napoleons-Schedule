@@ -38,10 +38,15 @@ import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.leonui.theme.values.LeonSizes.Corner.toCornerRadius
 import com.therxmv.leonui.theme.values.RoundedCornerShape
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.edit_profile_faculty_placeholder
+import napoleon.leonres.generated.resources.edit_profile_year_placeholder
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Immutable
 data class LeonDropdownInputData(
-    val placeholder: String,
+    val placeholderRes: StringResource,
     val value: String? = null,
     val items: List<String> = emptyList(),
     val onClick: (String) -> Unit,
@@ -81,7 +86,7 @@ fun LeonDropdownInput(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
             },
             placeholder = {
-                Text(text = data.placeholder)
+                Text(text = stringResource(data.placeholderRes))
             },
             colors = style.colors,
             shape = RoundedCornerShape(
@@ -144,7 +149,7 @@ private fun LeonDropdownInputPreview() {
     ) {
         LeonDropdownInput(
             data = LeonDropdownInputData(
-                placeholder = "Placeholder",
+                placeholderRes = Res.string.edit_profile_faculty_placeholder,
                 items = data,
                 onClick = {},
             )
@@ -153,7 +158,7 @@ private fun LeonDropdownInputPreview() {
         LeonDropdownInput(
             modifier = Modifier.focusRequester(focusRequester),
             data = LeonDropdownInputData(
-                placeholder = "Placeholder",
+                placeholderRes = Res.string.edit_profile_year_placeholder,
                 value = "item1",
                 items = data,
                 onClick = {},
@@ -172,7 +177,7 @@ private fun EmptyLeonDropdownInputPreview() {
     LeonComponentPreview {
         LeonDropdownInput(
             data = LeonDropdownInputData(
-                placeholder = "Placeholder",
+                placeholderRes = Res.string.edit_profile_faculty_placeholder,
                 onClick = {},
             )
         )

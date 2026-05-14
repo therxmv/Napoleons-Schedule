@@ -1,7 +1,7 @@
 package com.therxmv.napoleon.ui
 
+import com.therxmv.leonres.getSyncString
 import com.therxmv.leonui.input.LeonDropdownInputData
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.ui.dashboard.component.DashboardUiData
 import com.therxmv.napoleon.ui.editprofile.component.EditProfileUiData
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
@@ -19,6 +19,38 @@ import compose.icons.feathericons.Folder
 import compose.icons.feathericons.Globe
 import compose.icons.feathericons.Layout
 import kotlinx.datetime.LocalDate
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.dashboard_excel_tile
+import napoleon.leonres.generated.resources.dashboard_process_tile
+import napoleon.leonres.generated.resources.dashboard_rating_tile
+import napoleon.leonres.generated.resources.dashboard_site_tile
+import napoleon.leonres.generated.resources.dashboard_timetable_tile
+import napoleon.leonres.generated.resources.edit_profile_faculty_placeholder
+import napoleon.leonres.generated.resources.edit_profile_save_button
+import napoleon.leonres.generated.resources.edit_profile_specialty_placeholder
+import napoleon.leonres.generated.resources.edit_profile_year_placeholder
+import napoleon.leonres.generated.resources.exams_edit_info
+import napoleon.leonres.generated.resources.exams_edit_info_link_text
+import napoleon.leonres.generated.resources.exams_list_title
+import napoleon.leonres.generated.resources.profile_edit_button
+import napoleon.leonres.generated.resources.profile_faculty_label
+import napoleon.leonres.generated.resources.profile_info_title
+import napoleon.leonres.generated.resources.profile_specialty_label
+import napoleon.leonres.generated.resources.rating_add_label
+import napoleon.leonres.generated.resources.rating_credits_label
+import napoleon.leonres.generated.resources.rating_info_link_text
+import napoleon.leonres.generated.resources.rating_info_text
+import napoleon.leonres.generated.resources.rating_label
+import napoleon.leonres.generated.resources.rating_name_label
+import napoleon.leonres.generated.resources.rating_probability
+import napoleon.leonres.generated.resources.rating_score_label
+import napoleon.leonres.generated.resources.timetable_close
+import napoleon.leonres.generated.resources.timetable_copy
+import napoleon.leonres.generated.resources.timetable_empty_shift
+import napoleon.leonres.generated.resources.timetable_first_shift
+import napoleon.leonres.generated.resources.timetable_second_shift
+import napoleon.leonres.generated.resources.timetable_title
+import napoleon.leonres.generated.resources.zalik_list_title
 
 object PreviewMockData {
 
@@ -27,28 +59,28 @@ object PreviewMockData {
         tiles = listOf(
             DashboardUiData.Tile.wideRectangle(
                 icon = FeatherIcons.Layout,
-                title = Res.string.dashboard_excel_tile,
+                titleRes = Res.string.dashboard_excel_tile,
                 onClick = {},
             ),
             DashboardUiData.Tile.smallSquare(
                 icon = FeatherIcons.DivideCircle,
-                title = Res.string.dashboard_rating_tile,
+                titleRes = Res.string.dashboard_rating_tile,
                 onClick = {},
             ),
             DashboardUiData.Tile.smallSquare(
                 icon = FeatherIcons.Clock,
-                title = Res.string.dashboard_timetable_tile,
+                titleRes = Res.string.dashboard_timetable_tile,
                 onClick = {},
             ),
             DashboardUiData.Tile.EmptyDivider,
             DashboardUiData.Tile.smallRectangle(
                 icon = FeatherIcons.Globe,
-                title = Res.string.dashboard_site_tile,
+                titleRes = Res.string.dashboard_site_tile,
                 onClick = {},
             ),
             DashboardUiData.Tile.smallRectangle(
                 icon = FeatherIcons.Folder,
-                title = Res.string.dashboard_process_tile,
+                titleRes = Res.string.dashboard_process_tile,
                 onClick = {},
             ),
         ),
@@ -57,62 +89,62 @@ object PreviewMockData {
 
     val editProfileUiData = EditProfileUiData(
         facultyDropdown = LeonDropdownInputData(
-            placeholder = Res.string.edit_profile_faculty_placeholder,
+            placeholderRes = Res.string.edit_profile_faculty_placeholder,
             value = "ФМІ",
             items = listOf("ФМІ"),
             onClick = {},
         ),
         yearDropdown = LeonDropdownInputData(
-            placeholder = Res.string.edit_profile_year_placeholder,
+            placeholderRes = Res.string.edit_profile_year_placeholder,
             items = listOf("4"),
             onClick = {},
         ),
         specialtyDropdown = LeonDropdownInputData(
-            placeholder = Res.string.edit_profile_specialty_placeholder,
+            placeholderRes = Res.string.edit_profile_specialty_placeholder,
             onClick = {},
         ),
-        saveLabel = Res.string.edit_profile_save_button,
+        saveLabelRes = Res.string.edit_profile_save_button,
     )
 
     val profileUiData = ProfileUiData(
-        infoTitle = Res.string.profile_info_title,
-        facultyLabel = Res.string.profile_faculty_label,
+        infoTitleRes = Res.string.profile_info_title,
+        facultyLabelRes = Res.string.profile_faculty_label,
         faculty = "ФМІ",
-        specialtyLabel = Res.string.profile_specialty_label,
+        specialtyLabelRes = Res.string.profile_specialty_label,
         specialty = "ІПЗ-41",
-        editButtonLabel = Res.string.profile_edit_button,
+        editButtonLabelRes = Res.string.profile_edit_button,
     )
 
     val ratingUiData = RatingUiData(
-        nameLabel = Res.string.rating_name_label,
-        creditsLabel = Res.string.rating_credits_label,
-        scoreLabel = Res.string.rating_score_label,
-        addInputLabel = Res.string.rating_add_label,
+        nameLabelRes = Res.string.rating_name_label,
+        creditsLabelRes = Res.string.rating_credits_label,
+        scoreLabelRes = Res.string.rating_score_label,
+        addInputLabelRes = Res.string.rating_add_label,
         subjectInputs = List(2) { SubjectInput() },
         ratingResult = "${Res.string.rating_label} 88.14",
         probabilityInputs = listOf(
             ProbabilityInput(
-                title = ProbabilityInput.Id.Capacity.title,
+                id = ProbabilityInput.Id.Capacity,
                 value = "20",
             ),
             ProbabilityInput(
-                title = ProbabilityInput.Id.Quota.title,
+                id = ProbabilityInput.Id.Quota,
                 value = "8",
             ),
             ProbabilityInput(
-                title = ProbabilityInput.Id.Average.title,
+                id = ProbabilityInput.Id.Average,
                 value = "75",
             ),
             ProbabilityInput(
-                title = ProbabilityInput.Id.Deviation.title,
+                id = ProbabilityInput.Id.Deviation,
                 value = "5",
             ),
         ),
         probabilityResult = "${Res.string.rating_probability} 78.4%",
         infoData = RatingUiData.Info(
-            text = Res.string.rating_info_text,
+            textRes = Res.string.rating_info_text,
             link = "link",
-            linkText = Res.string.rating_info_link_text,
+            linkTextRes = Res.string.rating_info_link_text,
         ),
     )
 
@@ -148,29 +180,29 @@ object PreviewMockData {
 
     val timetableUiData = TimetableUiData(
         icon = FeatherIcons.Clock,
-        title = Res.string.timetable_title,
+        titleRes = Res.string.timetable_title,
         text = buildString {
-            append(Res.string.timetable_first_shift)
+            append(getSyncString(Res.string.timetable_first_shift))
             append("\n1) 8:00 - 9:20\n2) 9:35 - 10:55")
             append("\n\n")
-            append(Res.string.timetable_second_shift)
+            append(getSyncString(Res.string.timetable_second_shift))
             append("\n")
-            append(Res.string.timetable_empty_shift)
+            append(getSyncString(Res.string.timetable_empty_shift))
         },
-        copyLabel = Res.string.timetable_copy,
-        closeLabel = Res.string.timetable_close,
+        copyLabelRes = Res.string.timetable_copy,
+        closeLabelRes = Res.string.timetable_close,
     )
 
     val examsUiData = ExamsUiData(
         infoData = ExamsUiData.Info(
-            text = Res.string.exams_edit_info,
+            textRes = Res.string.exams_edit_info,
             link = "link",
-            linkText = Res.string.exams_edit_info_link_text,
+            linkTextRes = Res.string.exams_edit_info_link_text,
         ),
         sections = listOf(
             ExamsUiData.Section(
                 id = ExamsUiData.Section.Id.Exam,
-                title = Res.string.exams_list_title,
+                titleRes = Res.string.exams_list_title,
                 items = listOf(
                     ExamsUiData.Item.Editable.Exam(
                         teacher = "Teacher's full name",
@@ -187,7 +219,7 @@ object PreviewMockData {
             ),
             ExamsUiData.Section(
                 id = ExamsUiData.Section.Id.Zalik,
-                title = Res.string.zalik_list_title,
+                titleRes = Res.string.zalik_list_title,
                 items = listOf(
                     ExamsUiData.Item.EmptyPlaceholder(name = "Empty Placeholder Example"),
                     ExamsUiData.Item.Editable.Zalik(name = "This is Lesson3", isEditing = true),

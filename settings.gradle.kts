@@ -20,3 +20,4 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":leonui")
 include(":datetime")
+include(":leonres")

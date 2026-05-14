@@ -1,19 +1,26 @@
 package com.therxmv.napoleon.ui.rating.component
 
 import androidx.compose.runtime.Immutable
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.rating.model.RatingModel
 import com.therxmv.napoleon.data.repository.rating.model.SubjectModel
 import com.therxmv.napoleon.ui.rating.component.RatingUiData.SubjectInput
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.rating_average
+import napoleon.leonres.generated.resources.rating_capacity
+import napoleon.leonres.generated.resources.rating_deviation
+import napoleon.leonres.generated.resources.rating_name_label
+import napoleon.leonres.generated.resources.rating_quota
+import org.jetbrains.compose.resources.StringResource
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Immutable
 data class RatingUiData(
-    val nameLabel: String,
-    val creditsLabel: String,
-    val scoreLabel: String,
-    val addInputLabel: String,
+    val nameLabelRes: StringResource,
+    val creditsLabelRes: StringResource,
+    val scoreLabelRes: StringResource,
+    val addInputLabelRes: StringResource,
     val subjectInputs: List<SubjectInput>,
     val ratingResult: String,
     val probabilityInputs: List<ProbabilityInput>,
@@ -23,7 +30,7 @@ data class RatingUiData(
     @OptIn(ExperimentalUuidApi::class)
     data class SubjectInput(
         val id: String = Uuid.random().toHexDashString(),
-        val name: String = Res.string.rating_name_label,
+        val name: String = getSyncString(Res.string.rating_name_label),
         val credits: String = "3",
         val score: String = "74",
         val error: String? = null,
@@ -31,11 +38,11 @@ data class RatingUiData(
 
     @OptIn(ExperimentalUuidApi::class)
     data class ProbabilityInput(
-        val title: String,
+        val id: Id,
         val value: String,
         val error: String? = null,
     ) {
-        enum class Id(val title: String) {
+        enum class Id(val titleRes: StringResource) {
             Capacity(Res.string.rating_capacity),
             Quota(Res.string.rating_quota),
             Average(Res.string.rating_average),
@@ -44,9 +51,9 @@ data class RatingUiData(
     }
 
     data class Info(
-        val text: String,
+        val textRes: StringResource,
         val link: String,
-        val linkText: String,
+        val linkTextRes: StringResource,
     )
 }
 

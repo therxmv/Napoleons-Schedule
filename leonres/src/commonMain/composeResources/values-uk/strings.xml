@@ -17,7 +17,7 @@
     <string name="dashboard_process_tile">Освітній Процес</string>
 
     <!--Profile-->
-    <string name="profile_welcome">Вітаємо</string>
+    <string name="profile_welcome">Вітаємо %1$s!</string>
     <string name="profile_faculty_label">Факультет:</string>
     <string name="profile_specialty_label">Спеціальність:</string>
     <string name="profile_edit_button">Редагувати</string>
@@ -32,7 +32,7 @@
     <string name="edit_profile_save_button">Зберегти</string>
 
     <!--Schedule-->
-    <string name="schedule_title">Розклад для</string>
+    <string name="schedule_title">Розклад для %1$s, %2$s</string>
 
     <string name="schedule_monday">Понеділок</string>
     <string name="schedule_tuesday">Вівторок</string>
@@ -44,7 +44,7 @@
     <string name="schedule_unknown_day">Невідомий день</string>
 
     <string name="schedule_no_lesson">Немає</string>
-    <string name="schedule_no_lessons">Немає занять</string>
+    <string name="schedule_no_lessons">%1$s - Немає занять</string>
 
     <string name="offline_open_schedule">Відкрити розклад</string>
 
@@ -77,21 +77,21 @@
     <string name="rating_score_label">Бал</string>
     <string name="rating_add_label">Додати Предмет</string>
 
-    <string name="rating_label">Ваш Рейтинг</string>
-    <string name="rating_probability">Ймовірність стипендії</string>
+    <string name="rating_label">Ваш Рейтинг %1$s</string>
+    <string name="rating_probability">Ймовірність стипендії %1$s</string>
 
     <string name="rating_info_text">Інформацію про екзамени та кредити можна знайти </string>
     <string name="rating_info_link_text">тут</string>
 
     <string name="rating_error_score_number">Бал має бути числом</string>
-    <string name="rating_error_score_range">Бал має бути у межах</string>
+    <string name="rating_error_score_range">Бал має бути у межах %1$s</string>
     <string name="rating_error_credits_number">Кредити мають бути числом</string>
-    <string name="rating_error_credits_range">Кредити мають бути хоча б</string>
+    <string name="rating_error_credits_range">Кредити мають бути хоча б %1$s</string>
     <string name="rating_error_it_number">Має бути числом</string>
-    <string name="rating_error_it_range">Має бути хоча б</string>
+    <string name="rating_error_it_range">Має бути хоча б %1$s</string>
 
     <!-- Exams -->
-    <string name="exams_title">Розклад екзаменів для</string>
+    <string name="exams_title">Розклад екзаменів для %1$s, %2$s</string>
     <string name="exams_list_title">Екзамени</string>
     <string name="zalik_list_title">Заліки</string>
     <string name="exams_no_data">У нас немає інформації про екзамени та заліки</string>

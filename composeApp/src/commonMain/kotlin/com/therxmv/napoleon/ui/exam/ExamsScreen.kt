@@ -23,7 +23,7 @@ fun ExamsScreen(
             ExamsContent(
                 modifier = modifier,
                 data = uiState.data,
-                fallbackReason = uiState.cacheReason,
+                fallbackReasonRes = uiState.cacheReasonRes,
                 onEvent = component::onEvent,
             )
         }

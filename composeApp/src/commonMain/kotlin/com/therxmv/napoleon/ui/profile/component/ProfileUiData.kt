@@ -1,10 +1,12 @@
 package com.therxmv.napoleon.ui.profile.component
 
+import org.jetbrains.compose.resources.StringResource
+
 data class ProfileUiData(
-    val infoTitle: String,
-    val facultyLabel: String,
+    val infoTitleRes: StringResource,
+    val facultyLabelRes: StringResource,
     val faculty: String,
-    val specialtyLabel: String,
+    val specialtyLabelRes: StringResource,
     val specialty: String,
-    val editButtonLabel: String,
+    val editButtonLabelRes: StringResource,
 )

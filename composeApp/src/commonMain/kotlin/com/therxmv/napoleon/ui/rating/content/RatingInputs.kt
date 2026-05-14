@@ -33,6 +33,7 @@ import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Plus
 import compose.icons.feathericons.Trash2
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RatingSubjectInputs(
@@ -51,8 +52,8 @@ fun RatingSubjectInputs(
     ) {
         item {
             LeonCard(
-                text = data.infoData.text,
-                hyperlinkText = data.infoData.linkText,
+                text = stringResource(data.infoData.textRes),
+                hyperlinkText = stringResource(data.infoData.linkTextRes),
                 hyperlink = data.infoData.link,
                 type = LeonCardType.Info,
             )
@@ -61,7 +62,7 @@ fun RatingSubjectInputs(
         item {
             LeonButton(
                 modifier = Modifier.leonLazyListAnimation(),
-                label = data.addInputLabel,
+                label = stringResource(data.addInputLabelRes),
                 onClick = { onEvent(RatingUiEvent.AddSubjectInput) },
                 prefixIcon = FeatherIcons.Plus,
             )
@@ -71,9 +72,9 @@ fun RatingSubjectInputs(
             item {
                 InputLabels(
                     modifier = Modifier.leonLazyListAnimation(),
-                    name = data.nameLabel,
-                    credits = data.creditsLabel,
-                    score = data.scoreLabel,
+                    name = stringResource(data.nameLabelRes),
+                    credits = stringResource(data.creditsLabelRes),
+                    score = stringResource(data.scoreLabelRes),
                 )
             }
         }

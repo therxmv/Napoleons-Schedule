@@ -24,6 +24,21 @@ import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.text.withLeonLink
 import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun LeonCard(
+    modifier: Modifier = Modifier,
+    textRes: StringResource,
+    type: LeonCardType,
+) {
+    LeonCard(
+        modifier = modifier,
+        text = AnnotatedString(stringResource(textRes)),
+        type = type,
+    )
+}
 
 @Composable
 fun LeonCard(

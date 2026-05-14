@@ -3,12 +3,16 @@ package com.therxmv.napoleon.ui.profile.component
 import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.therxmv.leonui.state.LeonState
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.profile_edit_button
+import napoleon.leonres.generated.resources.profile_faculty_label
+import napoleon.leonres.generated.resources.profile_info_title
+import napoleon.leonres.generated.resources.profile_specialty_label
 
 @Stable
 class ProfileComponent(
@@ -32,12 +36,12 @@ class ProfileComponent(
         val profile = profileRepository.getNotNullProfileSync()
 
         return ProfileUiData(
-            infoTitle = Res.string.profile_info_title,
-            facultyLabel = Res.string.profile_faculty_label,
+            infoTitleRes = Res.string.profile_info_title,
+            facultyLabelRes = Res.string.profile_faculty_label,
             faculty = profile.facultyName,
-            specialtyLabel = Res.string.profile_specialty_label,
+            specialtyLabelRes = Res.string.profile_specialty_label,
             specialty = profile.specialtyName,
-            editButtonLabel = Res.string.profile_edit_button,
+            editButtonLabelRes = Res.string.profile_edit_button,
         )
     }
 }
