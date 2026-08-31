@@ -1,9 +1,11 @@
 package com.therxmv.napoleon.data.repository.profile
 
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
 import kotlinx.coroutines.runBlocking
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.profile_default_name
+import org.jetbrains.compose.resources.getString
 
 class ProfileRepositoryImpl(
     private val dataStoreSource: DataStoreSource,
@@ -28,7 +30,7 @@ class ProfileRepositoryImpl(
         specialtyName: String,
     ) {
         val profile = ProfileModel(
-            name = Res.string.profile_default_name,
+            name = getString(Res.string.profile_default_name),
             year = year,
             facultyPath = facultyPath,
             facultyName = facultyName,

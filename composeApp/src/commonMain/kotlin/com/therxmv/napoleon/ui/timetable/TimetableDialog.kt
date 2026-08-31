@@ -2,7 +2,7 @@ package com.therxmv.napoleon.ui.timetable
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.therxmv.napoleon.base.state.BaseState
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.ui.timetable.component.TimetableComponent
 import com.therxmv.napoleon.ui.timetable.component.TimetableUiData
 import com.therxmv.napoleon.ui.timetable.content.TimetableContent
@@ -14,7 +14,7 @@ fun TimetableDialog(
     val uiState = component.uiState.collectAsStateWithLifecycle().value
 
     when (uiState) {
-        is BaseState.Ready<TimetableUiData> -> {
+        is LeonState.Ready<TimetableUiData> -> {
             TimetableContent(
                 data = uiState.data,
                 onEvent = component::onEvent,

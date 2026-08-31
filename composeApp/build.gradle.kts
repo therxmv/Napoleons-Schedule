@@ -10,19 +10,17 @@ plugins {
 
     alias(libs.plugins.firebase)
     alias(libs.plugins.firebase.crashlytics)
-
-    alias(libs.plugins.libres)
 }
 
 android {
-    namespace = libs.versions.project.applicationId.get()
+    namespace = "com.therxmv.napoleon"
     compileSdk = libs.versions.project.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.project.minSdk.get().toInt()
         targetSdk = libs.versions.project.targetSdk.get().toInt()
 
-        applicationId = libs.versions.project.applicationId.get() + ".androidApp"
+        applicationId = "com.therxmv.napoleon.androidApp"
         versionCode = libs.versions.project.versionCode.get().toInt()
         versionName = libs.versions.project.versionName.get()
     }
@@ -45,6 +43,10 @@ android {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -66,17 +68,18 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.components.uiToolingPreview)
+                implementation(project(":leonui"))
+                implementation(project(":datetime"))
+                implementation(project(":leonres"))
+
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.tooling.preview)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.material.icons)
                 implementation(libs.compose.backhandler)
 
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
-                implementation(libs.kotlinx.datetime)
-
-                implementation(libs.libres)
 
                 implementation(libs.bundles.voyager)
                 implementation(libs.bundles.decompose)
@@ -94,6 +97,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.androidx.appcompat)
+                implementation(libs.compose.tooling)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.ktor.client.okhttp)
@@ -111,8 +115,4 @@ kotlin {
             }
         }
     }
-}
-
-libres {
-    // https://github.com/Skeptick/libres#setup
 }

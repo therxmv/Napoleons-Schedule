@@ -1,20 +1,31 @@
 package com.therxmv.napoleon.ui.rating.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.info.InfoRepository
 import com.therxmv.napoleon.data.repository.rating.RatingRepository
-import com.therxmv.napoleon.ui.rating.component.RatingUiState.ProbabilityInput
-import com.therxmv.napoleon.ui.rating.component.RatingUiState.SubjectInput
+import com.therxmv.napoleon.ui.rating.component.RatingUiData.ProbabilityInput
+import com.therxmv.napoleon.ui.rating.component.RatingUiData.SubjectInput
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.rating_add_label
+import napoleon.leonres.generated.resources.rating_credits_label
+import napoleon.leonres.generated.resources.rating_info_link_text
+import napoleon.leonres.generated.resources.rating_info_text
+import napoleon.leonres.generated.resources.rating_label
+import napoleon.leonres.generated.resources.rating_name_label
+import napoleon.leonres.generated.resources.rating_probability
+import napoleon.leonres.generated.resources.rating_score_label
 import kotlin.math.round
 
+@Stable
 class RatingComponent(
     componentContext: ComponentContext,
     private val ratingRepository: RatingRepository,
@@ -110,7 +121,7 @@ class RatingComponent(
     private fun updateProbabilityState(event: RatingUiEvent.UpdateProbabilityInput) {
         _uiState.update { data ->
             val newInputs = data.probabilityInputs.map { input ->
-                if (input.title == event.id) {
+                if (input.id == event.id) {
                     val (value, error) = ratingRepository.validateProbabilityInput(event.value)
 
                     input.copy(
@@ -135,20 +146,20 @@ class RatingComponent(
         val rating = ratingRepository.calculateRating(list.toModel())
         val rounded = round(rating * 100) / 100
 
-        return rounded to "${Res.string.rating_label} $rounded"
+        return rounded to getSyncString(Res.string.rating_label, "$rounded")
     }
 
     private fun calculateProbability(rating: Double, list: List<ProbabilityInput>): String {
-        val capacity = list.first { it.title == ProbabilityInput.Id.Capacity.title }.value
-        val quota = list.first { it.title == ProbabilityInput.Id.Quota.title }.value
-        val average = list.first { it.title == ProbabilityInput.Id.Average.title }.value
-        val deviation = list.first { it.title == ProbabilityInput.Id.Deviation.title }.value
+        val capacity = list.first { it.id == ProbabilityInput.Id.Capacity }.value
+        val quota = list.first { it.id == ProbabilityInput.Id.Quota }.value
+        val average = list.first { it.id == ProbabilityInput.Id.Average }.value
+        val deviation = list.first { it.id == ProbabilityInput.Id.Deviation }.value
 
         val rating = ratingRepository.calculateProbability(rating, capacity, quota, average, deviation)
         val rounded = round(rating * 100).toString()
         val percentages = if (rounded.endsWith(".0")) "${rounded.dropLast(2)}%" else "$rounded%"
 
-        return "${Res.string.rating_probability} $percentages"
+        return getSyncString(Res.string.rating_probability, percentages)
     }
 
     private fun combineErrors(vararg errors: String?): String? {
@@ -157,7 +168,7 @@ class RatingComponent(
         return errorList?.joinToString("\n")
     }
 
-    private fun createInitialData(): RatingUiState {
+    private fun createInitialData(): RatingUiData {
         val subjectInputs = ratingRepository.getRatingSync()?.subjects?.toUi()
             ?: listOf(SubjectInput(), SubjectInput())
         val probabilityInputs = createProbabilityInputs()
@@ -165,11 +176,11 @@ class RatingComponent(
         val (number, rating) = calculateRating(subjectInputs)
         val probability = calculateProbability(number, probabilityInputs)
 
-        return RatingUiState(
-            nameLabel = Res.string.rating_name_label,
-            creditsLabel = Res.string.rating_credits_label,
-            scoreLabel = Res.string.rating_score_label,
-            addInputLabel = Res.string.rating_add_label,
+        return RatingUiData(
+            nameLabelRes = Res.string.rating_name_label,
+            creditsLabelRes = Res.string.rating_credits_label,
+            scoreLabelRes = Res.string.rating_score_label,
+            addInputLabelRes = Res.string.rating_add_label,
             subjectInputs = subjectInputs,
             ratingResult = rating,
             probabilityInputs = probabilityInputs,
@@ -181,30 +192,30 @@ class RatingComponent(
     private fun createProbabilityInputs(): List<ProbabilityInput> =
         listOf(
             ProbabilityInput(
-                title = ProbabilityInput.Id.Capacity.title,
+                id = ProbabilityInput.Id.Capacity,
                 value = "20",
             ),
             ProbabilityInput(
-                title = ProbabilityInput.Id.Quota.title,
+                id = ProbabilityInput.Id.Quota,
                 value = "8",
             ),
             ProbabilityInput(
-                title = ProbabilityInput.Id.Average.title,
+                id = ProbabilityInput.Id.Average,
                 value = "75",
             ),
             ProbabilityInput(
-                title = ProbabilityInput.Id.Deviation.title,
+                id = ProbabilityInput.Id.Deviation,
                 value = "5",
             ),
         )
 
-    private fun createInfoData(): RatingUiState.Info {
+    private fun createInfoData(): RatingUiData.Info {
         val link = infoRepository.getLinks().educationalPrograms
 
-        return RatingUiState.Info(
-            text = Res.string.rating_info_text,
+        return RatingUiData.Info(
+            textRes = Res.string.rating_info_text,
             link = link,
-            linkText = Res.string.rating_info_link_text,
+            linkTextRes = Res.string.rating_info_link_text,
         )
     }
 }

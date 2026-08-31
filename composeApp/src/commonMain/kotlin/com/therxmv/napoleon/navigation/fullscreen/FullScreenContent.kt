@@ -3,14 +3,16 @@ package com.therxmv.napoleon.navigation.fullscreen
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import com.therxmv.leonui.button.LeonIconButton
+import com.therxmv.leonui.theme.LeonPreview
 import com.therxmv.napoleon.navigation.destination.child.Child
 import com.therxmv.napoleon.ui.editprofile.EditProfileScreen
 import com.therxmv.napoleon.ui.exam.ExamsScreen
@@ -63,16 +65,27 @@ fun TopCenterAppBar(
         },
         navigationIcon = {
             if (data.canGoBack()) {
-                IconButton(
+                LeonIconButton(
+                    icon = FeatherIcons.ArrowLeft,
                     onClick = data.goBack,
-                ) {
-                    Icon(
-                        imageVector = FeatherIcons.ArrowLeft,
-                        contentDescription = "back",
-                    )
-                }
+                )
             }
         },
         windowInsets = windowInsets,
     )
+}
+
+@Preview
+@Composable
+private fun TopCenterAppBarPreview() {
+    LeonPreview {
+        TopCenterAppBar(
+            data = FullScreenComponent.Data(
+                title = "TopCenterAppBar",
+                canGoBack = { true },
+                goBack = {},
+            ),
+            windowInsets = WindowInsets.safeDrawing,
+        )
+    }
 }

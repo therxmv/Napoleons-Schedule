@@ -1,8 +1,9 @@
 package com.therxmv.napoleon.ui.schedule.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import com.therxmv.napoleon.base.state.BaseState
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Stable
 class ScheduleComponent(
     componentContext: ComponentContext,
     private val specialtyRepository: SpecialtyRepository,
@@ -26,7 +28,7 @@ class ScheduleComponent(
 ) : ComponentContext by componentContext {
     private val scope = coroutineScope(SupervisorJob())
 
-    private val _uiState = MutableStateFlow<BaseState<ScheduleUiData>>(BaseState.Idle)
+    private val _uiState = MutableStateFlow<LeonState<ScheduleUiData>>(LeonState.Idle)
     val uiState = _uiState.asStateFlow()
 
     private val _uiEffect = Channel<ScheduleUiEffect>()
@@ -38,7 +40,7 @@ class ScheduleComponent(
 
     private fun loadData() {
         scope.launch {
-            _uiState.update { BaseState.Loading }
+            _uiState.update { LeonState.Loading }
 
             val profile = profileRepository.getNotNullProfileSync()
 
@@ -47,13 +49,13 @@ class ScheduleComponent(
             _uiState.update {
                 when (result) {
                     is Result.Success<ScheduleModel> -> {
-                        BaseState.Ready(
+                        LeonState.Ready(
                             data = scheduleUiConverter.modelToUiData(result.data, ::openLessonUrl),
-                            cacheReason = result.reason?.message,
+                            cacheReasonRes = result.reason?.messageRes,
                         )
                     }
 
-                    is Result.Failure -> BaseState.Error(result.reason.message, ::loadData)
+                    is Result.Failure -> LeonState.Error(result.reason.messageRes, ::loadData)
                 }
             }
 
@@ -95,9 +97,9 @@ class ScheduleComponent(
         }
     }
 
-    private fun MutableStateFlow<BaseState<ScheduleUiData>>.updateReady(dataCreator: (ScheduleUiData) -> ScheduleUiData) {
+    private fun MutableStateFlow<LeonState<ScheduleUiData>>.updateReady(dataCreator: (ScheduleUiData) -> ScheduleUiData) {
         update { state ->
-            val state = (state as? BaseState.Ready<ScheduleUiData>) ?: return@update state
+            val state = (state as? LeonState.Ready<ScheduleUiData>) ?: return@update state
 
             state.copy(
                 data = dataCreator(state.data)

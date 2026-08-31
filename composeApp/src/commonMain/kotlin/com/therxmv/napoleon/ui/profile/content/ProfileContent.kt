@@ -12,12 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -28,15 +24,23 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.therxmv.leonui.button.LeonButton
+import com.therxmv.leonui.button.LeonButtonStyle
+import com.therxmv.leonui.list.LeonDividerType
+import com.therxmv.leonui.list.LeonHorizontalDivider
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonPreview
+import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiData
 import com.therxmv.napoleon.ui.profile.component.ProfileUiEvent
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit2
 import compose.icons.feathericons.User
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ProfileContent(
@@ -47,12 +51,12 @@ fun ProfileContent(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(NapoleonTheme.paddings.defaultValues),
+            .padding(LeonTheme.paddings.baseValues),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
             UserAvatar()
-            Spacer(modifier = Modifier.height(NapoleonTheme.paddings.vertical))
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
         }
 
         item {
@@ -72,21 +76,26 @@ private fun SpecialtyInfoCard(
     onEditClick: () -> Unit,
 ) {
     CardTitle(
-        title = data.infoTitle,
-        editLabel = data.editButtonLabel,
+        title = stringResource(data.infoTitleRes),
+        editLabel = stringResource(data.editButtonLabelRes),
         onEditClick = onEditClick,
     )
 
     InfoCard(
-        titleText = data.facultyLabel,
+        titleText = stringResource(data.facultyLabelRes),
         nameText = data.faculty,
-        shape = NapoleonTheme.shapes.onlyTopRounded,
+        shape = LeonTheme.shapes.onlyTopRounded(),
     )
-    Spacer(modifier = Modifier.height(NapoleonTheme.paddings.divider))
+
+    LeonHorizontalDivider(
+        type = LeonDividerType.Full,
+        color = LeonTheme.colors.surface,
+    )
+
     InfoCard(
-        titleText = data.specialtyLabel,
+        titleText = stringResource(data.specialtyLabelRes),
         nameText = data.specialty,
-        shape = NapoleonTheme.shapes.onlyBottomRounded,
+        shape = LeonTheme.shapes.onlyBottomRounded(),
     )
 }
 
@@ -100,21 +109,21 @@ private fun InfoCard(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(MaterialTheme.colorScheme.primary)
+            .background(LeonTheme.colors.primary)
             .padding(16.dp)
     ) {
-        Text(
+        LeonText(
             modifier = Modifier.weight(1f),
             text = titleText,
-            fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.onPrimary,
+            size = LeonTextSize.Title2,
+            color = LeonTheme.colors.onPrimary,
         )
 
-        Text(
+        LeonText(
             text = nameText,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.onPrimary,
+            size = LeonTextSize.Title2,
+            color = LeonTheme.colors.onPrimary,
+            weight = LeonTextWeight.Bold
         )
     }
 }
@@ -129,37 +138,27 @@ private fun CardTitle(
         modifier = Modifier.padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
+        LeonText(
             text = title,
-            fontSize = 18.sp,
+            size = LeonTextSize.Title2,
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
-        TextButton(
+        LeonButton(
+            style = LeonButtonStyle.Text(),
+            label = editLabel,
             onClick = onEditClick,
-            colors = NapoleonTheme.colors.textButton,
-        ) {
-            Text(
-                text = editLabel,
-                fontSize = 16.sp,
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-
-            Icon(
-                modifier = Modifier.size(18.dp),
-                imageVector = FeatherIcons.Edit2,
-                contentDescription = "edit",
-            )
-        }
+            suffixIcon = FeatherIcons.Edit2,
+        )
     }
 }
 
 @Composable
 private fun UserAvatar() {
     val colors = listOf(
-        MaterialTheme.colorScheme.tertiaryContainer,
-        MaterialTheme.colorScheme.primaryContainer,
+        LeonTheme.colors.tertiaryContainer,
+        LeonTheme.colors.primaryContainer,
     )
     val scale = remember { Animatable(0.2f) }
 
@@ -189,8 +188,19 @@ private fun UserAvatar() {
             modifier = Modifier
                 .fillMaxSize(0.5f),
             imageVector = FeatherIcons.User,
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            tint = LeonTheme.colors.onPrimaryContainer,
             contentDescription = "Avatar",
+        )
+    }
+}
+
+@LeonPreview
+@Composable
+private fun ProfileContentPreview() {
+    LeonPreview {
+        ProfileContent(
+            data = PreviewMockData.profileUiData,
+            onEvent = {},
         )
     }
 }

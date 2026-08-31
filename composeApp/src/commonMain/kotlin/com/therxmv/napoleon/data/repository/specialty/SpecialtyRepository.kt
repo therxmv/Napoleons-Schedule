@@ -9,4 +9,5 @@ interface SpecialtyRepository {
 
     suspend fun getSchedule(profile: ProfileModel): Result<ScheduleModel>
     suspend fun getExams(profile: ProfileModel): Result<ExamsModel>
+    suspend fun saveExams(profile: ProfileModel, exams: ExamsModel)
 }

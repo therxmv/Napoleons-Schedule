@@ -1,106 +1,231 @@
 package com.therxmv.napoleon.ui.exam.content
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import com.therxmv.napoleon.base.state.FallbackCard
+import androidx.compose.ui.graphics.Color
+import com.therxmv.datetime.picker.state.rememberDatePickerState
+import com.therxmv.datetime.toMillis
+import com.therxmv.leonui.animation.leonLazyListAnimation
+import com.therxmv.leonui.button.LeonButton
+import com.therxmv.leonui.button.LeonButtonStyle
+import com.therxmv.leonui.card.LeonCard
+import com.therxmv.leonui.card.LeonCardType
+import com.therxmv.leonui.datepicker.LeonDatePickerDialog
+import com.therxmv.leonui.list.LeonExpandableHeader
+import com.therxmv.leonui.list.LeonExpandableSubItem
+import com.therxmv.leonui.list.LeonSwipeState
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonPreview
+import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.base.ui.CopyIconButton
+import com.therxmv.napoleon.base.ui.LocalCopyIconColor
+import com.therxmv.napoleon.ui.PreviewMockData
 import com.therxmv.napoleon.ui.exam.component.ExamsUiData
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
+import com.therxmv.napoleon.ui.exam.component.ExamsUiData.Item
+import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent
+import com.therxmv.napoleon.ui.exam.component.ExamsUiEvent.UpdateItem
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Plus
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.exams_add_new
+import napoleon.leonres.generated.resources.fallback_offline
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ExamsContent(
     modifier: Modifier = Modifier,
     data: ExamsUiData,
-    fallbackReason: String?,
+    fallbackReasonRes: StringResource?,
+    onEvent: (ExamsUiEvent) -> Unit,
 ) {
+    var swipedItemId by remember { mutableStateOf<String?>(null) }
     LazyColumn(
-        modifier = modifier
-            .padding(NapoleonTheme.paddings.defaultValues),
-        verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+        modifier = modifier,
+        contentPadding = LeonTheme.paddings.baseValues,
     ) {
-        if (fallbackReason != null) {
+        if (fallbackReasonRes != null) {
             item {
-                FallbackCard(fallbackReason)
+                LeonCard(
+                    textRes = fallbackReasonRes,
+                    type = LeonCardType.Error,
+                )
+                Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
             }
         }
 
-        items(data.items) {
-            when (it) {
-                is ExamsUiData.Item.Title -> TitleItem(it.title)
+        item {
+            LeonCard(
+                text = stringResource(data.infoData.textRes),
+                hyperlinkText = stringResource(data.infoData.linkTextRes),
+                hyperlink = data.infoData.link,
+                type = LeonCardType.Info,
+            )
+            Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
+        }
 
-                is ExamsUiData.Item.Exam -> ExamItem(it)
+        data.sections.forEachIndexed { index, section ->
+            item(key = section.id) {
+                val color = if (index % 2 == 0) LeonTheme.colors.primary else LeonTheme.colors.tertiary
 
-                is ExamsUiData.Item.Zalik -> ZalikItem(it)
+                if (index != 0) {
+                    Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.base))
+                }
 
-                is ExamsUiData.Item.EmptyPlaceholder -> EmptyPlaceholderItem(it.text)
+                SectionHeader(
+                    modifier = Modifier.leonLazyListAnimation(),
+                    section = section,
+                    color = color,
+                    onEvent = onEvent,
+                )
+            }
+
+            // TODO drag reorder
+            items(
+                items = section.items,
+                key = { it.id },
+                contentType = { it },
+            ) { item ->
+                SectionSubItem(
+                    modifier = Modifier.leonLazyListAnimation(),
+                    item = item,
+                    section = section,
+                    swipedId = swipedItemId,
+                    onSwipe = { state ->
+                        when (state) {
+                            LeonSwipeState.Start -> {
+                                if (swipedItemId == item.id) swipedItemId == null
+                            }
+
+                            LeonSwipeState.End -> {
+                                swipedItemId = item.id
+                            }
+                        }
+                    },
+                    onEvent = onEvent,
+                )
             }
         }
     }
-}
 
-@Composable
-private fun EmptyPlaceholderItem(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.onSurface,
-    )
-}
-
-@Composable
-private fun TitleItem(title: String) {
-    Text(
-        text = title,
-        style = MaterialTheme.typography.titleLarge,
-        fontWeight = FontWeight.Bold,
-    )
-}
-
-@Composable
-private fun ExamItem(
-    data: ExamsUiData.Item.Exam,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = data.date,
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.surfaceTint,
-            fontWeight = FontWeight.Bold,
+    if (data.datePickerData != null) {
+        val state = rememberDatePickerState(data.datePickerData.date.toMillis())
+        LeonDatePickerDialog(
+            state = state,
+            onDateSelected = { onEvent(UpdateItem(data.datePickerData.sectionId, data.datePickerData.itemId, newDate = it)) },
+            onCancel = { onEvent(ExamsUiEvent.CloseDatePicker) },
         )
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
+    }
+}
 
-        Column {
-            Text(
-                text = data.lesson,
-                style = MaterialTheme.typography.titleMedium,
-            )
+@Composable
+private fun SectionHeader(
+    modifier: Modifier = Modifier,
+    section: ExamsUiData.Section,
+    color: Color,
+    onEvent: (ExamsUiEvent) -> Unit,
+) {
+    val contentColor = LeonTheme.colors.contentColorFor(color)
 
-            Text(
-                text = data.teacher,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+    LeonExpandableHeader(
+        modifier = modifier,
+        color = color,
+        isExpanded = true,
+    ) {
+        LeonText(
+            modifier = Modifier.weight(1f),
+            text = stringResource(section.titleRes),
+            size = LeonTextSize.Title2,
+            color = contentColor,
+            weight = LeonTextWeight.Bold,
+        )
+
+        LeonButton(
+            prefixIcon = FeatherIcons.Plus,
+            label = stringResource(Res.string.exams_add_new),
+            style = LeonButtonStyle.Text(contentColor),
+            onClick = { onEvent(ExamsUiEvent.AddNewItem(section.id)) },
+        )
+
+        CompositionLocalProvider(LocalCopyIconColor provides contentColor) {
+            CopyIconButton(textToCopy = section.toString())
         }
     }
 }
 
 @Composable
-private fun ZalikItem(data: ExamsUiData.Item.Zalik) {
-    Text(
-        text = data.lesson,
-        style = MaterialTheme.typography.titleMedium,
-    )
+private fun SectionSubItem(
+    modifier: Modifier = Modifier,
+    item: Item,
+    swipedId: String?,
+    onSwipe: (LeonSwipeState) -> Unit,
+    section: ExamsUiData.Section,
+    onEvent: (ExamsUiEvent) -> Unit,
+) {
+    val isLast = item == section.items.last()
+
+    when (item) {
+        is Item.Editable -> {
+            SwipeableSubItem(
+                modifier = modifier,
+                isLast = isLast,
+                item = item,
+                swipedId = swipedId,
+                onSwipe = onSwipe,
+                onEdit = { onEvent(ExamsUiEvent.EditItem(section.id, item.id)) },
+                onDelete = { onEvent(ExamsUiEvent.DeleteItem(section.id, item.id)) },
+            ) {
+                when (item) {
+                    is Item.Editable.Exam -> ExamItemContent(
+                        item = item,
+                        sectionId = section.id,
+                        onEvent = onEvent,
+                    )
+
+                    is Item.Editable.Zalik -> ZalikItemContent(
+                        item = item,
+                        sectionId = section.id,
+                        onEvent = onEvent,
+                    )
+                }
+            }
+        }
+
+        else -> {
+            LeonExpandableSubItem(
+                modifier = modifier,
+                isLast = isLast,
+            ) {
+                when (item) {
+                    is Item.EmptyPlaceholder -> EmptyItemContent(item)
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+}
+
+@LeonPreview
+@Composable
+private fun DashboardContentPreview() {
+    LeonPreview {
+        ExamsContent(
+            data = PreviewMockData.examsUiData,
+            fallbackReasonRes = Res.string.fallback_offline,
+            onEvent = {},
+        )
+    }
 }

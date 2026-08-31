@@ -1,9 +1,9 @@
 package com.therxmv.napoleon.ui.timetable.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.base.state.BaseState
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.timetable.TimetableRepository
@@ -16,7 +16,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.timetable_close
+import napoleon.leonres.generated.resources.timetable_copy
+import napoleon.leonres.generated.resources.timetable_empty_shift
+import napoleon.leonres.generated.resources.timetable_first_shift
+import napoleon.leonres.generated.resources.timetable_loading
+import napoleon.leonres.generated.resources.timetable_second_shift
+import napoleon.leonres.generated.resources.timetable_title
+import org.jetbrains.compose.resources.getString
 
+@Stable
 class TimetableComponent(
     componentContext: ComponentContext,
     private val dismiss: () -> Unit,
@@ -25,7 +35,7 @@ class TimetableComponent(
 ) : ComponentContext by componentContext {
     private val scope = coroutineScope(SupervisorJob())
 
-    private val _uiState = MutableStateFlow<BaseState<TimetableUiData>>(BaseState.Idle)
+    private val _uiState = MutableStateFlow<LeonState<TimetableUiData>>(LeonState.Idle)
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -35,12 +45,12 @@ class TimetableComponent(
 
     private fun loadData() {
         scope.launch {
-            _uiState.update { BaseState.Ready(createLoadingData()) }
+            _uiState.update { LeonState.Ready(createLoadingData()) }
 
             val result = timetableRepository.getTimetable()
 
             _uiState.update {
-                val state = (it as? BaseState.Ready) ?: return@update it
+                val state = (it as? LeonState.Ready) ?: return@update it
 
                 when (result) {
                     is Result.Success<TimetableModel> -> {
@@ -54,7 +64,7 @@ class TimetableComponent(
                     is Result.Failure -> {
                         state.copy(
                             data = state.data.copy(
-                                text = result.reason.message,
+                                text = getString(result.reason.messageRes),
                             ),
                         )
                     }
@@ -71,28 +81,28 @@ class TimetableComponent(
         }
     }
 
-    private fun createLoadingData(): TimetableUiData =
+    private suspend fun createLoadingData(): TimetableUiData =
         TimetableUiData(
             icon = FeatherIcons.Clock,
-            title = Res.string.timetable_title,
-            text = Res.string.timetable_loading,
-            copyLabel = Res.string.timetable_copy,
-            closeLabel = Res.string.timetable_close,
+            titleRes = Res.string.timetable_title,
+            text = getString(Res.string.timetable_loading),
+            copyLabelRes = Res.string.timetable_copy,
+            closeLabelRes = Res.string.timetable_close,
         )
 
-    private fun TimetableModel.toText(): String {
+    private suspend fun TimetableModel.toText(): String {
         val shift1 = buildString {
-            append(Res.string.timetable_first_shift)
+            append(getString(Res.string.timetable_first_shift))
             firstShift.time
                 .toStringWithNumbers()
-                .ifEmpty { Res.string.timetable_empty_shift }
+                .ifEmpty { getString(Res.string.timetable_empty_shift) }
                 .also(::append)
         }
         val shift2 = buildString {
-            append(Res.string.timetable_second_shift)
+            append(getString(Res.string.timetable_second_shift))
             secondShift.time
                 .toStringWithNumbers()
-                .ifEmpty { Res.string.timetable_empty_shift }
+                .ifEmpty { getString(Res.string.timetable_empty_shift) }
                 .also(::append)
         }
 

@@ -2,22 +2,37 @@ package com.therxmv.napoleon.navigation.bottom
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import com.therxmv.leonui.button.LeonIconButton
+import com.therxmv.leonui.theme.LeonPreview
+import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.navigation.bottom.BottomNavigationComponent.AppBarData
+import com.therxmv.napoleon.navigation.bottom.BottomNavigationComponent.Data
 import com.therxmv.napoleon.navigation.destination.child.Child
 import com.therxmv.napoleon.ui.dashboard.DashboardScreen
 import com.therxmv.napoleon.ui.profile.ProfileScreen
 import com.therxmv.napoleon.ui.schedule.ScheduleScreen
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Clock
+import compose.icons.feathericons.Home
+import compose.icons.feathericons.List
+import compose.icons.feathericons.User
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.bottom_dashboard_label
+import napoleon.leonres.generated.resources.bottom_profile_label
+import napoleon.leonres.generated.resources.bottom_schedule_label
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +67,7 @@ fun BottomNavigationContent(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopLeftAppBar(
-    data: BottomNavigationComponent.AppBarData,
+    data: AppBarData,
     windowInsets: WindowInsets,
 ) {
     TopAppBar(
@@ -74,32 +89,41 @@ fun TopLeftAppBar(
 
 @Composable
 private fun AppBarAction(
-    data: BottomNavigationComponent.AppBarData.Action,
+    data: AppBarData.Action,
 ) {
-    IconButton(onClick = data.onClick) {
-        Icon(imageVector = data.icon, contentDescription = null)
-    }
+    LeonIconButton(
+        icon = data.icon,
+        onClick = data.onClick,
+    )
 }
 
 @Composable
 fun BottomNavBar(
-    data: BottomNavigationComponent.Data,
+    data: Data,
 ) {
     NavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = LeonTheme.colors.surface,
     ) {
         data.tabs.forEach { data ->
             NavigationBarItem(
-                colors = NapoleonTheme.colors.navBarItem,
+                colors = NavigationBarItemColors(
+                    selectedIconColor = LeonTheme.colors.onPrimary,
+                    selectedTextColor = LeonTheme.colors.onSurface,
+                    selectedIndicatorColor = LeonTheme.colors.primary,
+                    unselectedIconColor = LeonTheme.colors.onSurface,
+                    unselectedTextColor = LeonTheme.colors.onSurface,
+                    disabledIconColor = LeonTheme.colors.onSurface,
+                    disabledTextColor = LeonTheme.colors.onSurface
+                ),
                 selected = data.isSelected,
                 onClick = data.onClick,
                 icon = {
-                    Icon(imageVector = data.icon, contentDescription = data.label)
+                    Icon(imageVector = data.icon, contentDescription = stringResource(data.labelRes))
                 },
                 label = {
                     Text(
-                        text = data.label,
+                        text = stringResource(data.labelRes),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                     )
@@ -108,3 +132,56 @@ fun BottomNavBar(
         }
     }
 }
+
+@Preview
+@Composable
+private fun TopLeftAppBarPreview() {
+    LeonPreview {
+        TopLeftAppBar(
+            data = appBarData,
+            windowInsets = WindowInsets.safeDrawing,
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun BottomNavBarPreview() {
+    LeonPreview {
+        BottomNavBar(
+            data = Data(
+                appBarData = appBarData,
+                tabs = listOf(
+                    Data.Tab(
+                        labelRes = Res.string.bottom_dashboard_label,
+                        icon = FeatherIcons.Home,
+                        isSelected = true,
+                        onClick = {},
+                    ),
+                    Data.Tab(
+                        labelRes = Res.string.bottom_schedule_label,
+                        icon = FeatherIcons.List,
+                        isSelected = false,
+                        onClick = {},
+                    ),
+                    Data.Tab(
+                        labelRes = Res.string.bottom_profile_label,
+                        icon = FeatherIcons.User,
+                        isSelected = false,
+                        onClick = {},
+                    ),
+                ),
+            )
+        )
+    }
+}
+
+private val appBarData = AppBarData(
+    title = "TopLeftAppBar",
+    actions = listOf(
+        AppBarData.Action(
+            icon = FeatherIcons.Clock,
+            onClick = {},
+        )
+    ),
+)

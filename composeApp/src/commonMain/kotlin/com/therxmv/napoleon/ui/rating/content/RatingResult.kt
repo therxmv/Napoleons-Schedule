@@ -7,24 +7,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -36,20 +33,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.therxmv.leonui.input.LeonTextInput
+import com.therxmv.leonui.input.LeonTextInputStyle
+import com.therxmv.leonui.list.LeonDividerType
+import com.therxmv.leonui.list.LeonHorizontalDivider
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.leonui.theme.values.RoundedCornerShape
+import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
-import com.therxmv.napoleon.ui.rating.component.RatingUiState
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RatingResult(
+fun RatingResultAndProbability(
     modifier: Modifier = Modifier,
-    data: RatingUiState,
+    data: RatingUiData,
     minFraction: Float,
     maxFraction: Float = 1f,
     threshold: Float = 0.2f,
@@ -99,24 +104,32 @@ fun RatingResult(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .clip(NapoleonTheme.shapes.onlyTopRounded)
-                .background(MaterialTheme.colorScheme.tertiary)
+                .clip(RoundedCornerShape(top = LeonTheme.sizes.corner.largeRadius, bottom = 0.dp))
+                .background(LeonTheme.colors.tertiary)
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(NapoleonTheme.paddings.defaultValues),
+                .padding(LeonTheme.paddings.baseValues),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+            verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
         ) {
-            HorizontalDivider(
-                modifier = Modifier
-                    .width(50.dp)
-                    .clip(CircleShape),
-                thickness = 6.dp,
-                color = MaterialTheme.colorScheme.onTertiary.copy(0.5f),
+            LeonHorizontalDivider(
+                type = LeonDividerType.Small,
+                color = LeonTheme.colors.onTertiary.copy(0.5f),
             )
 
-            ResultText(data.ratingResult)
+            LeonText(
+                text = data.ratingResult,
+                size = LeonTextSize.Title1,
+                color = LeonTheme.colors.onTertiary,
+                weight = LeonTextWeight.Bold,
+                textAlign = TextAlign.Center,
+            )
 
-            ProbabilityText(data.probabilityResult)
+            LeonText(
+                text = data.probabilityResult,
+                size = LeonTextSize.Title1,
+                color = LeonTheme.colors.onTertiary,
+                textAlign = TextAlign.Center,
+            )
 
             LazyVerticalGrid(
                 modifier = Modifier
@@ -124,18 +137,18 @@ fun RatingResult(
                         alpha = dragFraction
                     },
                 columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.horizontal),
-                verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+                horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.base),
+                verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
             ) {
                 itemsIndexed(
                     items = data.probabilityInputs,
                     span = { _, _ -> GridItemSpan(1) },
-                    key = { index, item -> "$index-${item.title}" },
+                    key = { index, item -> "$index-${item.id}" },
                 ) { index, input ->
                     InputItem(
                         data = input,
                         onValueChange = {
-                            onEvent(RatingUiEvent.UpdateProbabilityInput(input.title, it))
+                            onEvent(RatingUiEvent.UpdateProbabilityInput(input.id, it))
                         },
                         isLast = index == data.probabilityInputs.lastIndex,
                     )
@@ -147,17 +160,21 @@ fun RatingResult(
 
 @Composable
 private fun InputItem(
-    data: RatingUiState.ProbabilityInput,
+    data: RatingUiData.ProbabilityInput,
     onValueChange: (String) -> Unit,
     isLast: Boolean,
 ) {
     Column {
-        InputTitle(
+        LeonText(
             modifier = Modifier.fillMaxWidth(),
-            title = data.title,
+            text = stringResource(data.id.titleRes),
+            color = LeonTheme.colors.onTertiary,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
+        Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.skinny))
 
-        InputField(
+        LeonTextInput(
             modifier = Modifier.fillMaxWidth(),
             value = data.value,
             error = data.error,
@@ -165,8 +182,9 @@ private fun InputItem(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done.takeIf { isLast } ?: ImeAction.Next,
             ),
-            colors = NapoleonTheme.colors.tertiaryOutlinedTextField,
             onValueChange = onValueChange,
+            style = LeonTextInputStyle.Tertiary,
+            maxLines = 1,
         )
 
         if (data.error != null) {
@@ -176,44 +194,4 @@ private fun InputItem(
             )
         }
     }
-}
-
-@Composable
-private fun ResultText(
-    result: String,
-) {
-    Text(
-        text = result,
-        style = MaterialTheme.typography.headlineMedium,
-        color = MaterialTheme.colorScheme.onTertiary,
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold,
-    )
-}
-
-@Composable
-private fun ProbabilityText(
-    result: String,
-) {
-    Text(
-        text = result,
-        style = MaterialTheme.typography.headlineSmall,
-        color = MaterialTheme.colorScheme.onTertiary,
-        textAlign = TextAlign.Center,
-    )
-}
-
-@Composable
-private fun InputTitle(
-    modifier: Modifier = Modifier,
-    title: String,
-) {
-    Text(
-        modifier = modifier,
-        text = title,
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.onTertiary,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-    )
 }

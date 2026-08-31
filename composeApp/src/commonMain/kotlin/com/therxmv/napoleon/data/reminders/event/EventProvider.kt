@@ -1,6 +1,5 @@
 package com.therxmv.napoleon.data.reminders.event
 
-import com.therxmv.napoleon.Res
 import com.therxmv.napoleon.data.reminders.Faculty.PPF
 import com.therxmv.napoleon.data.reminders.event.model.EventModel
 import com.therxmv.napoleon.data.reminders.event.model.ReminderModel
@@ -25,7 +24,7 @@ class EventProvider : EventProviderApi {
     }
 
     override fun getEvent(item: LessonModel, faculty: String) = EventModel(
-        title = Res.string.reminder_title,
+        title = "Lesson Reminder", // TODO p4 add StringResource
         description = item.lessonName.orEmpty(),
         reminderModel = ReminderModel(
             startDate = getStartDate(item, faculty),

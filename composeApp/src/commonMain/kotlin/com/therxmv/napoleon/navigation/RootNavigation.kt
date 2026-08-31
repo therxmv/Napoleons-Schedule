@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.union
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -27,10 +26,10 @@ import androidx.compose.ui.backhandler.BackHandler
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.PredictiveBackParams
-import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.StackAnimation
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.therxmv.leonui.theme.LeonTheme
 import com.therxmv.napoleon.navigation.bottom.BottomNavBar
 import com.therxmv.napoleon.navigation.bottom.BottomNavigationContent
 import com.therxmv.napoleon.navigation.bottom.TopLeftAppBar
@@ -44,18 +43,7 @@ import com.therxmv.napoleon.ui.timetable.TimetableDialog
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun RootNavigation(component: RootComponent) {
-    ScaffoldChildStack(
-        component = component,
-        animation = stackAnimation(
-            animator = fade(),
-            predictiveBackParams = {
-                PredictiveBackParams(
-                    backHandler = component.backHandler,
-                    onBack = component::onBackClicked,
-                )
-            },
-        ),
-    ) { paddingValues, active ->
+    ScaffoldChildStack(component = component) { paddingValues, active ->
         val isHandlerEnabled by rememberUpdatedState(component.canGoBack())
         BackHandler(enabled = isHandlerEnabled, onBack = component::onBackClicked)
 
@@ -83,7 +71,6 @@ fun RootNavigation(component: RootComponent) {
 @Composable
 private fun ScaffoldChildStack(
     component: RootComponent,
-    animation: StackAnimation<Any, Child>? = null,
     content: @Composable AnimatedVisibilityScope.(PaddingValues, com.arkivanov.decompose.Child.Created<Any, Child>) -> Unit,
 ) {
     val stack by component.stack.subscribeAsState()
@@ -104,7 +91,7 @@ private fun ScaffoldChildStack(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface),
+            .background(LeonTheme.colors.surface),
         contentWindowInsets = scaffoldInsets,
         topBar = {
             when (activeChild) {
@@ -127,7 +114,15 @@ private fun ScaffoldChildStack(
     ) { paddingValues ->
         ChildStack(
             stack = stack,
-            animation = animation,
+            animation = stackAnimation(
+                animator = fade(),
+                predictiveBackParams = {
+                    PredictiveBackParams(
+                        backHandler = component.backHandler,
+                        onBack = component::onBackClicked,
+                    )
+                },
+            ),
             content = {
                 this.content(paddingValues, it)
             },

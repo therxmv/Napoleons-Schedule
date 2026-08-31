@@ -1,7 +1,6 @@
 package com.therxmv.napoleon.ui.rating.content
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,45 +8,37 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.dp
-import com.therxmv.napoleon.base.ui.LocalCopyIconColor
+import com.therxmv.leonui.animation.leonLazyListAnimation
+import com.therxmv.leonui.button.LeonButton
+import com.therxmv.leonui.button.LeonIconButton
+import com.therxmv.leonui.card.LeonCard
+import com.therxmv.leonui.card.LeonCardType
+import com.therxmv.leonui.input.LeonTextInput
+import com.therxmv.leonui.text.LeonText
+import com.therxmv.leonui.text.LeonTextSize
+import com.therxmv.leonui.text.LeonTextWeight
+import com.therxmv.leonui.theme.LeonTheme
+import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
-import com.therxmv.napoleon.ui.rating.component.RatingUiState
-import com.therxmv.napoleon.ui.theme.NapoleonTheme
 import compose.icons.FeatherIcons
-import compose.icons.feathericons.Info
+import compose.icons.feathericons.Plus
 import compose.icons.feathericons.Trash2
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RatingInputs(
+fun RatingSubjectInputs(
     modifier: Modifier = Modifier,
-    data: RatingUiState,
+    data: RatingUiData,
     heightFraction: Float,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
@@ -55,29 +46,35 @@ fun RatingInputs(
         modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(heightFraction),
-        contentPadding = NapoleonTheme.paddings.defaultValues,
+        contentPadding = LeonTheme.paddings.baseValues,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.vertical),
+        verticalArrangement = Arrangement.spacedBy(LeonTheme.paddings.vertical.base),
     ) {
         item {
-            InfoCard(data.infoData)
+            LeonCard(
+                text = stringResource(data.infoData.textRes),
+                hyperlinkText = stringResource(data.infoData.linkTextRes),
+                hyperlink = data.infoData.link,
+                type = LeonCardType.Info,
+            )
         }
 
         item {
-            AddInputButton(
-                modifier = Modifier.animateItem(),
-                label = data.addInputLabel,
+            LeonButton(
+                modifier = Modifier.leonLazyListAnimation(),
+                label = stringResource(data.addInputLabelRes),
                 onClick = { onEvent(RatingUiEvent.AddSubjectInput) },
+                prefixIcon = FeatherIcons.Plus,
             )
         }
 
         if (data.subjectInputs.isNotEmpty()) {
             item {
                 InputLabels(
-                    modifier = Modifier.animateItem(),
-                    name = data.nameLabel,
-                    credits = data.creditsLabel,
-                    score = data.scoreLabel,
+                    modifier = Modifier.leonLazyListAnimation(),
+                    name = stringResource(data.nameLabelRes),
+                    credits = stringResource(data.creditsLabelRes),
+                    score = stringResource(data.scoreLabelRes),
                 )
             }
         }
@@ -87,15 +84,15 @@ fun RatingInputs(
             key = { it.id },
         ) { input ->
             SubjectItem(
-                modifier = Modifier.animateItem(),
+                modifier = Modifier.leonLazyListAnimation(),
                 data = input,
                 onEvent = onEvent,
             )
 
             if (input.error != null) {
-                Spacer(modifier = Modifier.height(NapoleonTheme.paddings.halfVertical))
+                Spacer(modifier = Modifier.height(LeonTheme.paddings.vertical.skinny))
                 ErrorText(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier.leonLazyListAnimation(),
                     error = input.error,
                 )
             }
@@ -106,19 +103,20 @@ fun RatingInputs(
 @Composable
 private fun SubjectItem(
     modifier: Modifier = Modifier,
-    data: RatingUiState.SubjectInput,
+    data: RatingUiData.SubjectInput,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
+    val padding = LeonTheme.paddings.vertical.skinny
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(NapoleonTheme.shapes.allRounded)
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(vertical = NapoleonTheme.paddings.halfVertical, horizontal = NapoleonTheme.paddings.halfHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.halfHorizontal),
+            .clip(RoundedCornerShape(size = LeonTheme.sizes.corner.defaultRadius + padding)) // To make outer radius look like inner
+            .background(LeonTheme.colors.primary)
+            .padding(padding),
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.skinny),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        InputField(
+        LeonTextInput(
             modifier = Modifier.weight(2f),
             value = data.name,
             error = data.error,
@@ -133,10 +131,11 @@ private fun SubjectItem(
                         name = it,
                     )
                 )
-            }
+            },
+            maxLines = 3,
         )
 
-        InputField(
+        LeonTextInput(
             modifier = Modifier.weight(1f),
             value = data.credits,
             error = data.error,
@@ -151,10 +150,11 @@ private fun SubjectItem(
                         credits = it,
                     )
                 )
-            }
+            },
+            maxLines = 1,
         )
 
-        InputField(
+        LeonTextInput(
             modifier = Modifier.weight(1f),
             value = data.score,
             error = data.error,
@@ -169,11 +169,14 @@ private fun SubjectItem(
                         score = it,
                     )
                 )
-            }
+            },
+            maxLines = 1,
         )
 
-        DeleteIcon(
+        LeonIconButton(
             modifier = Modifier.weight(0.5f),
+            icon = FeatherIcons.Trash2,
+            tint = LeonTheme.colors.onPrimary,
             onClick = {
                 onEvent(RatingUiEvent.DeleteSubjectInput(data.id))
             },
@@ -191,8 +194,8 @@ private fun InputLabels(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = NapoleonTheme.paddings.halfHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(NapoleonTheme.paddings.halfHorizontal),
+            .padding(horizontal = LeonTheme.paddings.horizontal.skinny),
+        horizontalArrangement = Arrangement.spacedBy(LeonTheme.paddings.horizontal.skinny),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         InputLabel(
@@ -216,11 +219,10 @@ private fun InputLabel(
     modifier: Modifier = Modifier,
     label: String,
 ) {
-    Text(
+    LeonText(
         modifier = modifier,
         text = label,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.onSurface
+        size = LeonTextSize.Body2,
     )
 }
 
@@ -229,119 +231,11 @@ fun ErrorText(
     modifier: Modifier = Modifier,
     error: String,
 ) {
-    Text(
+    LeonText(
         modifier = modifier,
         text = error,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.error
+        size = LeonTextSize.Body2,
+        color = LeonTheme.colors.error,
+        weight = LeonTextWeight.Bold,
     )
-}
-
-@Composable
-private fun DeleteIcon(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
-    IconButton(
-        modifier = modifier,
-        onClick = onClick,
-    ) {
-        Icon(
-            modifier = Modifier.size(20.dp),
-            imageVector = FeatherIcons.Trash2,
-            contentDescription = "Delete",
-            tint = LocalCopyIconColor.current,
-        )
-    }
-}
-
-@Composable
-private fun AddInputButton(
-    modifier: Modifier = Modifier,
-    label: String,
-    onClick: () -> Unit,
-) {
-    Button(
-        modifier = modifier,
-        colors = NapoleonTheme.colors.button,
-        shape = RoundedCornerShape(NapoleonTheme.shapes.cornerRadius.times(2)),
-        onClick = onClick,
-    ) {
-        Text(
-            modifier = Modifier.padding(NapoleonTheme.paddings.defaultValues),
-            text = label,
-            style = MaterialTheme.typography.titleMedium,
-        )
-    }
-}
-
-@Composable
-fun InputField(
-    modifier: Modifier = Modifier,
-    value: String,
-    error: String?,
-    keyboardOptions: KeyboardOptions,
-    colors: TextFieldColors = NapoleonTheme.colors.primaryOutlinedTextField,
-    onValueChange: (String) -> Unit,
-) {
-    OutlinedTextField(
-        modifier = modifier,
-        value = value,
-        onValueChange = onValueChange,
-        isError = error != null,
-        shape = NapoleonTheme.shapes.allRounded,
-        textStyle = TextStyle(fontWeight = FontWeight.Bold),
-        keyboardOptions = keyboardOptions,
-        maxLines = 1,
-        colors = colors,
-    )
-}
-
-@Composable
-private fun InfoCard(
-    data: RatingUiState.Info,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(NapoleonTheme.paddings.divider, MaterialTheme.colorScheme.surfaceTint, NapoleonTheme.shapes.allRounded)
-            .padding(NapoleonTheme.paddings.defaultValues),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = FeatherIcons.Info,
-            tint = MaterialTheme.colorScheme.surfaceTint,
-            contentDescription = null,
-        )
-        Spacer(modifier = Modifier.width(NapoleonTheme.paddings.horizontal))
-
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Normal,
-                    ).toSpanStyle(),
-                ) {
-                    append(data.text)
-                }
-
-                withLink(
-                    LinkAnnotation.Url(
-                        url = data.link,
-                        styles = TextLinkStyles(
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.surfaceTint,
-                            ).toSpanStyle()
-                        ),
-                    )
-                ) {
-                    append(data.linkText)
-                }
-            },
-            style = MaterialTheme.typography.bodyLarge.copy(
-                color = MaterialTheme.colorScheme.onPrimary,
-            ),
-        )
-    }
 }

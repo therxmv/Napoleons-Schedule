@@ -1,5 +1,4 @@
 rootProject.name = "Napoleon"
-include(":composeApp")
 
 pluginManagement {
     repositories {
@@ -17,3 +16,8 @@ dependencyResolutionManagement {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
+
+include(":composeApp")
+include(":leonui")
+include(":datetime")
+include(":leonres")

@@ -3,7 +3,7 @@ package com.therxmv.napoleon.navigation.bottom
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.arkivanov.decompose.ComponentContext
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.navigation.bottom.BottomNavigationComponent.Data.Tab
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination
@@ -14,6 +14,14 @@ import compose.icons.feathericons.Clock
 import compose.icons.feathericons.Home
 import compose.icons.feathericons.List
 import compose.icons.feathericons.User
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.app_name
+import napoleon.leonres.generated.resources.bottom_dashboard_label
+import napoleon.leonres.generated.resources.bottom_profile_label
+import napoleon.leonres.generated.resources.bottom_schedule_label
+import napoleon.leonres.generated.resources.profile_welcome
+import napoleon.leonres.generated.resources.schedule_title
+import org.jetbrains.compose.resources.StringResource
 
 class BottomNavigationComponent(
     componentContext: ComponentContext,
@@ -30,23 +38,23 @@ class BottomNavigationComponent(
         ),
         tabs = listOf(
             BottomNav.Dashboard.toTab(
-                label = Res.string.bottom_dashboard_label,
+                labelRes = Res.string.bottom_dashboard_label,
                 icon = FeatherIcons.Home,
             ),
             BottomNav.Schedule.toTab(
-                label = Res.string.bottom_schedule_label,
+                labelRes = Res.string.bottom_schedule_label,
                 icon = FeatherIcons.List,
             ),
             BottomNav.Profile.toTab(
-                label = Res.string.bottom_profile_label,
+                labelRes = Res.string.bottom_profile_label,
                 icon = FeatherIcons.User,
             ),
         ),
     )
 
-    private fun ChildDestination.toTab(label: String, icon: ImageVector): Tab =
+    private fun ChildDestination.toTab(labelRes: StringResource, icon: ImageVector): Tab =
         Tab(
-            label = label,
+            labelRes = labelRes,
             icon = icon,
             isSelected = currentDestination == this,
             onClick = { navigateTo(this) },
@@ -54,10 +62,10 @@ class BottomNavigationComponent(
 
     private fun ChildDestination.resolveTitle(): String =
         when (this) {
-            BottomNav.Dashboard -> Res.string.app_name
+            BottomNav.Dashboard -> getSyncString(Res.string.app_name)
             BottomNav.Schedule -> getScheduleTitle()
             BottomNav.Profile -> getProfileTitle()
-            else -> Res.string.app_name
+            else -> getSyncString(Res.string.app_name)
         }
 
     private fun getScheduleTitle(): String {
@@ -65,13 +73,13 @@ class BottomNavigationComponent(
         val specialty = profile.specialtyName
         val faculty = profile.facultyName
 
-        return Res.string.schedule_title + " $specialty, $faculty"
+        return getSyncString(Res.string.schedule_title, specialty, faculty)
     }
 
     private fun getProfileTitle(): String {
         val profile = profileRepository.getNotNullProfileSync()
 
-        return Res.string.profile_welcome + " ${profile.name}!"
+        return getSyncString(Res.string.profile_welcome, profile.name)
     }
 
     private fun ChildDestination.resolveActions(): List<AppBarData.Action> =
@@ -92,7 +100,7 @@ class BottomNavigationComponent(
         val tabs: List<Tab>,
     ) {
         data class Tab(
-            val label: String,
+            val labelRes: StringResource,
             val icon: ImageVector,
             val isSelected: Boolean,
             val onClick: () -> Unit,

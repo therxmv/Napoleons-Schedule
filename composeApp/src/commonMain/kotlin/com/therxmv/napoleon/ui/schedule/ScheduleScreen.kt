@@ -8,9 +8,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import com.therxmv.napoleon.base.state.BaseState
-import com.therxmv.napoleon.base.state.ErrorContainer
-import com.therxmv.napoleon.base.state.LoadingContainer
+import com.therxmv.leonui.state.LeonError
+import com.therxmv.leonui.state.LeonLoader
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.ui.schedule.component.ScheduleComponent
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiData
 import com.therxmv.napoleon.ui.schedule.component.ScheduleUiEffect
@@ -27,20 +27,20 @@ fun ScheduleScreen(
     val uiState = component.uiState.collectAsStateWithLifecycle().value
 
     when (uiState) {
-        is BaseState.Ready<ScheduleUiData> -> {
+        is LeonState.Ready<ScheduleUiData> -> {
             ScheduleContent(
                 modifier = modifier,
                 data = uiState.data,
-                fallbackReason = uiState.cacheReason,
+                fallbackReasonRes = uiState.cacheReasonRes,
                 onEvent = component::onEvent,
             )
         }
 
-        BaseState.Loading -> LoadingContainer()
+        LeonState.Loading -> LeonLoader()
 
-        is BaseState.Error -> ErrorContainer(uiState)
+        is LeonState.Error -> LeonError(uiState)
 
-        BaseState.Idle -> Unit
+        LeonState.Idle -> Unit
     }
 
     LaunchedEffect(lifecycleOwner, component.uiEffect) {

@@ -1,11 +1,18 @@
 package com.therxmv.napoleon.data.repository.rating
 
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.rating.model.RatingModel
 import com.therxmv.napoleon.data.repository.rating.model.SubjectModel
 import com.therxmv.napoleon.data.repository.rating.model.ValidValueModel
 import com.therxmv.napoleon.data.source.local.datastore.DataStoreSource
 import kotlinx.coroutines.runBlocking
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.rating_error_credits_number
+import napoleon.leonres.generated.resources.rating_error_credits_range
+import napoleon.leonres.generated.resources.rating_error_it_number
+import napoleon.leonres.generated.resources.rating_error_it_range
+import napoleon.leonres.generated.resources.rating_error_score_number
+import napoleon.leonres.generated.resources.rating_error_score_range
 import kotlin.math.abs
 import kotlin.math.exp
 import kotlin.math.pow
@@ -45,30 +52,30 @@ class RatingRepositoryImpl(
         runBlocking { dataStoreSource.getRating() }
 
     override fun validateCredits(value: String): ValidValueModel {
-        val intCredits = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_credits_number)
+        val intCredits = value.toIntOrNull() ?: return ValidValueModel(value, getSyncString(Res.string.rating_error_credits_number))
 
         if (intCredits < MIN_CREDITS) {
-            return ValidValueModel(value, "${Res.string.rating_error_credits_range} $MIN_CREDITS")
+            return ValidValueModel(value, getSyncString(Res.string.rating_error_credits_range, "$MIN_CREDITS"))
         }
 
         return ValidValueModel(value)
     }
 
     override fun validateScore(value: String): ValidValueModel {
-        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_score_number)
+        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, getSyncString(Res.string.rating_error_score_number))
 
-        if (intScore < MIN_SCORE || intScore > MAX_SCORE) {
-            return ValidValueModel(value, "${Res.string.rating_error_score_range} $MIN_SCORE-$MAX_SCORE")
+        if (intScore !in MIN_SCORE..MAX_SCORE) {
+            return ValidValueModel(value, getSyncString(Res.string.rating_error_score_range, "$MIN_SCORE-$MAX_SCORE"))
         }
 
         return ValidValueModel(value)
     }
 
     override fun validateProbabilityInput(value: String): ValidValueModel {
-        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, Res.string.rating_error_it_number)
+        val intScore = value.toIntOrNull() ?: return ValidValueModel(value, getSyncString(Res.string.rating_error_it_number))
 
         if (intScore < MIN_PROBABILITY_VALUE) {
-            return ValidValueModel(value, "${Res.string.rating_error_it_range} $MIN_PROBABILITY_VALUE")
+            return ValidValueModel(value, getSyncString(Res.string.rating_error_it_range, "$MIN_PROBABILITY_VALUE"))
         }
 
         return ValidValueModel(value)
@@ -81,6 +88,9 @@ class RatingRepositoryImpl(
             val averageRating = average.toDouble()
             val ratingDeviation = deviation.toDouble()
 
+            // A deviation or group size of 0 would divide by zero below (NaN when rating == averageRating, Infinity otherwise)
+            if (groupSize <= 0 || ratingDeviation <= 0.0) return 0.0
+
             // На скільки стандартних відхилень рейтинг вищий або нижчий за середній
             val z = (rating - averageRating) / ratingDeviation
 
@@ -88,7 +98,9 @@ class RatingRepositoryImpl(
             val pHigher = 1.0 - normalCdf(z)
 
             // Ймовірність того, що не більше ніж (grantQuota - 1) студентів мають вищий бал
-            return binomialCdf(grantQuota - 1, groupSize - 1, pHigher)
+            val probability = binomialCdf(grantQuota - 1, groupSize - 1, pHigher)
+
+            return probability.takeIf { it.isFinite() } ?: 0.0
         } catch (e: Exception) {
             e.printStackTrace()
             return 0.0

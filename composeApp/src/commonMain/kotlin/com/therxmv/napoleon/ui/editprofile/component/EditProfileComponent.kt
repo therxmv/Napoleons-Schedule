@@ -1,9 +1,10 @@
 package com.therxmv.napoleon.ui.editprofile.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.base.state.BaseState
+import com.therxmv.leonui.input.LeonDropdownInputData
+import com.therxmv.leonui.state.LeonState
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.faculty.FacultyRepository
 import com.therxmv.napoleon.data.repository.faculty.model.FacultiesModel
@@ -23,7 +24,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.edit_profile_faculty_placeholder
+import napoleon.leonres.generated.resources.edit_profile_save_button
+import napoleon.leonres.generated.resources.edit_profile_specialty_placeholder
+import napoleon.leonres.generated.resources.edit_profile_year_placeholder
+import org.jetbrains.compose.resources.StringResource
 
+@Stable
 class EditProfileComponent(
     componentContext: ComponentContext,
     private val facultyRepository: FacultyRepository,
@@ -36,7 +44,7 @@ class EditProfileComponent(
 ) : ComponentContext by componentContext {
     private val scope = coroutineScope(SupervisorJob())
 
-    private val _uiState = MutableStateFlow<BaseState<EditProfileUiData>>(BaseState.Idle)
+    private val _uiState = MutableStateFlow<LeonState<EditProfileUiData>>(LeonState.Idle)
     val uiState = _uiState.asStateFlow()
 
     private var cachedFaculties: List<FacultyModel> = emptyList()
@@ -53,7 +61,7 @@ class EditProfileComponent(
 
     private fun loadData() {
         scope.launch {
-            _uiState.update { BaseState.Loading }
+            _uiState.update { LeonState.Loading }
 
             val profile = profileRepository.getProfile()
             loadAllFaculties(profile)
@@ -73,13 +81,13 @@ class EditProfileComponent(
                     val prepopulatedFaculty = faculties.find { it == profile?.facultyName }
                     val data = createInitialData(facultyItems = faculties, facultyName = prepopulatedFaculty)
 
-                    BaseState.Ready(
+                    LeonState.Ready(
                         data = data,
-                        cacheReason = result.reason?.message,
+                        cacheReasonRes = result.reason?.messageRes,
                     )
                 }
 
-                is Result.Failure -> BaseState.Error(result.reason.message, ::loadData)
+                is Result.Failure -> LeonState.Error(result.reason.messageRes, ::loadData)
             }
         }
     }
@@ -94,7 +102,7 @@ class EditProfileComponent(
             is Result.Success<YearsModel> -> {
                 val prepopulatedYear = result.data.years.find { it == profile?.year }
 
-                _uiState.updateReady(result.reason?.message) { data ->
+                _uiState.updateReady(result.reason?.messageRes) { data ->
                     data.copy(
                         yearDropdown = data.yearDropdown.copy(
                             items = result.data.years,
@@ -110,7 +118,7 @@ class EditProfileComponent(
 
             is Result.Failure -> {
                 _uiState.update {
-                    BaseState.Error(result.reason.message, ::loadData)
+                    LeonState.Error(result.reason.messageRes, ::loadData)
                 }
             }
         }
@@ -127,7 +135,7 @@ class EditProfileComponent(
 
                 val prepopulatedSpecialty = specialties.find { it == profile?.specialtyName }
 
-                _uiState.updateReady(result.reason?.message) { data ->
+                _uiState.updateReady(result.reason?.messageRes) { data ->
                     data.copy(
                         specialtyDropdown = data.specialtyDropdown.copy(
                             items = specialties,
@@ -139,7 +147,7 @@ class EditProfileComponent(
 
             is Result.Failure -> {
                 _uiState.update {
-                    BaseState.Error(result.reason.message, ::loadData)
+                    LeonState.Error(result.reason.messageRes, ::loadData)
                 }
             }
         }
@@ -154,21 +162,21 @@ class EditProfileComponent(
 
     private fun createInitialData(facultyItems: List<String>, facultyName: String?): EditProfileUiData =
         EditProfileUiData(
-            facultyDropdown = EditProfileUiData.Dropdown(
-                placeholder = Res.string.edit_profile_faculty_placeholder,
+            facultyDropdown = LeonDropdownInputData(
+                placeholderRes = Res.string.edit_profile_faculty_placeholder,
                 value = facultyName,
                 items = facultyItems,
                 onClick = ::onFacultyClick,
             ),
-            yearDropdown = EditProfileUiData.Dropdown(
-                placeholder = Res.string.edit_profile_year_placeholder,
+            yearDropdown = LeonDropdownInputData(
+                placeholderRes = Res.string.edit_profile_year_placeholder,
                 onClick = ::onYearClick,
             ),
-            specialtyDropdown = EditProfileUiData.Dropdown(
-                placeholder = Res.string.edit_profile_specialty_placeholder,
+            specialtyDropdown = LeonDropdownInputData(
+                placeholderRes = Res.string.edit_profile_specialty_placeholder,
                 onClick = ::onSpecialtyClick,
             ),
-            saveLabel = Res.string.edit_profile_save_button,
+            saveLabelRes = Res.string.edit_profile_save_button,
         )
 
     private fun onFacultyClick(value: String) {
@@ -245,22 +253,22 @@ class EditProfileComponent(
         }
     }
 
-    private fun MutableStateFlow<BaseState<EditProfileUiData>>.getReadyData(): EditProfileUiData? {
-        val state = this.value as? BaseState.Ready<*>
+    private fun MutableStateFlow<LeonState<EditProfileUiData>>.getReadyData(): EditProfileUiData? {
+        val state = this.value as? LeonState.Ready<*>
         val data = (state?.data as? EditProfileUiData)
 
         return data
     }
 
-    private fun MutableStateFlow<BaseState<EditProfileUiData>>.updateReady(cacheReason: String? = null, dataCreator: (EditProfileUiData) -> EditProfileUiData) {
+    private fun MutableStateFlow<LeonState<EditProfileUiData>>.updateReady(cacheReasonRes: StringResource? = null, dataCreator: (EditProfileUiData) -> EditProfileUiData) {
         update { state ->
-            if (state !is BaseState.Ready<*>) return@update state
+            if (state !is LeonState.Ready<*>) return@update state
 
             val data = (state.data as? EditProfileUiData) ?: return@update state
 
-            BaseState.Ready(
+            LeonState.Ready(
                 data = dataCreator(data),
-                cacheReason = cacheReason,
+                cacheReasonRes = cacheReasonRes,
             )
         }
     }

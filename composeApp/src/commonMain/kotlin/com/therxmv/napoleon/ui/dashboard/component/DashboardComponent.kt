@@ -1,9 +1,9 @@
 package com.therxmv.napoleon.ui.dashboard.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import com.therxmv.napoleon.Res
-import com.therxmv.napoleon.base.date.getTodayDateTime
+import com.therxmv.datetime.getNowDate
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsEvents
 import com.therxmv.napoleon.data.repository.analytics.AnalyticsRepository
 import com.therxmv.napoleon.data.repository.info.InfoRepository
@@ -31,7 +31,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.dashboard_exams_tile
+import napoleon.leonres.generated.resources.dashboard_excel_tile
+import napoleon.leonres.generated.resources.dashboard_process_tile
+import napoleon.leonres.generated.resources.dashboard_rating_tile
+import napoleon.leonres.generated.resources.dashboard_site_tile
+import napoleon.leonres.generated.resources.dashboard_tg_bot_tile
+import napoleon.leonres.generated.resources.dashboard_tg_channel_tile
+import napoleon.leonres.generated.resources.dashboard_timetable_tile
+import org.jetbrains.compose.resources.getString
 
+@Stable
 class DashboardComponent(
     private val componentContext: ComponentContext,
     private val specialtyRepository: SpecialtyRepository,
@@ -69,110 +80,95 @@ class DashboardComponent(
     private fun generateData(): DashboardUiData =
         DashboardUiData(
             widgets = generateWidgets(),
-            cards = generateCards(),
+            tiles = generateTiles(),
         )
 
     private fun generateWidgets(): List<DashboardUiData.Widget> =
         listOf(DashboardUiData.Widget.SkeletonTodaySchedule)
 
-    private fun generateCards(): List<DashboardUiData.Card> {
+    private fun generateTiles(): List<DashboardUiData.Tile> {
         val links = infoRepository.getLinks()
 
         return buildList {
             if (links.excelSchedule != null) {
-                excelCard(links.excelSchedule).also(::add)
+                excelTile(links.excelSchedule).also(::add)
             }
 
-            ratingCard().also(::add)
-            // TODO implement manual input & save examsCard().also(::add)
-            timetableCard().also(::add)
+            examsTile().also(::add)
+            timetableTile().also(::add)
 
-            add(DashboardUiData.Card.EmptyDivider)
-            siteCard(links.mainSite).also(::add)
-            processCard(links.studyProcess).also(::add)
+            ratingTile().also(::add)
 
-            add(DashboardUiData.Card.EmptyDivider)
-            tgChannelCard(links.telegramChannel).also(::add)
-            tgBotCard(links.telegramBot).also(::add)
+            add(DashboardUiData.Tile.EmptyDivider)
+            siteTile(links.mainSite).also(::add)
+            processTile(links.studyProcess).also(::add)
+
+            add(DashboardUiData.Tile.EmptyDivider)
+            tgChannelTile(links.telegramChannel).also(::add)
+            tgBotTile(links.telegramBot).also(::add)
         }
     }
 
-    private fun excelCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun excelTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.wideRectangle(
             icon = FeatherIcons.Layout,
-            title = Res.string.dashboard_excel_card,
+            titleRes = Res.string.dashboard_excel_tile,
             onClick = { openUrl(url) },
-            gridSpan = 2,
-            ratio = 4f,
         )
 
-    private fun examsCard(): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun examsTile(): DashboardUiData.Tile =
+        DashboardUiData.Tile.smallSquare(
             icon = FeatherIcons.Calendar,
-            title = Res.string.dashboard_exams_card,
+            titleRes = Res.string.dashboard_exams_tile,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Exams))
             },
-            gridSpan = 1,
-            ratio = 1f,
         )
 
-    private fun ratingCard(): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun ratingTile(): DashboardUiData.Tile =
+        DashboardUiData.Tile.wideRectangle(
             icon = FeatherIcons.DivideCircle,
-            title = Res.string.dashboard_rating_card,
+            titleRes = Res.string.dashboard_rating_tile,
             onClick = {
                 onEvent(DashboardUiEvent.Navigate(ChildDestination.FullScreen.Rating))
             },
-            gridSpan = 1,
-            ratio = 1f,
         )
 
-    private fun timetableCard(): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun timetableTile(): DashboardUiData.Tile =
+        DashboardUiData.Tile.smallSquare(
             icon = FeatherIcons.Clock,
-            title = Res.string.dashboard_timetable_card,
+            titleRes = Res.string.dashboard_timetable_tile,
             onClick = {
                 onEvent(DashboardUiEvent.OpenDialog(SlotDestination.TimetableDialog))
             },
-            gridSpan = 1,
-            ratio = 1f,
         )
 
-    private fun tgChannelCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun tgChannelTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Send,
-            title = Res.string.dashboard_tg_channel_card,
+            titleRes = Res.string.dashboard_tg_channel_tile,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
-    private fun tgBotCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun tgBotTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.MessageCircle,
-            title = Res.string.dashboard_tg_bot_card,
+            titleRes = Res.string.dashboard_tg_bot_tile,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
-    private fun siteCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun siteTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Globe,
-            title = Res.string.dashboard_site_card,
+            titleRes = Res.string.dashboard_site_tile,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
-    private fun processCard(url: String): DashboardUiData.Card =
-        DashboardUiData.Card.Default(
+    private fun processTile(url: String): DashboardUiData.Tile =
+        DashboardUiData.Tile.smallRectangle(
             icon = FeatherIcons.Folder,
-            title = Res.string.dashboard_process_card,
+            titleRes = Res.string.dashboard_process_tile,
             onClick = { openUrl(url) },
-            gridSpan = 1,
-            ratio = 2f,
         )
 
     private fun openUrl(url: String) {
@@ -200,7 +196,7 @@ class DashboardComponent(
                                 widgets = data.widgets.map { widget ->
                                     scheduleWidget.takeIf { widget.isSchedule } ?: widget
                                 },
-                                cacheReason = result.reason?.message,
+                                cacheReason = result.reason?.messageRes?.let { getString(it) },
                             )
                         }
                     }
@@ -218,7 +214,7 @@ class DashboardComponent(
     }
 
     private fun indexOfToday(): Int =
-        getTodayDateTime().dayOfWeek.ordinal
+        getNowDate().dayOfWeek.ordinal
 
     private fun openLessonUrl(url: String) {
         scope.launch {

@@ -2,6 +2,7 @@ package com.therxmv.napoleon.data.source.local.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.therxmv.napoleon.data.repository.profile.model.ProfileModel
@@ -34,6 +35,7 @@ class DataStoreSource(
     private val specialtiesKey = stringPreferencesKey("SpecialtiesKey")
     private val timetableKey = stringPreferencesKey("TimetableKey")
     private val ratingKey = stringPreferencesKey("RatingKey")
+    private val customExamsKey = booleanPreferencesKey("CustomExamsKey")
 
     suspend fun getProfile(): ProfileModel? =
         profileKey.getObject<ProfileModel>()
@@ -75,6 +77,13 @@ class DataStoreSource(
 
     suspend fun setExamsBySpecialty(specialty: String, exams: ExamsDto) {
         stringPreferencesKey(specialty + EXAMS).saveObject(exams)
+    }
+
+    suspend fun getIsCustomExams(): Boolean =
+        customExamsKey.getValue() == true
+
+    suspend fun setIsCustomExams() {
+        customExamsKey.saveValue(true)
     }
 
     suspend fun getRating(): RatingModel? =

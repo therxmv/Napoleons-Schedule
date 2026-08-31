@@ -73,17 +73,17 @@ object MockData {
     val examsDto = ExamsDto(
         exams = listOf(
             ExamItemDto(
-                teacher = "доц. Пелех О.Б.",
-                lesson = "Економіка і право в IT-галузі",
-                date = "19.11",
-            ),
-            ExamItemDto(
-                teacher = "проф.Турбал Ю.В.",
+                teacher = "проф. Викладач Ю.В.",
                 lesson = "Якість і тестування програмного забезпечення",
                 date = "25.11",
             ),
             ExamItemDto(
-                teacher = "в.Копелюк В.О",
+                teacher = "доц. Викладач О.Б.",
+                lesson = "Економіка і право в IT-галузі",
+                date = "19.11",
+            ),
+            ExamItemDto(
+                teacher = "в. Викладач В.О",
                 lesson = "Конструювання програмного забезпечення",
                 date = "29.11",
             ),

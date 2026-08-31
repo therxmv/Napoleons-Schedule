@@ -1,10 +1,16 @@
 package com.therxmv.napoleon.navigation.fullscreen
 
 import com.arkivanov.decompose.ComponentContext
-import com.therxmv.napoleon.Res
+import com.therxmv.leonres.getSyncString
 import com.therxmv.napoleon.data.repository.profile.ProfileRepository
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination
 import com.therxmv.napoleon.navigation.destination.child.ChildDestination.FullScreen
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.app_name
+import napoleon.leonres.generated.resources.edit_profile_title
+import napoleon.leonres.generated.resources.exams_title
+import napoleon.leonres.generated.resources.profile_info_title
+import napoleon.leonres.generated.resources.rating_title
 
 class FullScreenComponent(
     componentContext: ComponentContext,
@@ -22,11 +28,11 @@ class FullScreenComponent(
 
     private fun ChildDestination.resolveTitle(): String =
         when (this) {
-            FullScreen.CreateProfile -> Res.string.profile_info_title
-            FullScreen.EditProfile -> Res.string.edit_profile_title
+            FullScreen.CreateProfile -> getSyncString(Res.string.profile_info_title)
+            FullScreen.EditProfile -> getSyncString(Res.string.edit_profile_title)
             FullScreen.Exams -> getExamsTitle()
-            FullScreen.Rating -> Res.string.rating_title
-            else -> Res.string.app_name
+            FullScreen.Rating -> getSyncString(Res.string.rating_title)
+            else -> getSyncString(Res.string.app_name)
         }
 
     private fun getExamsTitle(): String {
@@ -34,7 +40,7 @@ class FullScreenComponent(
         val specialty = profile.specialtyName
         val faculty = profile.facultyName
 
-        return Res.string.exams_title + " $specialty, $faculty"
+        return getSyncString(Res.string.exams_title, specialty, faculty)
     }
 
     data class Data(

@@ -1,0 +1,141 @@
+<resources>
+    <string name="app_name">Розклад Наполеона</string>
+
+    <!--BottomNav-->
+    <string name="bottom_dashboard_label">Дошка</string>
+    <string name="bottom_schedule_label">Розклад</string>
+    <string name="bottom_profile_label">Профіль</string>
+
+    <!--Dashboard-->
+    <string name="dashboard_rating_tile">Калькулятор Рейтингу</string>
+    <string name="dashboard_exams_tile">Екзамени</string>
+    <string name="dashboard_excel_tile">Розклад у Excel</string>
+    <string name="dashboard_timetable_tile">Розклад Дзвінків</string>
+    <string name="dashboard_tg_channel_tile">Телеграм Канал</string>
+    <string name="dashboard_tg_bot_tile">Телеграм Бот</string>
+    <string name="dashboard_site_tile">Вебсайт</string>
+    <string name="dashboard_process_tile">Освітній Процес</string>
+
+    <!--Profile-->
+    <string name="profile_welcome">Вітаємо %1$s!</string>
+    <string name="profile_faculty_label">Факультет:</string>
+    <string name="profile_specialty_label">Спеціальність:</string>
+    <string name="profile_edit_button">Редагувати</string>
+    <string name="profile_info_title">Про спеціальність</string>
+    <string name="profile_default_name">Студент</string>
+
+    <!--Edit Profile-->
+    <string name="edit_profile_title">Редагування профілю</string>
+    <string name="edit_profile_faculty_placeholder">Виберіть факультет</string>
+    <string name="edit_profile_specialty_placeholder">Виберіть спеціальність</string>
+    <string name="edit_profile_year_placeholder">Виберіть курс</string>
+    <string name="edit_profile_save_button">Зберегти</string>
+
+    <!--Schedule-->
+    <string name="schedule_title">Розклад для %1$s, %2$s</string>
+
+    <string name="schedule_monday">Понеділок</string>
+    <string name="schedule_tuesday">Вівторок</string>
+    <string name="schedule_wednesday">Середа</string>
+    <string name="schedule_thursday">Четвер</string>
+    <string name="schedule_friday">П'ятниця</string>
+    <string name="schedule_saturday">Субота</string>
+    <string name="schedule_sunday">Неділя</string>
+    <string name="schedule_unknown_day">Невідомий день</string>
+
+    <string name="schedule_no_lesson">Немає</string>
+    <string name="schedule_no_lessons">%1$s - Немає занять</string>
+
+    <string name="offline_open_schedule">Відкрити розклад</string>
+
+    <!-- Timetable -->
+    <string name="timetable_title">Розклад дзвінків</string>
+    <string name="timetable_loading">Завантаження...</string>
+    <string name="timetable_first_shift">Перша зміна</string>
+    <string name="timetable_second_shift">Друга зміна</string>
+    <string name="timetable_empty_shift">Немає інформації</string>
+    <string name="timetable_copy">Копіювати</string>
+    <string name="timetable_close">Закрити</string>
+
+    <!-- Reminders -->
+    <string name="reminder_title">Починається пара!</string>
+    <string name="reminders_dialog_title">Дозвіл на нагадування</string>
+    <string name="reminders_dialog_description">Будь ласка, дозвольте Наполеону надсилати вам сповіщення про майбутні пари</string>
+    <string name="reminders_dialog_grant">Дозволити</string>
+    <string name="reminders_dialog_deny">Заборонити</string>
+
+    <!-- Date Picker -->
+    <string name="datepicker_selected_date_label">Обрана дата</string>
+    <string name="datepicker_cancel">Скасувати</string>
+    <string name="datepicker_confirm">Підтвердити</string>
+    <string name="datepicker_weekday_mon">Пн</string>
+    <string name="datepicker_weekday_tue">Вт</string>
+    <string name="datepicker_weekday_wed">Ср</string>
+    <string name="datepicker_weekday_thu">Чт</string>
+    <string name="datepicker_weekday_fri">Пт</string>
+    <string name="datepicker_weekday_sat">Сб</string>
+    <string name="datepicker_weekday_sun">Нд</string>
+
+    <string name="datepicker_month_jan">Січень</string>
+    <string name="datepicker_month_feb">Лютий</string>
+    <string name="datepicker_month_mar">Березень</string>
+    <string name="datepicker_month_apr">Квітень</string>
+    <string name="datepicker_month_may">Травень</string>
+    <string name="datepicker_month_jun">Червень</string>
+    <string name="datepicker_month_jul">Липень</string>
+    <string name="datepicker_month_aug">Серпень</string>
+    <string name="datepicker_month_sep">Вересень</string>
+    <string name="datepicker_month_oct">Жовтень</string>
+    <string name="datepicker_month_nov">Листопад</string>
+    <string name="datepicker_month_dec">Грудень</string>
+
+    <!-- Rating -->
+    <string name="rating_title">Калькулятор рейтингу</string>
+
+    <string name="rating_capacity">Кількість студентів</string>
+    <string name="rating_quota">Квота на стипендію</string>
+    <string name="rating_average">Середній бал групи</string>
+    <string name="rating_deviation">Відхилення балу</string>
+
+    <string name="rating_name_label">Предмет</string>
+    <string name="rating_credits_label">Кредити</string>
+    <string name="rating_score_label">Бал</string>
+    <string name="rating_add_label">Додати Предмет</string>
+
+    <string name="rating_label">Ваш Рейтинг %1$s</string>
+    <string name="rating_probability">Ймовірність стипендії %1$s</string>
+
+    <string name="rating_info_text">Інформацію про екзамени та кредити можна знайти </string>
+    <string name="rating_info_link_text">тут</string>
+
+    <string name="rating_error_score_number">Бал має бути числом</string>
+    <string name="rating_error_score_range">Бал має бути у межах %1$s</string>
+    <string name="rating_error_credits_number">Кредити мають бути числом</string>
+    <string name="rating_error_credits_range">Кредити мають бути хоча б %1$s</string>
+    <string name="rating_error_it_number">Має бути числом</string>
+    <string name="rating_error_it_range">Має бути хоча б %1$s</string>
+
+    <!-- Exams -->
+    <string name="exams_title">Розклад екзаменів для %1$s, %2$s</string>
+    <string name="exams_list_title">Екзамени</string>
+    <string name="zalik_list_title">Заліки</string>
+    <string name="exams_no_data">У нас немає інформації про екзамени та заліки</string>
+    <string name="exams_empty_placeholder">Немає інформації</string>
+    <string name="exams_edit_info">Ви можете додати екзамени власноруч або провести ліворуч по вже існуючим, щоб редагувати або видалити.\n\nРозклад екзаменів можете знайти </string>
+    <string name="exams_edit_info_link_text">тут</string>
+    <string name="exams_add_new">Додати</string>
+    <string name="exams_default_exam_name">Екзамен</string>
+    <string name="exams_default_exam_teacher">Викладач</string>
+    <string name="exams_default_zalik_name">Залік</string>
+
+    <!-- Error -->
+    <string name="error_generic">Ой-йо... Щось зламалося :(</string>
+    <string name="error_offline">Не можемо зв'язатися з сервером. Перевірте Ваш інтернет та спробуйте ще раз</string>
+    <string name="error_cant_find">Не можемо знайти дані на сервері. Спробуйте ще раз пізніше</string>
+    <string name="error_slow_internet">Ваш інтернет надто повільний для завантаження даних. Перевірте Ваш інтернет та спробуйте ще раз</string>
+    <!-- Fallback cache -->
+    <string name="fallback_offline">Не можемо зв'язатися з сервером для оновлення даних. Ви зараз бачите збереженні дані (можуть бути застарілими)</string>
+    <string name="fallback_cant_find">Не можемо знайти дані на сервері, але ми дещо зберегли (дані можуть бути застарілими)</string>
+    <string name="fallback_slow_internet">Ваш інтернет надто повільний для оновлення даних, але ми дещо зберегли (дані можуть бути застарілими)</string>
+
+</resources>

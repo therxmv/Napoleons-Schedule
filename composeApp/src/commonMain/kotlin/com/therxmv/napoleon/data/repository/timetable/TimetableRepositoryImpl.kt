@@ -14,7 +14,8 @@ class TimetableRepositoryImpl(
     private var fetchedTimetable: Result.Success<TimetableModel>? = null
 
     override suspend fun getTimetable(): Result<TimetableModel> =
-        fetchedTimetable ?: Result.of(
+        Result.of(
+            cachedResult = { fetchedTimetable },
             block = {
                 napoleonApi
                     .getTimetable()

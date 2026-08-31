@@ -6,13 +6,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.therxmv.leonui.theme.LeonPreview
+import com.therxmv.napoleon.ui.PreviewMockData
+import com.therxmv.napoleon.ui.rating.component.RatingUiData
 import com.therxmv.napoleon.ui.rating.component.RatingUiEvent
-import com.therxmv.napoleon.ui.rating.component.RatingUiState
 
 @Composable
 fun RatingContent(
     modifier: Modifier = Modifier,
-    data: RatingUiState,
+    data: RatingUiData,
     onEvent: (RatingUiEvent) -> Unit,
 ) {
     val resultsSheetHeight = remember { 0.2f }
@@ -21,18 +23,29 @@ fun RatingContent(
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
-        RatingInputs(
+        RatingSubjectInputs(
             modifier = Modifier.align(Alignment.TopCenter),
             data = data,
             heightFraction = inputsHeight,
             onEvent = onEvent,
         )
 
-        RatingResult(
+        RatingResultAndProbability(
             modifier = Modifier.align(Alignment.BottomCenter),
             data = data,
             minFraction = resultsSheetHeight,
             onEvent = onEvent,
+        )
+    }
+}
+
+@LeonPreview
+@Composable
+private fun RatingContentPreview() {
+    LeonPreview {
+        RatingContent(
+            data = PreviewMockData.ratingUiData,
+            onEvent = {},
         )
     }
 }

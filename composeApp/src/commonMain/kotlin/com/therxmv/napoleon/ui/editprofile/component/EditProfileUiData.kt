@@ -1,22 +1,16 @@
 package com.therxmv.napoleon.ui.editprofile.component
 
 import androidx.compose.runtime.Immutable
+import com.therxmv.leonui.input.LeonDropdownInputData
+import org.jetbrains.compose.resources.StringResource
 
 @Immutable
 data class EditProfileUiData(
-    val facultyDropdown: Dropdown,
-    val yearDropdown: Dropdown,
-    val specialtyDropdown: Dropdown,
-    val saveLabel: String,
+    val facultyDropdown: LeonDropdownInputData,
+    val yearDropdown: LeonDropdownInputData,
+    val specialtyDropdown: LeonDropdownInputData,
+    val saveLabelRes: StringResource,
 ) {
     val isAllSelected: Boolean
         get() = facultyDropdown.value != null && yearDropdown.value != null && specialtyDropdown.value != null
-
-    @Immutable
-    data class Dropdown(
-        val placeholder: String,
-        val value: String? = null,
-        val items: List<String> = emptyList(),
-        val onClick: (String) -> Unit,
-    )
 }
