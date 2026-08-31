@@ -15,6 +15,10 @@ import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonButtonStyle
 import com.therxmv.leonui.theme.LeonTheme
 import kotlinx.datetime.LocalDate
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.datepicker_cancel
+import napoleon.leonres.generated.resources.datepicker_confirm
+import org.jetbrains.compose.resources.stringResource
 
 // TODO p4 add preview
 @Composable
@@ -49,14 +53,14 @@ private fun DialogActions(
         modifier = modifier,
     ) {
         LeonButton(
-            label = "Cancel", // TODO p1 translate string
+            label = stringResource(Res.string.datepicker_cancel),
             style = LeonButtonStyle.Text(),
             onClick = onCancel,
         )
         Spacer(modifier = Modifier.width(LeonTheme.paddings.horizontal.skinny))
 
         LeonButton(
-            label = "Confirm", // TODO p1 translate string
+            label = stringResource(Res.string.datepicker_confirm),
             style = LeonButtonStyle.Text(),
             onClick = onConfirm,
         )

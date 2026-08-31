@@ -45,6 +45,9 @@ import compose.icons.feathericons.Calendar
 import compose.icons.feathericons.ChevronDown
 import compose.icons.feathericons.ChevronUp
 import kotlinx.datetime.LocalDate
+import napoleon.leonres.generated.resources.Res
+import napoleon.leonres.generated.resources.datepicker_selected_date_label
+import org.jetbrains.compose.resources.stringResource
 
 // TODO p4 add preview
 @Composable
@@ -112,7 +115,7 @@ private fun Header(
 
         Column {
             LeonText(
-                text = "Selected date", // TODO p1 translate string
+                text = stringResource(Res.string.datepicker_selected_date_label),
             )
 
             LeonText(

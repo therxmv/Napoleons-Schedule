@@ -88,6 +88,9 @@ class RatingRepositoryImpl(
             val averageRating = average.toDouble()
             val ratingDeviation = deviation.toDouble()
 
+            // A deviation or group size of 0 would divide by zero below (NaN when rating == averageRating, Infinity otherwise)
+            if (groupSize <= 0 || ratingDeviation <= 0.0) return 0.0
+
             // На скільки стандартних відхилень рейтинг вищий або нижчий за середній
             val z = (rating - averageRating) / ratingDeviation
 
@@ -95,7 +98,9 @@ class RatingRepositoryImpl(
             val pHigher = 1.0 - normalCdf(z)
 
             // Ймовірність того, що не більше ніж (grantQuota - 1) студентів мають вищий бал
-            return binomialCdf(grantQuota - 1, groupSize - 1, pHigher)
+            val probability = binomialCdf(grantQuota - 1, groupSize - 1, pHigher)
+
+            return probability.takeIf { it.isFinite() } ?: 0.0
         } catch (e: Exception) {
             e.printStackTrace()
             return 0.0

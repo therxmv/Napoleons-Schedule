@@ -64,6 +64,18 @@
     <string name="reminders_dialog_grant">Дозволити</string>
     <string name="reminders_dialog_deny">Заборонити</string>
 
+    <!-- Date Picker -->
+    <string name="datepicker_selected_date_label">Обрана дата</string>
+    <string name="datepicker_cancel">Скасувати</string>
+    <string name="datepicker_confirm">Підтвердити</string>
+    <string name="datepicker_weekday_mon">Пн</string>
+    <string name="datepicker_weekday_tue">Вт</string>
+    <string name="datepicker_weekday_wed">Ср</string>
+    <string name="datepicker_weekday_thu">Чт</string>
+    <string name="datepicker_weekday_fri">Пт</string>
+    <string name="datepicker_weekday_sat">Сб</string>
+    <string name="datepicker_weekday_sun">Нд</string>
+
     <!-- Rating -->
     <string name="rating_title">Калькулятор рейтингу</string>
 

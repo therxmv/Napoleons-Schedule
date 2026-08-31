@@ -159,7 +159,6 @@ class RatingComponent(
         val rounded = round(rating * 100).toString()
         val percentages = if (rounded.endsWith(".0")) "${rounded.dropLast(2)}%" else "$rounded%"
 
-        // TODO p1 percentages sometimes NaN
         return getSyncString(Res.string.rating_probability, percentages)
     }
 
