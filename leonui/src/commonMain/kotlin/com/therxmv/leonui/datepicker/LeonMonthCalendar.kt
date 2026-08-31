@@ -21,31 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.therxmv.datetime.picker.state.DatePickerState
 import com.therxmv.datetime.picker.state.rememberDatePickerState
+import com.therxmv.datetime.rememberWeekdayLabels
 import com.therxmv.leonui.extensions.applyIf
 import com.therxmv.leonui.text.LeonText
 import com.therxmv.leonui.text.LeonTextWeight
 import com.therxmv.leonui.theme.LeonComponentPreview
 import com.therxmv.leonui.theme.LeonTheme
 import kotlinx.datetime.LocalDate
-import napoleon.leonres.generated.resources.Res
-import napoleon.leonres.generated.resources.datepicker_weekday_fri
-import napoleon.leonres.generated.resources.datepicker_weekday_mon
-import napoleon.leonres.generated.resources.datepicker_weekday_sat
-import napoleon.leonres.generated.resources.datepicker_weekday_sun
-import napoleon.leonres.generated.resources.datepicker_weekday_thu
-import napoleon.leonres.generated.resources.datepicker_weekday_tue
-import napoleon.leonres.generated.resources.datepicker_weekday_wed
-import org.jetbrains.compose.resources.stringResource
-
-private val weekdayLabelRes = listOf(
-    Res.string.datepicker_weekday_mon,
-    Res.string.datepicker_weekday_tue,
-    Res.string.datepicker_weekday_wed,
-    Res.string.datepicker_weekday_thu,
-    Res.string.datepicker_weekday_fri,
-    Res.string.datepicker_weekday_sat,
-    Res.string.datepicker_weekday_sun,
-)
 
 // TODO p4 add preview
 @Composable
@@ -59,10 +41,10 @@ fun LeonMonthCalendar(
         verticalArrangement = Arrangement.spacedBy(LeonTheme.sizes.divider.thin),
     ) {
         GridRow {
-            weekdayLabelRes.forEach {
+            rememberWeekdayLabels().forEach {
                 GridBox {
                     LeonText(
-                        text = stringResource(it),
+                        text = it,
                         weight = LeonTextWeight.Bold,
                     )
                 }

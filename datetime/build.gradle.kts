@@ -31,6 +31,7 @@ kotlin {
             dependencies {
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.material3)
+                implementation(project(":leonres"))
                 api(libs.kotlinx.datetime)
             }
         }

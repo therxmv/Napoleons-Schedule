@@ -1,7 +1,6 @@
 package com.therxmv.datetime
 
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format.MonthNames
 import kotlinx.datetime.format.char
 
 object DateTimeConstants {
@@ -28,18 +27,6 @@ object DateTimeConstants {
             char('.')
             monthNumber()
             char('\n')
-            year()
-        }
-        val fullMonthSpaceYear = LocalDate.Format {
-            monthName(MonthNames.ENGLISH_FULL)
-            char(' ')
-            year()
-        }
-        val fullDate = LocalDate.Format {
-            monthName(MonthNames.ENGLISH_FULL)
-            char(' ')
-            day()
-            chars(", ")
             year()
         }
     }

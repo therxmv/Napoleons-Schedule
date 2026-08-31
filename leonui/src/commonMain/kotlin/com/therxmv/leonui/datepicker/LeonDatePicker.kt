@@ -27,9 +27,10 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.therxmv.datetime.DateTimeConstants
 import com.therxmv.datetime.picker.state.DatePickerState
 import com.therxmv.datetime.picker.state.rememberDatePickerState
+import com.therxmv.datetime.rememberFullDateFormat
+import com.therxmv.datetime.rememberMonthYearFormat
 import com.therxmv.leonui.button.LeonButton
 import com.therxmv.leonui.button.LeonIconButton
 import com.therxmv.leonui.button.LeonIconButtonStyle
@@ -119,7 +120,7 @@ private fun Header(
             )
 
             LeonText(
-                text = state.formatSelectedDate(DateTimeConstants.Format.fullDate),
+                text = state.formatSelectedDate(rememberFullDateFormat()),
                 size = LeonTextSize.Title1,
                 weight = LeonTextWeight.Bold,
             )
@@ -139,7 +140,7 @@ private fun CalendarActions(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         LeonButton(
-            label = state.formatCurrentDate(DateTimeConstants.Format.fullMonthSpaceYear),
+            label = state.formatCurrentDate(rememberMonthYearFormat()),
             textPadding = PaddingValues(
                 end = LeonTheme.paddings.horizontal.skinny,
             ),
